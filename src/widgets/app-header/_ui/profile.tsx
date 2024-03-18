@@ -31,7 +31,7 @@ export function Profile() {
           <DropdownMenuLabel>
             <p>Мой аккаунт</p>
             <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-              Paromov
+              Иванов И.И.
             </p>
           </DropdownMenuLabel>
           <DropdownMenuGroup></DropdownMenuGroup>
