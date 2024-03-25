@@ -11,15 +11,17 @@ import {
 import { LogOut, User } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { useAppSession } from "@/entities/user/use-app-session";
 import { useSignOut } from "@/features/auth/use-sign-out";
 import { SignInButton } from "@/features/auth/sign-in-button";
+import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile";
 
 export function Profile() {
   const session = useAppSession();
   const { signOut, isPending: isLoadingSignOut } = useSignOut();
+
+  console.log(session);
 
   if (session.status === "loading") {
     return <Skeleton className="w-8 h-8 rounded-full" />;
@@ -29,6 +31,8 @@ export function Profile() {
     return <SignInButton />;
   }
 
+  const user = session?.data?.user;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,17 +40,14 @@ export function Profile() {
           variant="ghost"
           className="p-px rounded-full self-center h-8 w-8"
         >
-          <Avatar className="w-8 h-8">
-            <AvatarImage src={session.data?.user.image} />
-            <AvatarFallback>AC</AvatarFallback>
-          </Avatar>
+            <ProfileAvatar profile={user}/>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-2 ">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
           <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-            {session.data?.user.name}
+            {user ? getProfileDisplayName(user) : undefined}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuGroup></DropdownMenuGroup>
