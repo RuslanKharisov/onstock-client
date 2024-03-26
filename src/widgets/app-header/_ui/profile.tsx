@@ -21,8 +21,6 @@ export function Profile() {
   const session = useAppSession();
   const { signOut, isPending: isLoadingSignOut } = useSignOut();
 
-  console.log(session);
-
   if (session.status === "loading") {
     return <Skeleton className="w-8 h-8 rounded-full" />;
   }

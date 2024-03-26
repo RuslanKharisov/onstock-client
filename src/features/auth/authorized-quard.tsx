@@ -14,9 +14,7 @@ export default function AuthorizedGuard({children}:{children: React.ReactNode}) 
     if (isUnauthenticated) {
       signIn();
     }
-  }, [isUnauthenticated]);
-
-  console.log(session.status);
+  }, [isUnauthenticated]);  
 
   const isLoading =
     session.status === "loading" || session.status === "unauthenticated";

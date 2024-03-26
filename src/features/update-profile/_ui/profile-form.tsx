@@ -53,24 +53,24 @@ export function ProfileForm({
 }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues: getDefaultValues(profile),
+    // defaultValues: getDefaultValues(profile),
   });
 
-  const updateProfile = useUpdateProfile();
+//   const updateProfile = useUpdateProfile();
 
-  const handleSubmit = form.handleSubmit(async (data) => {
-    const newProfile = await updateProfile.update({
-      userId,
-      data,
-    });
+//   const handleSubmit = form.handleSubmit(async (data) => {
+//     const newProfile = await updateProfile.update({
+//       userId,
+//       data,
+//     });
 
-    form.reset(getDefaultValues(newProfile.profile));
-    onSuccess?.();
-  });
+//     form.reset(getDefaultValues(newProfile.profile));
+//     onSuccess?.();
+//   });
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={form.handleSubmit(console.log)} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -113,12 +113,12 @@ export function ProfileForm({
           )}
         />
         <Button type="submit">
-          {updateProfile.isPending && (
+          {/* {updateProfile.isPending && (
             <Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-label="Обновление профиля"
             />
-          )}
+          )} */}
           {submitText}
         </Button>
       </form>
