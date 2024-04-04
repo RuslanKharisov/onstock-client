@@ -24,9 +24,9 @@ export async function Profile() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="p-px border rounded-full self-center h-8 w-8"
+          className="p-px border rounded-full self-center h-8 w-8 dark:bg-slate-400"
         >
-            <ProfileAvatar profile={user} className="h-6 w-6"/>
+          <ProfileAvatar profile={user} className="h-6 w-6" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-2 ">
