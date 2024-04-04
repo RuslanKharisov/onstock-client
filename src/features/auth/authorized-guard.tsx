@@ -15,12 +15,8 @@ export default async function AuthorizedGuard({
     const isUnauthenticated = user.ok === false;
     if (isUnauthenticated) redirect(`/auth/sign-in`);
 
-//   const isLoading =
-//     session.status === "loading" || session.status === "unauthenticated";
-
   return (
     <>
-      {/* <FullPageSpinner isLoading={isLoading} /> */}
       {user.ok === true && children}
     </>
   );

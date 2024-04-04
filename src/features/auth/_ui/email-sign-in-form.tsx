@@ -30,7 +30,7 @@ export function EmailSignInForm() {
   return (
     <div className="w-full max-w-md">
       <form action={formAction}>
-        <Card>
+        {/* <Card> */}
           <CardHeader className="space-y-6 text-center">
             <CardTitle className="text-3xl font-bold">
               Войти в аккаунт
@@ -69,7 +69,7 @@ export function EmailSignInForm() {
             />
             <StrapiErrors error={formState?.strapiErrors} />
           </CardFooter>
-        </Card>
+        {/* </Card> */}
         <div className="mt-4 text-center text-sm">
           У вас нет учетной записи?
           <Link className="underline ml-2" href="sign-up">
@@ -77,7 +77,6 @@ export function EmailSignInForm() {
           </Link>
         </div>
       </form>
-      //{" "}
     </div>
   );
 }
