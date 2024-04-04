@@ -1,15 +1,17 @@
-"use client";
+// "use client";
 
-import { Button } from "@/shared/ui/button";
-import { LogIn } from "lucide-react";
-import { signIn } from "next-auth/react";
+// import { Button } from "@/shared/ui/button";
+// import { LogIn } from "lucide-react";
 
-export function SignInButton() {
-  const handleSignOut = () => signIn();
 
-  return (
-    <Button variant={"outline"} onClick={handleSignOut}>
-      <LogIn className="mr-2 h-4 w-4" /> Войти
-    </Button>
-  );
-}
+// export function SignInButton() {
+//   const handleSignOut = () => {
+//     console.log("SignInButton: Войти")
+//   };
+
+//   return (
+//     <Button variant={"outline"} onClick={handleSignOut}>
+//       <LogIn className="mr-2 h-4 w-4" /> Войти
+//     </Button>
+//   );
+// }

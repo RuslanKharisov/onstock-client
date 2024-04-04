@@ -18,7 +18,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { AvatarField } from "./avatar-field";
 import { Profile } from "@/entities/user/profile";
 import { UserId } from "@/entities/user/user";
-// import { useUpdateProfile } from "../_vm/use-update-profile";
+import { useAppSession } from "@/entities/user/use-app-session";
 
 const profileFormSchema = z.object({
   name: z
@@ -37,7 +37,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 const getDefaultValues = (profile: Profile) => ({
   email: profile.email,
   image: profile.image ?? undefined,
-  name: profile.name ?? "",
+  name: profile.username ?? "",
 });
 
 export function ProfileForm({
@@ -53,10 +53,12 @@ export function ProfileForm({
 }) {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    // defaultValues: getDefaultValues(profile),
+    defaultValues: getDefaultValues(profile),
   });
 
-//   const updateProfile = useUpdateProfile();
+  const session = useAppSession();
+
+//    const updateProfile = useUpdateProfile();
 
 //   const handleSubmit = form.handleSubmit(async (data) => {
 //     const newProfile = await updateProfile.update({
@@ -67,6 +69,7 @@ export function ProfileForm({
 //     form.reset(getDefaultValues(newProfile.profile));
 //     onSuccess?.();
 //   });
+
 
   return (
     <Form {...form}>
@@ -102,7 +105,9 @@ export function ProfileForm({
           control={form.control}
           name="image"
           disabled
-          render={({ field }) => (
+          render={({ field }) => {
+            console.log("🚀 ~ field:", field)
+            return (
             <FormItem>
               <FormLabel>Аватарка</FormLabel>
               <FormControl>
@@ -110,7 +115,8 @@ export function ProfileForm({
               </FormControl>
               <FormMessage />
             </FormItem>
-          )}
+            );
+            }}
         />
         <Button type="submit">
           {/* {updateProfile.isPending && (
