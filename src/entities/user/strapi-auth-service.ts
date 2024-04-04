@@ -1,6 +1,5 @@
 import { getStrapiURL } from "@/shared/lib/utils";
 
-
 interface RegisterUserProps {
   username: string;
   password: string;

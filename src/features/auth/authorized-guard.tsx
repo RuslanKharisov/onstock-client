@@ -1,5 +1,3 @@
-// "use client";
-
 import { getUserProfile } from "@/entities/user/_actions/get-user-profile";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { redirect } from "next/navigation";

@@ -25,8 +25,7 @@ const schemaRegister = z.object({
   }),
 });
 
-// Экшн фармы регистрации пользователя
-
+/* Экшн фармы регистрации пользователя */
 export async function registerUserAction(prevState: any, formData: FormData) {
   const validatedFields = schemaRegister.safeParse({
     username: formData.get("username"),
@@ -82,8 +81,7 @@ const schemaLogin = z.object({
     }),
 });
 
-// Экшн формы входа
-
+/* Экшн формы входа */
 export async function loginUserAction(prevState: any, formData: FormData) {
   const validatedFields = schemaLogin.safeParse({
     identifier: formData.get("identifier"),
@@ -122,8 +120,7 @@ export async function loginUserAction(prevState: any, formData: FormData) {
   redirect("/personal-stock/1");
 }
 
-/* Delete JWT from qookies */
-
+/* Экшн логаута и очиста куков */
 export async function logoutAction() {
   cookies().set("session", "", { ...config, maxAge: 0 });
   redirect("/");
