@@ -1,12 +1,12 @@
 // "use client";
 
-import { getUserProfile } from "@/entities/user/_actions/get-user-profile";
+import { getUserProfile } from "@/entities/user/get-user-profile";
 import Link from "next/link";
 
 export async function MainNav() {
-    const session =  await getUserProfile();
-    const user = session?.data;
-    
+  const session =  await getUserProfile();
+  const user = session?.data;
+
   return (
     <nav className="flex items-start md:items-center gap-6 text-sm font-medium flex-col md:flex-row ">
       <Link
