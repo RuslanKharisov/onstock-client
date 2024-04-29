@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import qs from "qs";
 import { getAuthToken } from "./get-auth-status";
 
@@ -32,5 +32,3 @@ export async function getUserProfile() {
     return { ok: false, data: null, error: error };
   }
 }
-
-

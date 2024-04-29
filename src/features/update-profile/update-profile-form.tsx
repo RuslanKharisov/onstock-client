@@ -7,10 +7,18 @@ import { useRouter } from "next/navigation";
 export function UpdateProfileForm({
   userId,
   callbackUrl,
+  profile
 }: {
   userId: string;
   callbackUrl?: string;
+  profile?:{
+    ok: boolean;
+    data:any;
+    error: any;
+  }
 }) {
+
+  console.log("🚀 ~ profile:", profile)
 
   const router = useRouter();
   const handleSuccess = () => {
@@ -18,6 +26,8 @@ export function UpdateProfileForm({
       router.push(callbackUrl);
     }
   };
+
+  
 
 //   if (profileQuery.isPending) {  
 //     return <Spinner aria-label="Загрузка профиля" />;
@@ -29,7 +39,7 @@ export function UpdateProfileForm({
 
 
   return (
-    <h2></h2>
+    <h2>{profile?.ok}</h2>
     // <ProfileForm
     //   userId={userId}
     //    profile={profileQuery.data.profile}

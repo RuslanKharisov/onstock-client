@@ -12,7 +12,7 @@ import { LogOut, User } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { LogoutButton } from "@/features/auth/_ui/logout-button";
-import { getUserProfile } from "@/entities/user/_actions/get-user-profile";
+import { getUserProfile } from "@/entities/user/get-user-profile";
 import { ProfileAvatar } from "@/entities/user/_ui/profile-avatar";
 
 export async function Profile() {

@@ -16,9 +16,14 @@ import {
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { AvatarField } from "./avatar-field";
-import { Profile } from "@/entities/user/profile";
-import { UserId } from "@/entities/user/user";
-import { useAppSession } from "@/entities/user/use-app-session";
+import { getUserProfile } from "@/entities/user/get-user-profile";
+import { Profile } from "@/entities/user/_domain/types";
+// import { Profile } from "@/entities/user/profile";
+// import { UserId } from "@/entities/user/user";
+// import { useAppSession } from "@/entities/user/use-app-session";
+
+const session =  await getUserProfile();
+    const user = session?.data;
 
 const profileFormSchema = z.object({
   name: z
@@ -46,7 +51,7 @@ export function ProfileForm({
   profile,
   userId,
 }: {
-  userId: UserId;
+  userId: string;
   profile: Profile;
   onSuccess?: () => void;
   submitText?: string;
@@ -55,8 +60,6 @@ export function ProfileForm({
     resolver: zodResolver(profileFormSchema),
     defaultValues: getDefaultValues(profile),
   });
-
-  const session = useAppSession();
 
 //    const updateProfile = useUpdateProfile();
 
