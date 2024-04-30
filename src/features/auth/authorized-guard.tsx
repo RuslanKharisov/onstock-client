@@ -1,17 +1,33 @@
-import { getUserProfile } from "@/entities/user/get-user-profile";
+
+"use client";
+
+import { useAppSession } from "@/entities/user/session";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
-import { redirect } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { useEffect } from "react";
 
-export default async function AuthorizedGuard({
+export default function AuthorizedGuard({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getUserProfile();
+  const session = useAppSession();
 
-  const isUnauthenticated = user.ok === false;
-  if (isUnauthenticated) redirect(`/auth/sign-in`);
+  const isUnauthenticated = session.status === "unauthenticated";
 
-  return <>{user.ok === true && children}</>;
+  useEffect(() => {
+    if (isUnauthenticated) {
+      signIn();
+    }
+  }, [isUnauthenticated]);
+
+  const isLoading =
+    session.status === "loading" || session.status === "unauthenticated";
+
+  return (
+    <>
+      <FullPageSpinner isLoading={isLoading} />
+      {session.status === "authenticated" && children}
+    </>
+  );
 }

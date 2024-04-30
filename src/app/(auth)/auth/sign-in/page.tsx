@@ -5,6 +5,7 @@ import Link from "next/link";
 export default function AuthenticationPage() {
   return (
     <>
+      {" "}
       <div className="container relative  flex-col items-center justify-center self-center pt-24">
         <Card className="max-w-[350px] mx-auto">
           {/* <CardHeader className="flex flex-col space-y-2 text-center">
@@ -13,7 +14,6 @@ export default function AuthenticationPage() {
             </h1>
           </CardHeader> */}
           <CardContent className="grid gap-4">
-          {/* <AuthForm/> */}
             <SignInForm />
             <p className="px-0 text-center text-sm text-muted-foreground">
               Нажимая продолжить вы соглашаетесь с{" "}
