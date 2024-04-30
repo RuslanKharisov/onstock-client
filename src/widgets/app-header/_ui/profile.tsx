@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,26 +17,16 @@ import { useSignOut } from "@/features/auth/use-sign-out";
 import { SignInButton } from "@/features/auth/sign-in-button";
 import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile";
 
-export function Profile() {
-  const session = useAppSession();
-  const { signOut, isPending: isLoadingSignOut } = useSignOut();
-
-  if (session.status === "loading") {
-    return <Skeleton className="w-8 h-8 rounded-full" />;
-  }
-
-  if (session.status === "unauthenticated") {
-    return <SignInButton />;
-  }
-
-  const user = session?.data?.user;
+export async function Profile() {
+  const session = await getUserProfile();
+  const user = session?.data;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="p-px rounded-full self-center h-8 w-8"
+          className="p-px border rounded-full self-center h-8 w-8 dark:bg-slate-400"
         >
           <ProfileAvatar profile={user} className="w-8 h-8" />
         </Button>
@@ -44,8 +34,8 @@ export function Profile() {
       <DropdownMenuContent className="w-56 mr-2 ">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
-          <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-            {user ? getProfileDisplayName(user) : undefined}
+          <p className="pt-2 text-xs text-muted-foreground overflow-hidden text-ellipsis">
+            {user ? user.username : undefined}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuGroup></DropdownMenuGroup>
