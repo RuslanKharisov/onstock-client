@@ -41,7 +41,7 @@ export const nextAuthConfig: AuthOptions = {
     newUser: "/auth/new-user",
     verifyRequest: "/auth/verify-request",
   },
-  providers: compact([
+  providers: ([
     YandexProvider({
         clientId: process.env.YANDEX_CLIENT_ID ?? "",
         clientSecret: process.env.YANDEX_CLIENT_SECRET ?? "",
