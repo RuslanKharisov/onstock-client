@@ -8,11 +8,11 @@ export default function AuthenticationPage() {
       {" "}
       <div className="container relative  flex-col items-center justify-center self-center pt-24">
         <Card className="max-w-[350px] mx-auto">
-          {/* <CardHeader className="flex flex-col space-y-2 text-center">
+          <CardHeader className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
               Войти в аккаунт
             </h1>
-          </CardHeader> */}
+          </CardHeader>
           <CardContent className="grid gap-4">
             <SignInForm />
             <p className="px-0 text-center text-sm text-muted-foreground">
