@@ -19,6 +19,7 @@ import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/ui/utils";
 
 const createProductFormSchema = z.object({
+  sku: z.string(),  
   name: z.string(),
   description: z.string(),
 });
@@ -34,6 +35,7 @@ export function CreateProductForm({
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {
+      sku: "",
       name: "",
       description: "",
     },
@@ -49,6 +51,19 @@ export function CreateProductForm({
         })}
         className={cn(className, "space-y-4")}
       >
+        <FormField
+          control={form.control}
+          name="sku"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Артикул </FormLabel>
+              <FormControl>
+                <Input placeholder="артикул..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="name"

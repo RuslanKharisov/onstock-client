@@ -17,8 +17,10 @@ export function UpdateProfileForm({
     error: any;
   }
 }) {
-
-  console.log("🚀 ~ profile:", profile)
+  const profileQuery = useQuery({
+    ...getProfileQuery(userId),
+    retry: 0,
+  });
 
   const router = useRouter();
   const handleSuccess = () => {
@@ -27,24 +29,22 @@ export function UpdateProfileForm({
     }
   };
 
-  
+  if (profileQuery.isPending) {
+    return <Spinner aria-label="Загрузка профиля" />;
+  }
 
-//   if (profileQuery.isPending) {  
-//     return <Spinner aria-label="Загрузка профиля" />;
-//   }
-
-  if (!false) {  
+  if (!profileQuery.data) {
     return <div>Не удалось загрузить профиль, возможно у вас нет прав</div>;
   }
 
+  console.log(profileQuery.data)
 
   return (
-    <h2>{profile?.ok}</h2>
-    // <ProfileForm
-    //   userId={userId}
-    //    profile={profileQuery.data.profile}
-    //    onSuccess={handleSuccess}
-    //   submitText={callbackUrl ? "Продолжить" : "Сохранить"}
-    // />
+    <ProfileForm
+      userId={userId}
+      profile={profileQuery.data.profile}
+      onSuccess={handleSuccess}
+      submitText={callbackUrl ? "Продолжить" : "Сохранить"}
+    />
   );
 }
