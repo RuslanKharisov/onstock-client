@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,41 +11,29 @@ import {
 import { LogOut, User } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
-import { Skeleton } from "@/shared/ui/skeleton";
-import { useAppSession } from "@/entities/user/use-app-session";
-import { useSignOut } from "@/features/auth/use-sign-out";
-import { SignInButton } from "@/features/auth/sign-in-button";
-import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile";
+import { LogoutButton } from "@/features/auth/_ui/logout-button";
+import { getUserProfile } from "@/entities/user/get-user-profile";
+import { ProfileAvatar } from "@/entities/user/_ui/profile-avatar";
 
-export function Profile() {
-  const session = useAppSession();
-  const { signOut, isPending: isLoadingSignOut } = useSignOut();
-
-  if (session.status === "loading") {
-    return <Skeleton className="w-8 h-8 rounded-full" />;
-  }
-
-  if (session.status === "unauthenticated") {
-    return <SignInButton />;
-  }
-
-  const user = session?.data?.user;
+export async function Profile() {
+  const session = await getUserProfile();
+  const user = session?.data;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="p-px rounded-full self-center h-8 w-8"
+          className="p-px border rounded-full self-center h-8 w-8 dark:bg-slate-400"
         >
-            <ProfileAvatar profile={user}/>
+          <ProfileAvatar profile={user} className="h-6 w-6" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-2 ">
         <DropdownMenuLabel>
           <p>Мой аккаунт</p>
-          <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis">
-            {user ? getProfileDisplayName(user) : undefined}
+          <p className="pt-2 text-xs text-muted-foreground overflow-hidden text-ellipsis">
+            {user ? user.username : undefined}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuGroup></DropdownMenuGroup>
@@ -57,13 +45,8 @@ export function Profile() {
               <span>Профиль</span>
             </Link>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={() => signOut.signOut()}> */}
-          <DropdownMenuItem
-            disabled={isLoadingSignOut}
-            onClick={() => signOut()}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Выход</span>
+          <DropdownMenuItem>
+            <LogoutButton />
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
