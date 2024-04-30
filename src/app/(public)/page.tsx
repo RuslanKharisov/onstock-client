@@ -5,10 +5,7 @@ import { StockTable } from "@/widgets/stock-table/stock-table";
 
 
 export default async function Home() {
-    const products = await dbClient.product.findMany();
-
-    console.log("🚀 ~ Home ~ products:", products)
-    
+    const products = await dbClient.product.findMany();    
   return (
     <main className="container flex min-h-screen flex-col  p-8">
       <CreateProductForm revalidatePagePath="/" className={"w-1/3"} />
