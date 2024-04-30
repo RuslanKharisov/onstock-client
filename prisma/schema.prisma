@@ -12,3 +12,97 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Модель поставщика
+
+model Supplier {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Stock     Stock[]
+}
+
+// Модель товара
+model Product {
+  id          String @id @default(cuid())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Stock       Stock[]
+}
+
+// Модель склада
+model Stock {
+  id         Int      @id @default(autoincrement())
+  supplierId Int
+  productId  String
+  quantity   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  supplier Supplier @relation(fields: [supplierId], references: [id])
+  product  Product  @relation(fields: [productId], references: [id])
+
+  @@unique([supplierId, productId])
+}
+
+
+// Пример использования
+// В этом запросе используется параметр create, который позволяет указать данные
+//для создания нового продукта, если продукт с указанным SKU не существует.
+// Если продукт с SKU 2 уже существует, то запрос обновит его количество на складе. 
+//Если продукт не существует, то запрос создаст новый продукт с именем "Новый продукт" 
+//и описанием "Описание нового продукта" и обновит его количество на складе.
+
+// mutation {
+//   updateStock(
+//     where: {
+//       supplierId: 1,
+//       productId: 2
+//     },
+//     data: {
+//       quantity: 10
+//     },
+//     create: {
+//       product: {
+//         name: "Новый продукт",
+//         description: "Описание нового продукта"
+//       }
+//     }
+//   ) {
+//     id
+//     quantity
+//   }
+// }
+// Чтобы удалить товар со склада, поставщик может выполнить следующий запрос:
+
+// mutation {
+//   deleteStock(
+//     where: {
+//       supplierId: 1,
+//       productId: 2
+//     }
+//   ) {
+//     id
+//   }
+// }
+// Чтобы обновить наличие товара на складе, поставщик может выполнить следующий запрос:
+
+// mutation {
+//   updateStock(
+//     where: {
+//       supplierId: 1,
+//       productId: 2
+//     },
+//     data: {
+//       quantity: 5
+//     }
+//   ) {
+//     id
+//     quantity
+//   }
+// }
