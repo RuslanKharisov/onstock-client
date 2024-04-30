@@ -1,5 +1,5 @@
 "use client";
-import { useAppSession } from "@/entities/user/use-app-session";
+import { useAppSession } from "@/entities/user/session";
 import Link from "next/link";
 
 export function MainNav() {

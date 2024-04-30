@@ -19,14 +19,13 @@ const emailToken = privateConfig.TEST_EMAIL_TOKEN
   : {};
 
 export const nextAuthConfig: AuthOptions = {
-    adapter: prismaAdapter as AuthOptions["adapter"],
-//   adapter: {
-//     ...prismaAdapter,
-//     createUser: (user) => {
-//       console.log("🚀 ~ user:", user)
-//       return createUserUseCase.exec(user);
-//     },
-//   } as AuthOptions["adapter"],
+    // adapter: prismaAdapter as AuthOptions["adapter"],
+  adapter: {
+    ...prismaAdapter,
+    createUser: (user) => {
+      return createUserUseCase.exec(user);
+    },
+  } as AuthOptions["adapter"],
   callbacks: {
     session: async ({ session, user }) => {
       return {

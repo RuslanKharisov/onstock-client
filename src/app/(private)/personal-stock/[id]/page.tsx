@@ -1,6 +1,9 @@
 import { CreateProductForm } from "@/features/products-list/pub/create-product-form";
 import { ProductsList } from "@/features/products-list/pub/product-list";
 
+import { StockTable } from "@/widgets/stock-table/stock-table";
+import { ApdateStock } from "@/widgets/update-stock/update-stock";
+
 export default function PersonalStock() {
     return (
         <div className="container py-10">

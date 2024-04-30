@@ -1,3 +1,4 @@
+import { getUserProfile } from "@/entities/user/get-user-profile";
 import { UpdateProfileForm } from "@/features/update-profile/update-profile-form";
 import { Separator } from "@/shared/ui/separator";
 
@@ -10,9 +11,10 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         <p className="text-sm text-muted-foreground">
           Это как другие пользователи видят вас на сайте
         </p>
+         <h3>Мой Id: <span>{params.id}</span> </h3> 
       </div>
       <Separator />
-      <UpdateProfileForm userId={params.id} />
+      <UpdateProfileForm profile={profile} userId={params.id} />
     </main>
   );
 }

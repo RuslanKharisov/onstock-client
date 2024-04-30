@@ -11,8 +11,8 @@ import {
 import { LogOut, User } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
+import { useAppSession } from "@/entities/user/session";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { useAppSession } from "@/entities/user/use-app-session";
 import { useSignOut } from "@/features/auth/use-sign-out";
 import { SignInButton } from "@/features/auth/sign-in-button";
 import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile";
@@ -38,7 +38,7 @@ export function Profile() {
           variant="ghost"
           className="p-px rounded-full self-center h-8 w-8"
         >
-            <ProfileAvatar profile={user}/>
+          <ProfileAvatar profile={user} className="w-8 h-8" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-2 ">
@@ -52,12 +52,11 @@ export function Profile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/${session.data?.user.id}`}>            
+            <Link href={`/profile/${user?.id}`}>
               <User className="mr-2 h-4 w-4" />
               <span>Профиль</span>
             </Link>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={() => signOut.signOut()}> */}
           <DropdownMenuItem
             disabled={isLoadingSignOut}
             onClick={() => signOut()}
