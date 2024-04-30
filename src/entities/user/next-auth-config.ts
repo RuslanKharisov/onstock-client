@@ -1,59 +1,53 @@
 import { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
+import EmailProvider from "next-auth/providers/email";
 import YandexProvider from "next-auth/providers/yandex";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { dbClient } from "@/shared/lib/db";
+import { compact } from "lodash-es";
+import { privateConfig } from "@/shared/config/private";
+import { createUserUseCase } from "./_use-cases/create-user";
+
+const prismaAdapter = PrismaAdapter(dbClient);
+
+const emailToken = privateConfig.TEST_EMAIL_TOKEN
+  ? {
+      generateVerificationToken: () => privateConfig.TEST_EMAIL_TOKEN ?? "",
+      sendVerificationRequest: () =>
+        console.log("we don't send emails in test mode"),
+    }
+  : {};
 
 export const nextAuthConfig: AuthOptions = {
+    adapter: prismaAdapter as AuthOptions["adapter"],
+//   adapter: {
+//     ...prismaAdapter,
+//     createUser: (user) => {
+//       console.log("🚀 ~ user:", user)
+//       return createUserUseCase.exec(user);
+//     },
+//   } as AuthOptions["adapter"],
+  callbacks: {
+    session: async ({ session, user }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          role: user.role,
+        },
+      };
+    },
+  },
   pages: {
     signIn: "/auth/sign-in",
     newUser: "/auth/new-user",
     verifyRequest: "/auth/verify-request",
   },
-  providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID ?? "",
-      clientSecret: process.env.GITHUB_SECRET ?? "",
-    }),
-    GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID as string,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }),
+  providers: compact([
     YandexProvider({
         clientId: process.env.YANDEX_CLIENT_ID ?? "",
         clientSecret: process.env.YANDEX_CLIENT_SECRET ?? "",
       })
-  ],
-    session: { strategy: "jwt" },
-
-    callbacks: {
-        async session({ user, session, token }) {
-            session.user = token as any;
-            session.user.id = user?.id;
-            session.user.role = user?.role;
-            return Promise.resolve(session);
-        },
-        
-        async jwt({ token, user, account }) {
-            const isSignIn = user ? true : false;
-            if (isSignIn && account) {
-                try {
-                    console.log(`Provider ${account.provider} Account >>>>>>>>>>>>>> `, account);
-                    const public_url = process.env.NEXT_PUBLIC_API_URL;
-                    const response = await fetch(
-                        `${public_url}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-                    );
-                    const data = await response.json();
-                    console.log("Strapi Callback Data >>>>>>>>>>>>>> ", data);
-                    token.jwt = data.jwt;
-                    token.id = data.user.id;
-                } catch (error) {
-                    console.error('Fetch failed:', error);
-                }
-            }
-            return Promise.resolve(token);
-        },
-    },
-    secret: process.env.NEXTAUTH_SECRET as string
+  ]),
 };
-
-// export { handler as GET, handler as POST };

@@ -2,6 +2,7 @@ import { UpdateProfileForm } from "@/features/update-profile/update-profile-form
 import { Separator } from "@/shared/ui/separator";
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
+    console.log("🚀 ~ ProfilePage ~ params.id:", params.id)
   return (
     <main className="space-y-6 py-14 container  max-w-[600px]">
       <div>
