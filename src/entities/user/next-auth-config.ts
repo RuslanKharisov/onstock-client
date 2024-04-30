@@ -1,6 +1,4 @@
 import { AuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
-import EmailProvider from "next-auth/providers/email";
 import YandexProvider from "next-auth/providers/yandex";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { dbClient } from "@/shared/lib/db";
@@ -19,13 +17,13 @@ const emailToken = privateConfig.TEST_EMAIL_TOKEN
   : {};
 
 export const nextAuthConfig: AuthOptions = {
-    // adapter: prismaAdapter as AuthOptions["adapter"],
-  adapter: {
-    ...prismaAdapter,
-    createUser: (user) => {
-      return createUserUseCase.exec(user);
-    },
-  } as AuthOptions["adapter"],
+    adapter: prismaAdapter as AuthOptions["adapter"],
+//   adapter: {
+//     ...prismaAdapter,
+//     createUser: (user) => {
+//       return createUserUseCase.exec(user);
+//     },
+//   } as AuthOptions["adapter"],
   callbacks: {
     session: async ({ session, user }) => {
       return {
