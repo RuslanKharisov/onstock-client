@@ -1,19 +1,3 @@
-/*
-  Warnings:
-
-  - The primary key for the `Product` table will be changed. If it partially fails, the table could be left without primary key constraint.
-  - The `id` column on the `Product` table would be dropped and recreated. This will lead to data loss if there is data in the column.
-  - Added the required column `updatedAt` to the `Product` table without a default value. This is not possible if the table is not empty.
-
-*/
--- AlterTable
-ALTER TABLE "Product" DROP CONSTRAINT "Product_pkey",
-ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL,
-DROP COLUMN "id",
-ADD COLUMN     "id" SERIAL NOT NULL,
-ADD CONSTRAINT "Product_pkey" PRIMARY KEY ("id");
-
 -- CreateTable
 CREATE TABLE "Supplier" (
     "id" SERIAL NOT NULL,
@@ -27,10 +11,21 @@ CREATE TABLE "Supplier" (
 );
 
 -- CreateTable
+CREATE TABLE "Product" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Stock" (
     "id" SERIAL NOT NULL,
     "supplierId" INTEGER NOT NULL,
-    "productId" INTEGER NOT NULL,
+    "productId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
