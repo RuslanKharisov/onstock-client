@@ -9,7 +9,6 @@ import { ProviderButton } from "./_ui/provider-button";
 
 export async function SignInForm({ className }: { className?: string }) {
   const providers = await getProviders();
-  console.log("🚀 ~ SignInForm ~ providers:", providers)
   const oauthProviders = Object.values(providers ?? {}).filter(
     (provider) => provider.type === "oauth",
   );

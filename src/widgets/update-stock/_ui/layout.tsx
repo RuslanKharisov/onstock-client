@@ -1,9 +1,9 @@
 "use client"
-import { createProductsAction } from "@/entities/product/_actions/product-actions";
-import { Product } from "@/entities/product/_domain/types";
+
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
+import { Product } from "@prisma/client";
 import React, { useState }  from "react";
 import * as XLSX from "xlsx";
 
@@ -30,7 +30,7 @@ export function InputFile() {
 }
 
 function hadleClick() {
-    data.map((product) => createProductsAction(product))
+    data.map((product) => console.log(product))
 }
 
   return (

@@ -2,10 +2,11 @@ import { SignInForm } from "@/features/auth/sign-in-form.server";
 import { Card, CardContent, CardHeader } from "@/shared/ui/card";
 import Link from "next/link";
 
+import { Suspense } from "react";
+
 export default function AuthenticationPage() {
   return (
-    <>
-      {" "}
+    <Suspense fallback={null}>
       <div className="container relative  flex-col items-center justify-center self-center pt-24">
         <Card className="max-w-[350px] mx-auto">
           <CardHeader className="flex flex-col space-y-2 text-center">
@@ -35,6 +36,6 @@ export default function AuthenticationPage() {
           </CardContent>
         </Card>
       </div>
-    </>
+    </Suspense>
   );
 }
