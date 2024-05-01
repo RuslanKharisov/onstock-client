@@ -13,12 +13,12 @@ export function UpdateProfileForm({
   userId: string;
   callbackUrl?: string;
 }) {
-//   const profileQuery = updateProfileApi.updateProfile.get.useQuery({ userId });
-   const profileQuery = useQuery({ 
-    ...getProfileQuery(userId) 
-});
-
   const router = useRouter();
+  
+  const profileQuery = useQuery({
+    ...getProfileQuery(userId),
+  });
+
   const handleSuccess = () => {
     if (callbackUrl) {
       router.push(callbackUrl);

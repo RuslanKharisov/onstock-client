@@ -9,7 +9,6 @@ export default async function NewUserPage({
   searchParams: { callbackUrl?: string };
 }) {
   const session = await getAppSessionServer();
-  console.log("🚀 ~ session:", session)
 
   if (!session) {
     return redirect("/auth/sign-in");
