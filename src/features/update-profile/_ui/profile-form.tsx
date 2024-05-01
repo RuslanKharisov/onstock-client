@@ -19,7 +19,7 @@ import { AvatarField } from "./avatar-field";
 // import { useUpdateProfile } from "../_vm/use-update-profile";
 import { Profile } from "@/entities/user/client";
 import { UserId } from "@/kernel/domain/user";
-import { useUpdateProfileMutation } from "../_queries";
+import { useUpdateProfile } from "../_vm/use-update-profile";
 
 const profileFormSchema = z.object({
   name: z
@@ -58,12 +58,12 @@ export function ProfileForm({
   });
 
 //   const updateProfile = useUpdateProfile();
-  const updateProfileMutation = useUpdateProfileMutation();
+  const updateProfile = useUpdateProfile();
 
   const handleSubmit = form.handleSubmit(async (data) => {
 
 
-    const newProfile = await updateProfileMutation.mutateAsync({
+    const newProfile = await updateProfile.update({
       userId,
       data,
     });
@@ -130,7 +130,7 @@ export function ProfileForm({
           )}
         />
         <Button type="submit">
-          {updateProfileMutation.isPending && (
+          {updateProfile.isPending && (
             <Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-label="Обновление профиля"
