@@ -16,9 +16,10 @@ import {
 import { Input } from "@/shared/ui/input";
 import { Spinner } from "@/shared/ui/spinner";
 import { AvatarField } from "./avatar-field";
-import { useUpdateProfile } from "../_vm/use-update-profile";
+// import { useUpdateProfile } from "../_vm/use-update-profile";
 import { Profile } from "@/entities/user/client";
 import { UserId } from "@/kernel/domain/user";
+import { useUpdateProfileMutation } from "../_queries";
 
 const profileFormSchema = z.object({
   name: z
@@ -36,8 +37,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 const getDefaultValues = (profile: Profile) => ({
   email: profile.email,
-  image: profile.image ?? undefined,
   name: profile.name ?? "",
+  image: profile.image ?? undefined,
 });
 
 export function ProfileForm({
@@ -56,15 +57,23 @@ export function ProfileForm({
     defaultValues: getDefaultValues(profile),
   });
 
-  const updateProfile = useUpdateProfile();
+//   const updateProfile = useUpdateProfile();
+  const updateProfileMutation = useUpdateProfileMutation();
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const newProfile = await updateProfile.update({
+
+
+    const newProfile = await updateProfileMutation.mutateAsync({
       userId,
       data,
     });
+    // const newProfile = await updateProfile.update({
+    //   userId,
+    //   data,
+    // });
 
-    form.reset(getDefaultValues(newProfile));
+    // form.reset(getDefaultValues(newProfile));
+    form.reset(getDefaultValues(newProfile.profile));
     onSuccess?.();
   });
 
@@ -121,7 +130,7 @@ export function ProfileForm({
           )}
         />
         <Button type="submit">
-          {updateProfile.isPending && (
+          {updateProfileMutation.isPending && (
             <Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-label="Обновление профиля"

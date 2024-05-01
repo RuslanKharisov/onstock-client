@@ -1,8 +1,10 @@
 "use client";
+import { getProfileQuery } from "@/entities/user/_queries";
 import { ProfileForm } from "./_ui/profile-form";
 import { Spinner } from "@/shared/ui/spinner";
 import { useRouter } from "next/navigation";
-import { updateProfileApi } from "./_api";
+import { useQuery } from "@tanstack/react-query";
+// import { updateProfileApi } from "./_api";
 
 export function UpdateProfileForm({
   userId,
@@ -11,7 +13,10 @@ export function UpdateProfileForm({
   userId: string;
   callbackUrl?: string;
 }) {
-  const profileQuery = updateProfileApi.updateProfile.get.useQuery({ userId });
+//   const profileQuery = updateProfileApi.updateProfile.get.useQuery({ userId });
+   const profileQuery = useQuery({ 
+    ...getProfileQuery(userId) 
+});
 
   const router = useRouter();
   const handleSuccess = () => {
@@ -31,7 +36,7 @@ export function UpdateProfileForm({
   return (
     <ProfileForm
       userId={userId}
-      profile={profileQuery.data}
+      profile={profileQuery.data.profile}
       onSuccess={handleSuccess}
       submitText={callbackUrl ? "Продолжить" : "Сохранить"}
     />
