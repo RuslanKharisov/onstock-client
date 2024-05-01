@@ -3,19 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { ProfileForm } from "./_ui/profile-form";
 import { Spinner } from "@/shared/ui/spinner";
 import { useRouter } from "next/navigation";
+import { getProfileQuery } from "@/entities/user/_queries";
 
 export function UpdateProfileForm({
   userId,
   callbackUrl,
-  profile
 }: {
   userId: string;
   callbackUrl?: string;
-  profile?:{
-    ok: boolean;
-    data:any;
-    error: any;
-  }
 }) {
   const profileQuery = useQuery({
     ...getProfileQuery(userId),
@@ -36,8 +31,6 @@ export function UpdateProfileForm({
   if (!profileQuery.data) {
     return <div>Не удалось загрузить профиль, возможно у вас нет прав</div>;
   }
-
-  console.log(profileQuery.data)
 
   return (
     <ProfileForm

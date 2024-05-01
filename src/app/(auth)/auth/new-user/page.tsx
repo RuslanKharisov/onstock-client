@@ -1,4 +1,4 @@
-import { getUserProfile } from "@/entities/user/get-user-profile";
+import { getAppSessionServer } from "@/entities/user/session.server";
 import { UpdateProfileForm } from "@/features/update-profile/update-profile-form";
 import { Separator } from "@/shared/ui/separator";
 import { redirect } from "next/navigation";
@@ -8,8 +8,8 @@ export default async function NewUserPage({
 }: {
   searchParams: { callbackUrl?: string };
 }) {
-    const session =  await getUserProfile();
-    const user = session?.data;
+  const session = await getAppSessionServer();
+  console.log("🚀 ~ session:", session)
 
   if (!session) {
     return redirect("/auth/sign-in");
@@ -25,7 +25,7 @@ export default async function NewUserPage({
       </div>
       <Separator />
       <UpdateProfileForm
-        userId={user?.id}
+        userId={session.user.id}
         callbackUrl={searchParams.callbackUrl}
       />
     </main>

@@ -37,7 +37,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 const getDefaultValues = (profile: Profile) => ({
   email: profile.email,
   image: profile.image ?? undefined,
-  name: profile.username ?? "",
+  name: profile.name ?? "",
 });
 
 export function ProfileForm({
@@ -46,7 +46,7 @@ export function ProfileForm({
   profile,
   userId,
 }: {
-  userId: string;
+  userId: UserId;
   profile: Profile;
   onSuccess?: () => void;
   submitText?: string;
@@ -70,7 +70,7 @@ export function ProfileForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(console.log)} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -102,9 +102,7 @@ export function ProfileForm({
           control={form.control}
           name="image"
           disabled
-          render={({ field }) => {
-            console.log("🚀 ~ field:", field)
-            return (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Аватарка</FormLabel>
               <FormControl>
@@ -112,8 +110,7 @@ export function ProfileForm({
               </FormControl>
               <FormMessage />
             </FormItem>
-            );
-            }}
+          )}
         />
         <Button type="submit">
           {updateProfile.isPending && (

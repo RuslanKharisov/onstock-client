@@ -1,9 +1,7 @@
-import { getUserProfile } from "@/entities/user/get-user-profile";
 import { UpdateProfileForm } from "@/features/update-profile/update-profile-form";
 import { Separator } from "@/shared/ui/separator";
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
-    console.log("🚀 ~ ProfilePage ~ params.id:", params.id)
   return (
     <main className="space-y-6 py-14 container  max-w-[600px]">
       <div>
@@ -11,10 +9,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         <p className="text-sm text-muted-foreground">
           Это как другие пользователи видят вас на сайте
         </p>
-         <h3>Мой Id: <span>{params.id}</span> </h3> 
       </div>
       <Separator />
-      <UpdateProfileForm profile={profile} userId={params.id} />
+      <UpdateProfileForm userId={params.id} />
     </main>
   );
 }

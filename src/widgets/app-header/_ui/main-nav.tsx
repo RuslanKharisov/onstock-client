@@ -4,7 +4,6 @@ import Link from "next/link";
 
 export function MainNav() {
     const session = useAppSession();
-    console.log("🚀 ~ MainNav ~ session:", session)
     const id = session?.data?.user.id;
     
   return (

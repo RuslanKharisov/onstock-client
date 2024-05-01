@@ -17,13 +17,12 @@ const emailToken = privateConfig.TEST_EMAIL_TOKEN
   : {};
 
 export const nextAuthConfig: AuthOptions = {
-    adapter: prismaAdapter as AuthOptions["adapter"],
-//   adapter: {
-//     ...prismaAdapter,
-//     createUser: (user) => {
-//       return createUserUseCase.exec(user);
-//     },
-//   } as AuthOptions["adapter"],
+   adapter: {
+    ...prismaAdapter,
+    createUser: (user) => {
+      return createUserUseCase.exec(user);
+    },
+  } as AuthOptions["adapter"],
   callbacks: {
     session: async ({ session, user }) => {
       return {
@@ -41,10 +40,10 @@ export const nextAuthConfig: AuthOptions = {
     newUser: "/auth/new-user",
     verifyRequest: "/auth/verify-request",
   },
-  providers: ([
+  providers: [
     YandexProvider({
         clientId: process.env.YANDEX_CLIENT_ID ?? "",
         clientSecret: process.env.YANDEX_CLIENT_SECRET ?? "",
       })
-  ]),
+  ],
 };

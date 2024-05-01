@@ -1,82 +1,60 @@
 "use client";
-
-import Link from "next/link";
-import { useFormState } from "react-dom";
-import { loginUserAction } from "@/entities/user/_actions/auth-actions";
-import { Label } from "@/shared/ui/label";
-import { Input } from "@/shared/ui/input";
-import { ZodErrors } from "@/shared/lib/ZodErrors";
-import { StrapiErrors } from "@/shared/lib/strapi-errors";
-import { SubmitButton } from "./submit-button";
 import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  Card,
-} from "@/shared/ui/card";
-
-const INITIAL_STATE = {
-  zodErrors: null,
-  strapiErrors: null,
-  data: null,
-  message: null,
-};
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/shared/ui/form";
+import { useForm } from "react-hook-form";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Spinner } from "@/shared/ui/spinner";
+import { useEmailSignIn } from "../_vm/use-email-sign-in";
 
 export function EmailSignInForm() {
-  const [formState, formAction] = useFormState(loginUserAction, INITIAL_STATE);
+  const form = useForm<{ email: string }>({
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const emailSignIn = useEmailSignIn();
 
   return (
-    <div className="w-full max-w-md">
-      <form action={formAction}>
-        {/* <Card> */}
-          <CardHeader className="space-y-6 text-center">
-            <CardTitle className="text-3xl font-bold">
-              Войти в аккаунт
-            </CardTitle>
-            <CardDescription>
-              Введите свои данные для входа в свою учетную запись
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2 ">
-            <div className="space-y-2">
-              <Label htmlFor="email">Почта</Label>
-              <Input
-                id="identifier"
-                name="identifier"
-                type="email"
-                placeholder="name@example.com"
-              />
-              <ZodErrors error={formState?.zodErrors?.identifier} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Пароль</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="password"
-              />
-              <ZodErrors error={formState?.zodErrors?.password} />
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col">
-            <SubmitButton
-              className="w-full"
-              text="Войти"
-              loadingText="Loading"
-            />
-            <StrapiErrors error={formState?.strapiErrors} />
-          </CardFooter>
-        {/* </Card> */}
-        <div className="mt-4 text-center text-sm">
-          У вас нет учетной записи?
-          <Link className="underline ml-2" href="sign-up">
-            Регистрация
-          </Link>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((data) => emailSignIn.signIn(data.email))}
+      >
+        <div className="grid gap-2">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="sr-only">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="name@example.com"
+                    type="email"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                    autoCorrect="off"
+                    disabled={emailSignIn.isPending}
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <Button disabled={emailSignIn.isPending}>
+            {emailSignIn.isPending && (
+              <Spinner className="mr-2 h-4 w-4 " aria-label="Загрузка выхода" />
+            )}
+            Войти через Email
+          </Button>
         </div>
       </form>
-    </div>
+    </Form>
   );
 }
