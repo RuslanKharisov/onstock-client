@@ -46,57 +46,7 @@ export const data: ProductInStock[] = [
     qty: 4,
     status: "В наличии",
     supplier: "Сиккрафт",
-  },
-  {
-    id: "2",
-    sku: "6ES7214-1AG40-0XB1",
-    name: "SIMATIC S7 CPU 1214C DC/DC/DC",
-    description:
-      "SIMATIC S7-1200, КОМПАКТНОЕ ЦПУ CPU 1212C DC/DC/DC, ВСТРОЕННЫЕ ВХОДЫ/ВЫХОДЫ: 14 DI =24 В, 10 DO =24 В, 2 AI =0 - 10 В, БЛОК ПИТАНИЯ: =20.4 - 28.8 В, ПАМЯТЬ ПРОГРАММЫ/ДАННЫХ: 75 КБ",
-    qty: 28,
-    status: "В наличии",
-    supplier: "Сиккрафт",
-  },
-  {
-    id: "3",
-    sku: "6ES7214-1AG40-0XB3",
-    name: "SIMATIC S7 CPU 1216C DC/DC/DC",
-    description:
-      "SIMATIC S7-1200, КОМПАКТНОЕ ЦПУ CPU 1216C DC/DC/DC, ВСТРОЕННЫЕ ВХОДЫ/ВЫХОДЫ: 14 DI =24 В, 10 DO =24 В, 2 AI =0 - 10 В, БЛОК ПИТАНИЯ: =20.4 - 28.8 В, ПАМЯТЬ ПРОГРАММЫ/ДАННЫХ: 75 КБ",
-    qty: 0,
-    status: "Ожидается",
-    supplier: "Сиккрафт",
-  },
-  {
-    id: "4",
-    sku: "6ES7714-1AX40-0XB0",
-    name: "SIMATIC S7 CPU 1212C DC/DC/DC",
-    description:
-      "SIMATIC S7-1200, КОМПАКТНОЕ ЦПУ CPU 1214C DC/DC/DC, ВСТРОЕННЫЕ ВХОДЫ/ВЫХОДЫ: 14 DI =24 В, 10 DO =24 В, 2 AI =0 - 10 В, БЛОК ПИТАНИЯ: =20.4 - 28.8 В, ПАМЯТЬ ПРОГРАММЫ/ДАННЫХ: 75 КБ",
-    qty: 16,
-    status: "В наличии",
-    supplier: "Сиккрафт",
-  },
-  {
-    id: "5",
-    sku: "6GK89214-1AB70-0YB1",
-    name: "SIMATIC S7 CPU 1214C DC/DC/DC",
-    description:
-      "SIMATIC S7-1200, КОМПАКТНОЕ ЦПУ CPU 1212C DC/DC/DC, ВСТРОЕННЫЕ ВХОДЫ/ВЫХОДЫ: 14 DI =24 В, 10 DO =24 В, 2 AI =0 - 10 В, БЛОК ПИТАНИЯ: =20.4 - 28.8 В, ПАМЯТЬ ПРОГРАММЫ/ДАННЫХ: 75 КБ",
-    qty: 45,
-    status: "В наличии",
-    supplier: "Сиккрафт",
-  },
-  {
-    id: "6",
-    sku: "6ES7414-9HF40-0XB3",
-    name: "SIMATIC S7 CPU 1216C DC/DC/DC",
-    description:
-      "SIMATIC S7-1200, КОМПАКТНОЕ ЦПУ CPU 1216C DC/DC/DC, ВСТРОЕННЫЕ ВХОДЫ/ВЫХОДЫ: 14 DI =24 В, 10 DO =24 В, 2 AI =0 - 10 В, БЛОК ПИТАНИЯ: =20.4 - 28.8 В, ПАМЯТЬ ПРОГРАММЫ/ДАННЫХ: 75 КБ",
-    qty: 0,
-    status: "Ожидается",
-    supplier: "Сиккрафт",
-  },
+  }
 ];
 
 export type ProductInStock = {
@@ -109,7 +59,8 @@ export type ProductInStock = {
   supplier: string;
 };
 
-export const columns: ColumnDef<ProductInStock>[] = [
+// export const columns: ColumnDef<ProductInStock>[] = [
+export const columns: ColumnDef<StockListElementWithRelations>[] = [
   {
     accessorKey: "sku",
     header: "Sku",
@@ -144,11 +95,11 @@ export const columns: ColumnDef<ProductInStock>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("description")}</div>
+      <div className="lowercase">{row.getValue(`description`)}</div>
     ),
   },
   {
-    accessorKey: "qty",
+    accessorKey: "quantity",
     header: ({ column }) => {
       return (
         <Button
@@ -160,7 +111,7 @@ export const columns: ColumnDef<ProductInStock>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("qty")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("quantity")}</div>,
   },
   {
     accessorKey: "status",
@@ -193,7 +144,7 @@ export const columns: ColumnDef<ProductInStock>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Поставщик {product.supplier}</DropdownMenuLabel>            
+            <DropdownMenuLabel>Поставщик {product.product.name}</DropdownMenuLabel>            
             <DropdownMenuSeparator />
             <DropdownMenuItem>Запросить ТКП</DropdownMenuItem>
           </DropdownMenuContent>
@@ -203,7 +154,7 @@ export const columns: ColumnDef<ProductInStock>[] = [
   },
 ];
 
-export function DataTable() {
+export function DataTable({data}:{data:StockListElementWithRelations[]}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

@@ -51,11 +51,11 @@ export function CreateProductForm({
   });
 
   const addOrUpdateProductData = {
-    sku: "5",
-    name: "Sony",
+    sku: "6",
+    name: "Oleg",
     description:
-      "SonySonySonySonyХХХ",
-    quantity: 33,
+      "OlegOlegOlegOlegOleg",
+    quantity: 1,
     supplierId: 34,
     email: "string@example.com",
   };
