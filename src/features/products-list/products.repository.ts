@@ -14,6 +14,24 @@ class ProductsRepository {
     }
   }
 
+  async getStockList(): Promise<StockListElementWithRelations[]> {
+    // Получаем соединение из пула
+    const connection = await dbClient.$connect();
+    try {
+      // Выполняем запрос к базе данных
+      const stocks = await dbClient.stock.findMany({
+        include: {
+            product: true,
+            supplier: true,
+            }
+        });
+      return stocks;
+    } finally {
+      // Закрываем соединение после использования
+      await dbClient.$disconnect();
+    }
+  }
+
   addOrUpdateProduct = async (command: addOrUpdateProductCommand) => {
     const { sku, name, description, quantity, supplierId, email } = command;
 
@@ -25,11 +43,6 @@ class ProductsRepository {
         },
       });
       // получение склада по id поставщика
-      const supplierStock = await dbClient.stock.findMany({
-        where: {
-          supplierId: command.supplierId,
-        },
-      });
       const isProductExistInSupplierStock = await dbClient.stock.findFirst({
         where: {
           productId: existingProduct?.id,

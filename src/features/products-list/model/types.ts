@@ -5,6 +5,27 @@ type ProductListElement = {
   description: string;
 };
 
+type StockListElement = {
+  id?: number;
+  supplierId: number;
+  productId: string;
+  quantity: number;
+};
+
+type StockListElementWithRelations = {
+  id?: number;
+  supplierId: number;
+  productId: string;
+  quantity: number;
+  product: {
+    id: string;
+    sku: string;
+    name: string;
+    description: string;
+  };
+  supplier: { id: number; name: string; email: string };
+};
+
 type addOrUpdateProductCommand = {
   sku: string;
   name: string;
@@ -22,13 +43,6 @@ type CreateProductListElementCommand = {
 
 type DeleteProductListElementCommand = {
   id: string;
-};
-
-type StockElement = {
-  id?: number;
-  supplierId: number;
-  productId: string;
-  quantity: number;
 };
 
 // заготовка для склада
