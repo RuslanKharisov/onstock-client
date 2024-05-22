@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { productsRepository } from "../products.repository";
 import { ProductItem } from "../ui/product-item";
 
-export async function ProductsList({
+export async function ProductList({
   revalidatePagePath,
 }: {
   revalidatePagePath: string;

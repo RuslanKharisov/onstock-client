@@ -18,10 +18,18 @@ import { createProductAction } from "../actions";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/ui/utils";
 
+interface FormData {
+  sku: string;
+  name: string;
+  description: string;
+  quantity: string;
+}
+
 const createProductFormSchema = z.object({
-  sku: z.string(),  
+  sku: z.string(),
   name: z.string(),
   description: z.string(),
+  quantity: z.string(),
 });
 
 export function CreateProductForm({
@@ -38,17 +46,32 @@ export function CreateProductForm({
       sku: "",
       name: "",
       description: "",
+      quantity: "0",
     },
   });
+
+  const addOrUpdateProductData = {
+    sku: "5",
+    name: "Sony",
+    description:
+      "SonySonySonySonyХХХ",
+    quantity: 33,
+    supplierId: 34,
+    email: "string@example.com",
+  };
+
+  const onSubmitHandler = async (data: FormData) => {
+    console.log("🚀 ~ onSubmitHandler ~ data:", data);
+    // Вызов функции createProductAction с передачей дополнительных параметров
+    startCreateTransition(async () => {
+      createProductAction(addOrUpdateProductData, revalidatePagePath);
+    });
+  };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) => {
-          startCreateTransition(async () => {
-            createProductAction(data, revalidatePagePath);
-          });
-        })}
+        onSubmit={form.handleSubmit(onSubmitHandler)}
         className={cn(className, "space-y-4")}
       >
         <FormField
@@ -90,6 +113,21 @@ export function CreateProductForm({
             </FormItem>
           )}
         />
+        {/* добавление количества */}
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Количество </FormLabel>
+              <FormControl>
+                <Input type="number" placeholder="0" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button className="mt-8" type="submit" disabled={isCreateTransiton}>
           Добавить
         </Button>
