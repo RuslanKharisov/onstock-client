@@ -5,12 +5,12 @@ type ProductListElement = {
   description: string;
 };
 
-type StockListElement = {
-  id?: number;
-  supplierId: number;
-  productId: string;
-  quantity: number;
-};
+// type StockListElement = {
+//   id?: number;
+//   supplierId: number;
+//   productId: string;
+//   quantity: number;
+// };
 
 type StockListElementWithRelations = {
   id?: number;

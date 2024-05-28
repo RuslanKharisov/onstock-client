@@ -18,6 +18,8 @@ model Supplier {
   name   String
   email  String
   stocks Stock[]
+  userId String @unique
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 model Stock {
@@ -31,12 +33,11 @@ model Stock {
 
 model Product {
   id          String  @id @default(cuid())
-  sku         String @unique
+  sku         String  @unique
   name        String
   description String
   Stock       Stock[]
 }
-
 
 model Account {
   id                String  @id @default(cuid())
@@ -66,14 +67,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  role          ROLE      @default(USER)
+  id            String     @id @default(cuid())
+  email         String     @unique
+  role          ROLE       @default(USER)
   name          String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Supplier      Supplier?
 
   @@map("users")
 }

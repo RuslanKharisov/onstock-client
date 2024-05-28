@@ -35,7 +35,7 @@ export function Layout({
           </Sheet>
         </div>
 
-        <div className="mr-4 hidden md:flex mr-4">{logo}</div>
+        <div className="hidden md:flex mr-4">{logo}</div>
         <div className="items-center flex-1 flex">
           <div className="hidden md:flex">{nav}</div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">

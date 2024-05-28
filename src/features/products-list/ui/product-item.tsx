@@ -6,6 +6,7 @@ import {
   CardTitle,
   CardDescription,
   CardFooter,
+  CardContent,
 } from "@/shared/ui/card";
 import { useTransition } from "react";
 
@@ -27,8 +28,10 @@ export function ProductItem({
     <Card>
       <CardHeader>
         <CardTitle>{product.name}</CardTitle>
-        <CardDescription>{product.description}</CardDescription>
       </CardHeader>
+      <CardContent className="">
+        <p className="text-wrap">{product.description}</p>
+      </CardContent>
       <CardFooter>
         <Button disabled={isLoadingDelete} onClick={handleDelete}>
           Удалить

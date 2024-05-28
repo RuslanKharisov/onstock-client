@@ -1,12 +1,12 @@
-import { StockList } from "@/features/products-list/pub/stock-list";
-import { dbClient } from "@/shared/lib/db";
+
+import { productsRepository } from "@/features/products-list/products.repository";
+import { MyStock } from "@/widgets/my-stock/my-stock";
 
 export default async function Home() {
-  const products = await dbClient.product.findMany();
-  const opasity = 0.1;
+  const stockProducts = await productsRepository.getStockList();
   return (
     <main className="container flex min-h-screen flex-col  p-8">
-      <StockList revalidatePagePath="/" />
+      <MyStock variant="public" stockList={stockProducts} />
     </main>
   );
 }

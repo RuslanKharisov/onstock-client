@@ -51,18 +51,16 @@ export function CreateProductForm({
   });
 
   const addOrUpdateProductData = {
-    sku: "6",
-    name: "Oleg",
+    sku: "57",
+    name: "Морозильник",
     description:
-      "OlegOlegOlegOlegOleg",
-    quantity: 1,
-    supplierId: 34,
+      "Хороший морозильник",
+    quantity: 18,
+    supplierId: 2,
     email: "string@example.com",
   };
 
   const onSubmitHandler = async (data: FormData) => {
-    console.log("🚀 ~ onSubmitHandler ~ data:", data);
-    // Вызов функции createProductAction с передачей дополнительных параметров
     startCreateTransition(async () => {
       createProductAction(addOrUpdateProductData, revalidatePagePath);
     });
