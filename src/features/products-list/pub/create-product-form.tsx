@@ -13,65 +13,84 @@ import { Textarea } from "@/shared/ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { createProductAction } from "../actions";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/ui/utils";
 
-interface FormData {
-  sku: string;
-  name: string;
-  description: string;
-  quantity: string;
-}
+// interface FormData {
+//   sku: string;
+//   name: string;
+//   description: string;
+//   quantity: string;
+//   supplierId?: string ;
+// }
 
 const createProductFormSchema = z.object({
   sku: z.string(),
   name: z.string(),
   description: z.string(),
   quantity: z.string(),
+  supplierId: z.number(),
 });
 
 export function CreateProductForm({
   className,
+  supplier,
   revalidatePagePath,
 }: {
   className: string;
+  supplier: getSupplier;
   revalidatePagePath: string;
 }) {
-  const [isCreateTransiton, startCreateTransition] = useTransition();
+   const [isCreateTransiton, startCreateTransition] = useTransition();
   const form = useForm({
     resolver: zodResolver(createProductFormSchema),
     defaultValues: {
       sku: "",
       name: "",
       description: "",
-      quantity: "0",
+      quantity: "",
+      supplierId: supplier.id,
     },
   });
 
-  const addOrUpdateProductData = {
-    sku: "57",
-    name: "Морозильник",
-    description:
-      "Хороший морозильник",
-    quantity: 18,
-    supplierId: 2,
-    email: "string@example.com",
+//   const mockData = {
+//     sku: "57",
+//     name: "Морозильник",
+//     description:
+//       "Хороший морозильник",
+//     quantity: 18,
+//     supplierId: 2,
+//     // email: "string@example.com",
+//   };
+
+  const onSubmit = (data: any) => {
+     startCreateTransition(async () => {
+      createProductAction(data, revalidatePagePath);
+     });
   };
 
-  const onSubmitHandler = async (data: FormData) => {
-    startCreateTransition(async () => {
-      createProductAction(addOrUpdateProductData, revalidatePagePath);
-    });
-  };
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmitHandler)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className={cn(className, "space-y-4")}
       >
+        <FormField
+          control={form.control}
+          name="supplierId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Поставщик: {supplier.name} </FormLabel>
+              <FormControl>
+                {/* <Input placeholder="555" {...field} /> */}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="sku"
@@ -111,7 +130,6 @@ export function CreateProductForm({
             </FormItem>
           )}
         />
-        {/* добавление количества */}
         <FormField
           control={form.control}
           name="quantity"
@@ -126,7 +144,11 @@ export function CreateProductForm({
           )}
         />
 
-        <Button className="mt-8" type="submit" disabled={isCreateTransiton}>
+        <Button 
+        className="mt-8" 
+        type="submit" 
+         disabled={isCreateTransiton}
+        >
           Добавить
         </Button>
       </form>

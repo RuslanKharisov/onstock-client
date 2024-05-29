@@ -5,12 +5,12 @@ type ProductListElement = {
   description: string;
 };
 
-// type StockListElement = {
-//   id?: number;
-//   supplierId: number;
-//   productId: string;
-//   quantity: number;
-// };
+type getSupplier = {
+  id: number;
+  name:   string;
+  email:  string;
+  userId: string;
+};
 
 type StockListElementWithRelations = {
   id?: number;
@@ -30,9 +30,9 @@ type addOrUpdateProductCommand = {
   sku: string;
   name: string;
   description: string;
-  quantity: number;
-  supplierId: number;
-  email: string;
+  quantity: number | string;
+  supplierId?: number | string;
+  email?: string;
 };
 
 type CreateProductListElementCommand = {
