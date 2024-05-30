@@ -9,7 +9,7 @@ export default function StockItem({
   product: StockListElementWithRelations;
 }) {
   return (
-    <TableRow className="border-b md:hover:bg-slate-100">
+    <TableRow className="border-b">
       <TableCell className="px-1" data-title="Sku:">
         {product.product.sku}
       </TableCell>
@@ -21,7 +21,7 @@ export default function StockItem({
       <TableCell data-title="Количество:">{product.quantity}</TableCell>
       <TableCell className="px-2">
         <Button
-          variant="outline"
+          variant="default"
           className="text-xs"
           onClick={() => console.log("запросить ТКП на:", product.product.sku)}
         >

@@ -20,7 +20,7 @@ export async function StockList({
     <Table className="">
       <TableHeader className="">
         <TableRow>
-          <TableHead>Sku</TableHead>
+          <TableHead className="w-[160px]">Sku</TableHead>
           <TableHead>Наименование</TableHead>
           <TableHead>Описание</TableHead>
           <TableHead>Поставщик</TableHead>

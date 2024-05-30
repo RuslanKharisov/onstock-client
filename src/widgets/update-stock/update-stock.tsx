@@ -1,11 +1,12 @@
-import { InputFile } from "./_ui/InputFile";
+import { Layout } from "./_ui/Layout";
+import { UpdateFromFile } from "./_ui/UpdateFromFile";
+import {UpdateFromForm} from "./_ui/UpdateFromForm";
 
-export function ApdateStock({supplier}:{supplier: getSupplier}) {
+export function ApdateStock({supplier, revalidatePagePath}:{supplier: getSupplier, revalidatePagePath:string}) {
     return (
-        <div className=" my-16 max-w-80">
-        <h2 className=" text-center font-bold text-xl mb-5">Обновить из файла</h2>
-        <InputFile supplier={supplier} />
-        </div>
-        
+        <Layout 
+        updateFromForm = {<UpdateFromForm supplier={supplier} revalidatePagePath={revalidatePagePath} />}
+        updateFromFile = {<UpdateFromFile supplier={supplier} />}
+        />
     );
 }

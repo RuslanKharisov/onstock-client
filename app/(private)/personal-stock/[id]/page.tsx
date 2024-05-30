@@ -9,10 +9,14 @@ export default async function PersonalStock({ params }: { params: { id: string }
     const stockProducts = await productsRepository.getStockListById(params);
     const supplier = await productsRepository.getSupplierId(params);    
   return (
-    <div className="container py-10">
-      { supplier && <ApdateStock supplier={supplier}/> }
-      { supplier && <CreateProductForm revalidatePagePath="/personal-stock/" className="w-1/2 my-10" supplier={supplier} /> }
-      <MyStock variant={"auth"} stockList={stockProducts}/>
+    <div className="container mx-auto ">
+        <section className="py-8">
+          { supplier && <ApdateStock supplier={supplier} revalidatePagePath="/personal-stock/"/> }
+        </section>
+      {/* { supplier && <CreateProductForm revalidatePagePath="/personal-stock/" className="w-1/2 my-10" supplier={supplier} /> } */}
+      <section className="py-8">
+        <MyStock variant={"auth"} stockList={stockProducts}/>
+      </section>
     </div>
   );
 }
