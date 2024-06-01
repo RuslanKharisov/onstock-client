@@ -45,6 +45,10 @@ type DeleteProductListElementCommand = {
   id: string;
 };
 
+type DeleteStockItemCommand = {
+  id: number;
+};
+
 // заготовка для склада
 type CreateStockElementCommand = {
   quantity: number;

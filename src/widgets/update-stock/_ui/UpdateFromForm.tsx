@@ -35,6 +35,7 @@ export function UpdateFromForm({
     revalidatePagePath: string;
 }) {
     const [isCreateTransiton, startCreateTransition] = useTransition();
+
     const form = useForm({
         resolver: zodResolver(createProductFormSchema),
         defaultValues: {
@@ -57,7 +58,7 @@ export function UpdateFromForm({
             <CardHeader>
                 <CardTitle>Добавить товар на склад</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-y-8">
+            <CardContent className="flex flex-col gap-y-3">
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -128,9 +129,9 @@ export function UpdateFromForm({
                                 </FormItem>
                             )}
                         />
-
+                        
                         <Button
-                            className="mt-8"
+                            className="w-full"
                             type="submit"
                             disabled={isCreateTransiton}
                         >
@@ -138,7 +139,6 @@ export function UpdateFromForm({
                         </Button>
                     </form>
                 </Form>
-
             </CardContent>
         </Card>
     );

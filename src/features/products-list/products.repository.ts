@@ -131,6 +131,18 @@ class ProductsRepository {
         }
     };
 
+    deleteStockElement = async (
+        command: DeleteStockItemCommand,
+    ):Promise<void> => {
+        try {
+            await dbClient.stock.delete({
+                where: { id: command.id },
+            })
+        } catch (error) {
+            
+        }
+    }
+
     deleteProductElement = async (
         command: DeleteProductListElementCommand,
     ): Promise<void> => {
