@@ -10,3 +10,12 @@ export const createProductAction = async (
   await productsRepository.addOrUpdateProduct(command);
   revalidatePath(revalidatePagePath);
 };
+
+
+export const deleteStockElementItemAction = async (
+  command: DeleteStockElementCommand,
+  revalidatePagePath: string,
+) => {
+    await productsRepository.deleteStockElement(command)
+    revalidatePath(revalidatePagePath);
+}

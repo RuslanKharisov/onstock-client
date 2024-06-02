@@ -13,7 +13,7 @@ type getSupplier = {
 };
 
 type StockListElementWithRelations = {
-  id?: number;
+  id: string;
   supplierId: number;
   productId: string;
   quantity: number;
@@ -25,6 +25,15 @@ type StockListElementWithRelations = {
   };
   supplier: { id: number; name: string; email: string };
 };
+
+type Stock = {
+  id: string
+  sku: string
+  name?: string
+  description: string
+  quantity: number
+  supplier: string
+}
 
 type addOrUpdateProductCommand = {
   sku: string;
@@ -45,8 +54,8 @@ type DeleteProductListElementCommand = {
   id: string;
 };
 
-type DeleteStockItemCommand = {
-  id: number;
+type DeleteStockElementCommand = {
+  id: string;
 };
 
 // заготовка для склада

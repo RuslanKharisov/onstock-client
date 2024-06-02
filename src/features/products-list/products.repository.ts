@@ -132,15 +132,17 @@ class ProductsRepository {
     };
 
     deleteStockElement = async (
-        command: DeleteStockItemCommand,
+      stockId: string,
     ):Promise<void> => {
         try {
             await dbClient.stock.delete({
-                where: { id: command.id },
+                where: { id: stockId },
             })
         } catch (error) {
-            
-        }
+          throw new Error(`Failed to delete product: ${error}`);
+        } finally {
+          await dbClient.$disconnect();
+      }
     }
 
     deleteProductElement = async (

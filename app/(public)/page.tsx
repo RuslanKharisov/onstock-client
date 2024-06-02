@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <main className="container min-h-screen px-8">
         <h1 className=" text-center text-3xl my-10">Онлайн склад</h1>
-      <SmartDataTable stockList={stockProducts}/>
+      <SmartDataTable stockList={stockProducts} variant="public"/>
 
     </main>
   );

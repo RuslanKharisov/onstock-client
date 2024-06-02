@@ -43,6 +43,7 @@ export function DataTable<TData, TValue>({
         <div className="w-full">
             <div className="flex items-center py-4">
                 <Input
+                  name="sku"
                     placeholder="Filter sku..."
                     value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
@@ -52,24 +53,6 @@ export function DataTable<TData, TValue>({
                 />
             </div>
             <DataTablePagination table={table}/>
-            {/* <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    Next
-                </Button>
-            </div> */}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

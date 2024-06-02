@@ -69,9 +69,9 @@ export function UpdateFromForm({
                             name="supplierId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Поставщик: {supplier.name} </FormLabel>
+                                    <FormLabel htmlFor="supplierImput" >Поставщик: {supplier.name} </FormLabel>
                                     <FormControl>
-                                        {/* <Input placeholder="555" {...field} /> */}
+                                        <Input id="supplierImput" className=" hidden" placeholder="555" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -82,9 +82,9 @@ export function UpdateFromForm({
                             name="sku"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Артикул </FormLabel>
+                                    <FormLabel htmlFor="skuInput" >Артикул </FormLabel>
                                     <FormControl>
-                                        <Input placeholder="артикул..." {...field} />
+                                        <Input id="skuInput" placeholder="артикул..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -95,9 +95,9 @@ export function UpdateFromForm({
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Название </FormLabel>
+                                    <FormLabel htmlFor="nameInput" >Название </FormLabel>
                                     <FormControl>
-                                        <Input placeholder="название..." {...field} />
+                                        <Input id="nameInput" placeholder="название..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -108,9 +108,9 @@ export function UpdateFromForm({
                             name="description"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Описание</FormLabel>
+                                    <FormLabel htmlFor="descInput" >Описание</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="описание..." {...field} />
+                                        <Textarea id="descInput" placeholder="описание..." {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -121,15 +121,14 @@ export function UpdateFromForm({
                             name="quantity"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Количество </FormLabel>
+                                    <FormLabel htmlFor="qtyInput" >Количество </FormLabel>
                                     <FormControl>
-                                        <Input type="number" placeholder="0" {...field} />
+                                        <Input id="qtyInput" type="number" placeholder="0" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        
                         <Button
                             className="w-full"
                             type="submit"

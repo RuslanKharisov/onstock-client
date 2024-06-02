@@ -13,7 +13,7 @@ export default async function PersonalStock({ params }: { params: { id: string }
         </section>
       <h1 className=" text-center text-3xl my-8">Склад: {supplier?.name} </h1>
       <section className="py-8">
-        <SmartDataTable stockList={stockProducts}/>
+        <SmartDataTable stockList={stockProducts} variant="private"/>
       </section>
     </main>
   );

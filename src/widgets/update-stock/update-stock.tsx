@@ -8,15 +8,15 @@ export function ApdateStock({supplier, revalidatePagePath}:{supplier: getSupplie
     return (
         <section className="flex items-start flex-col md:flex-row gap-5">
             <Sheet>
-                <SheetTrigger>
-                    <Button variant="default">Обновить склад</Button>
+                        <SheetTrigger asChild>
+                <Button variant="default">Обновить склад</Button>
                 </SheetTrigger>
                 <SheetContent side="left">
-                <UpdateFromForm 
-                supplier={supplier} 
-                revalidatePagePath={revalidatePagePath}
-                />
-                <UpdateFromFile supplier={supplier} />
+                    <UpdateFromForm 
+                    supplier={supplier} 
+                    revalidatePagePath={revalidatePagePath}
+                    />
+                    <UpdateFromFile supplier={supplier} />
                 </SheetContent>
             </Sheet>
         </section>

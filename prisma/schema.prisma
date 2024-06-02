@@ -18,12 +18,12 @@ model Supplier {
   name   String
   email  String
   stocks Stock[]
-  userId String @unique
+  userId String  @unique
   user   User    @relation(fields: [userId], references: [id])
 }
 
 model Stock {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   supplier   Supplier @relation(fields: [supplierId], references: [id])
   supplierId Int
   product    Product  @relation(fields: [productId], references: [id])
@@ -67,9 +67,9 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  email         String     @unique
-  role          ROLE       @default(USER)
+  id            String    @id @default(cuid())
+  email         String    @unique
+  role          ROLE      @default(USER)
   name          String?
   emailVerified DateTime?
   image         String?
