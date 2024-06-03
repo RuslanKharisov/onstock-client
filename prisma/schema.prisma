@@ -90,5 +90,6 @@ model VerificationToken {
 
 enum ROLE {
   ADMIN
+  SUPPLIER
   USER
 }
