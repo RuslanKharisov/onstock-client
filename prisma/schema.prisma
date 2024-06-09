@@ -14,12 +14,13 @@ datasource db {
 }
 
 model Supplier {
-  id     Int     @id @default(autoincrement())
-  name   String
-  email  String
-  stocks Stock[]
-  userId String  @unique
-  user   User    @relation(fields: [userId], references: [id])
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String
+  siteUrl String?
+  stocks  Stock[]
+  userId  String  @unique
+  user    User    @relation(fields: [userId], references: [id])
 }
 
 model Stock {
