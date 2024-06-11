@@ -98,7 +98,7 @@ export function EmailLoginForm() {
                 aria-label="Загрузка выхода"
               />
             )}
-            Войти
+            Продолжить
           </Button>
         </div>
       </form>

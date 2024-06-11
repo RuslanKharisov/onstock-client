@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card"
 import PolicyLink from "./_ui/policy-link"
-import { ProviderButton } from "@/features/auth/_ui/provider-button"
 import BackButton from "./_ui/back-button"
 
 interface CardWrapperProps {
@@ -23,18 +22,14 @@ const FormWrapper = ({
   return (
     <Card className="mx-auto w-[320px]">
       <CardHeader className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold">
-          {headerLabel}
-        </h1>
+        <h1 className="text-2xl font-semibold">{headerLabel}</h1>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        {children}
-      </CardContent>
+      <CardContent className="grid gap-4">{children}</CardContent>
       <CardFooter>
-        <BackButton 
-          label={backButtonLabel}
-          href={backButtonHref}
-        />
+        <BackButton label={backButtonLabel} href={backButtonHref} />
+      </CardFooter>
+      <CardFooter>
+        <PolicyLink />
       </CardFooter>
     </Card>
   )

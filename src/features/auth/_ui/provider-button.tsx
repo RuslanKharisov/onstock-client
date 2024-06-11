@@ -4,6 +4,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { Github } from "lucide-react";
 import { ClientSafeProvider } from "next-auth/react";
 import { useOAuthSignIn } from "../_vm/use-oauth-sign-in";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const oauthSignIn = useOAuthSignIn(provider);
@@ -11,7 +12,7 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
   const getIcon = (provider: ClientSafeProvider) => {
     switch (provider.id) {
       case "github":
-        return <Github className="mr-2 h-4 w-4" />;
+        return <GitHubLogoIcon className="mr-2 h-4 w-4" />;
       default:
         return null;
     }

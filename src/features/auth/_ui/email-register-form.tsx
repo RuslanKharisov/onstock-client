@@ -113,7 +113,7 @@ export function EmailRegisterForm() {
                 aria-label="Загрузка выхода"
               />
             )}
-            Создать аккаунт
+            Продолжить
           </Button>
         </div>
       </form>
