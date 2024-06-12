@@ -1,5 +1,5 @@
-import { dbClient } from "@/shared/lib/db";
-import { UserEntity, UserId } from "../_domain/types";
+import { dbClient } from "@/shared/lib/db"
+import { UserEntity, UserId } from "../_domain/types"
 
 export class UserRepository {
   async getUserById(userId: UserId): Promise<UserEntity> {
@@ -7,14 +7,24 @@ export class UserRepository {
       where: {
         id: userId,
       },
-    });
+    })
+  }
+
+  async getUsByEmail(email: string) {
+    try {
+      return dbClient.user.findUnique({
+        where: { email },
+      })
+    } catch {
+      return null
+    }
   }
 
   async createUser(user: UserEntity): Promise<UserEntity> {
     return await dbClient.user.create({
       data: user,
-    });
+    })
   }
 }
 
-export const userRepository = new UserRepository();
+export const userRepository = new UserRepository()

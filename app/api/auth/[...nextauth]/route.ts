@@ -1,6 +1,6 @@
-import { nextAuthConfig } from "@/entities/user/next-auth-config";
-import NextAuth from "next-auth/next";
+import { handlers } from "@/entities/user/auth";
+// import { nextAuthConfig } from "@/entities/user/next-auth-config";
 
-const authHandler = NextAuth(nextAuthConfig);
+// const authHandler = NextAuth(nextAuthConfig);
 
-export { authHandler as GET, authHandler as POST };
+export const { GET, POST } = handlers

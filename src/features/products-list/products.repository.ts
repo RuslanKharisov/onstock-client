@@ -3,7 +3,7 @@ import { cache } from "react";
 class ProductsRepository {
 
     async getSupplierId(params: { id: string }): Promise<getSupplier | null> {
-        const connection = await dbClient.$connect();
+        // const connection = await dbClient.$connect();
         try {
             const supplier = await dbClient.supplier.findUnique({
                 where: {
@@ -12,23 +12,27 @@ class ProductsRepository {
             });
 
             return supplier || null;
-        } finally {
+        } catch{
+          return null;
+        }finally {
             await dbClient.$disconnect();
         }
     }
 
     async getProductsList(): Promise<ProductListElement[]> {
-        const connection = await dbClient.$connect();
+        // const connection = await dbClient.$connect();
         try {
             const products = await dbClient.product.findMany();
             return products;
-        } finally {
+        } catch{
+          return [];
+        }finally {
             await dbClient.$disconnect();
         }
     }
 
     async getStockList(): Promise<StockListElementWithRelations[]> {
-        const connection = await dbClient.$connect();
+        // const connection = await dbClient.$connect();
         try {
             const stocks = await dbClient.stock.findMany({
                 include: {
@@ -37,6 +41,8 @@ class ProductsRepository {
                 }
             });
             return stocks;
+        } catch{
+          return [];
         } finally {
             await dbClient.$disconnect();
         }
@@ -48,7 +54,7 @@ class ProductsRepository {
                 userId: params.id,
             },
         });
-        const connection = await dbClient.$connect();
+        // const connection = await dbClient.$connect();
         try {
             const stocks = await dbClient.stock.findMany({
                 where: {

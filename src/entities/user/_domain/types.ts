@@ -8,12 +8,13 @@ export const ROLES: Record<Role, Role> = {
 };
 
 export type UserEntity = {
-  id: UserId;
+  id?: UserId;
   email: string;
-  role: Role;
+  role?: Role;
   emailVerified?: Date | null;
   name?: string | null;
   image?: string | null;
+  password?: string | null;
 };
 
 export type SessionEntity = {
