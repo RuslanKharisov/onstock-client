@@ -17,8 +17,6 @@ export default auth(
     ctx: AppRouteHandlerFnContext,
   ): Promise<Response | void> => {
     const { nextUrl } = req
-    console.log("🚀 ~ req:", req.auth)
-    console.log("🚀 ~ auth ~ nextUrl:", nextUrl.pathname)
 
     const isLoggedIn = !!req.auth
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
@@ -26,20 +24,17 @@ export default auth(
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
     if (isApiAuthRoute) {
-      console.log("🚀 ~ auth ~ isApiAuthRoute:")
       return 
     }
 
     if (isAuthRoute) {
       if (isLoggedIn) {
-        console.log("🚀 ~ auth ~ isAuthRoute:")
         return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
       }
       return 
     }
 
     if (!isLoggedIn && !isPublicRoutes) {
-      console.log("🚀 ~ auth ~ !isLoggedIn && !isPublicRoutes:")
       return NextResponse.redirect(new URL("/auth/login", nextUrl))
     }
 
