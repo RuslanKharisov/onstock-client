@@ -20,6 +20,9 @@ import { EnterIcon } from "@radix-ui/react-icons"
 
 export function Profile() {
   const session = useAppSession()
+  console.log("🚀 ~ Profile ~ session:", session)
+  
+  
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
   if (session.status === "loading") {
@@ -36,7 +39,7 @@ export function Profile() {
     )
   }
 
-  const user = session?.data?.user
+   const user = session?.data?.user
 
   return (
     <DropdownMenu>
@@ -45,7 +48,7 @@ export function Profile() {
           variant="ghost"
           className="h-8 w-8 self-center rounded-full p-px"
         >
-          <ProfileAvatar profile={user} className="h-8 w-8" />
+           <ProfileAvatar profile={user} className="h-8 w-8" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-2 w-56 ">

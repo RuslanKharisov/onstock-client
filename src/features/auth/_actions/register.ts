@@ -1,7 +1,7 @@
 "use server"
 
 import * as z from "zod"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { RegisterSchema } from "@/entities/user/_domain/schemas"
 import { dbClient } from "@/shared/lib/db"
 import { userRepository } from "@/entities/user/_repositories/user"
