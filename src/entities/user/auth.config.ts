@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs"
 import Credentials from "next-auth/providers/credentials"
-import CredentialsProvider from "next-auth/providers/credentials";
 
 import { LoginSchema } from "./_domain/schemas"
 import { userRepository } from "./_repositories/user"

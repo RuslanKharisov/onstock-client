@@ -24,6 +24,14 @@ export const {
   signOut,
 } = NextAuth({
   callbacks: {
+    // колбэк для проверки записи в БД прошла ли верификацию указанная при регистрации почта
+    // async signIn({ user }) {
+    //   const existingUser = await userRepository.getUserById(user.id)
+    //   if (!existingUser || !existingUser.emailVerified) {
+    //     return false
+    //   }
+    //   return true
+    // },
     async session({ token, session }) {
       console.log("🚀 ~ session token:", token)
       if (token.sub && session.user) {
@@ -41,9 +49,9 @@ export const {
       console.log("🚀 ~ jwt ~ token:", token)
 
       if (!token.sub) return token
-      const existigUser = await userRepository.getUserById(token.sub)
-      if (!existigUser) return token
-      token.role = existigUser.role
+      const existingUser = await userRepository.getUserById(token.sub)
+      if (!existingUser) return token
+      token.role = existingUser.role
       return token
     },
   },

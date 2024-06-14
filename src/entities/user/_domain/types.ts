@@ -1,4 +1,4 @@
-export type UserId = string;
+export type UserId = string | undefined;
 export type Role = "ADMIN" | "SUPPLIER" | "USER";
 
 export const ROLES: Record<Role, Role> = {
@@ -8,7 +8,7 @@ export const ROLES: Record<Role, Role> = {
 };
 
 export type UserEntity = {
-  id?: UserId;
+  id: UserId;
   email: string;
   role?: Role;
   emailVerified?: Date | null;
