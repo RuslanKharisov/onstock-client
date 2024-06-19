@@ -26,4 +26,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * Роут для редиректа после аутентификации
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/settings";
+export const DEFAULT_LOGIN_REDIRECT: string = "/personal-stock";

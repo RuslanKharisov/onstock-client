@@ -10,13 +10,17 @@ import {
   SheetHeader,
 } from "@/shared/ui/sheet"
 import { Menu } from "lucide-react"
+import { auth } from "@/entities/user/auth"
 
-export function AppHeader({
+export async function AppHeader({
   variant,
 }: {
   variant: "auth" | "private" | "public"
 }) {
+  console.log("🚀 ~ AppHeader variant:", variant)
   const isProfile = variant !== "auth"
+
+  const session = await auth()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -46,7 +50,7 @@ export function AppHeader({
           </div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">
             <ToggleTheme />
-            {isProfile && <Profile />}
+            {isProfile && <Profile session={session}/>}
           </div>
         </div>
       </div>

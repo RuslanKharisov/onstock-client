@@ -1,4 +1,4 @@
-export type UserId = string | undefined
+export type UserId = string
 export type Role = "ADMIN" | "SUPPLIER" | "USER"
 
 export const ROLES: Record<Role, Role> = {
@@ -14,22 +14,22 @@ export type CreateUserCommand = {
 }
 
 export type UserEntity = {
-  id: UserId
-  email: string
+  id?: String
+  name?: string | null
+  email?: string
+  image?: string | null
   role?: Role
   emailVerified?: Date | null
-  name?: string | null
-  image?: string | null
   password?: string | null
 }
 
 export type SessionEntity = {
-  user: {
-    id: UserId
-    email: string
-    role: Role
+  user?: {
+    id?: string
     name?: string | null
-    image?: string | undefined
+    email?: string | null
+    image?: string | null
+    role?: Role
   }
   expires: string
 }

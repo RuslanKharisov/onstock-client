@@ -3,8 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
 import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
+import { Spinner } from "@/shared/ui/spinner";
+import { AvatarField } from "./avatar-field";
+import { Profile } from "@/entities/user/client";
+import { useUpdateProfile } from "../_vm/use-update-profile";
+import { UserId } from "@/entities/user/_domain/types";
 import {
   Form,
   FormControl,
@@ -13,13 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
-import { Spinner } from "@/shared/ui/spinner";
-import { AvatarField } from "./avatar-field";
-// import { useUpdateProfile } from "../_vm/use-update-profile";
-import { Profile } from "@/entities/user/client";
-import { UserId } from "@/kernel/domain/user";
-import { useUpdateProfile } from "../_vm/use-update-profile";
 
 const profileFormSchema = z.object({
   name: z
@@ -57,7 +55,6 @@ export function ProfileForm({
     defaultValues: getDefaultValues(profile),
   });
 
-//   const updateProfile = useUpdateProfile();
   const updateProfile = useUpdateProfile();
 
   const handleSubmit = form.handleSubmit(async (data) => {
@@ -67,12 +64,7 @@ export function ProfileForm({
       userId,
       data,
     });
-    // const newProfile = await updateProfile.update({
-    //   userId,
-    //   data,
-    // });
 
-    // form.reset(getDefaultValues(newProfile));
     form.reset(getDefaultValues(newProfile.profile));
     onSuccess?.();
   });
