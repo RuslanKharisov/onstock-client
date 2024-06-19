@@ -89,8 +89,8 @@ export function DataTable<TData, TValue>({
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                <TableCell colSpan={columns.length} className="h-24 text-center text-2xl font-bold -">
+                                   Ваш скдад пока не содержит продукции!
                                 </TableCell>
                             </TableRow>
                         )}
