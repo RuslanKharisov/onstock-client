@@ -8,8 +8,8 @@ const SettingsPage = async () => {
   return <div className=" h-screen flex flex-col justify-center items-center px-5">
     <h1>Setting page</h1>
     List of all registred users:
-    {usersList && usersList.map((user) => (
-      <ul className="flex gap-3">
+    {usersList && usersList.map((user, i) => (
+      <ul key={i} className="flex gap-3">
         <li>{user.id}</li>
         <li>{user.role}</li>
         <li>{user.email}</li>

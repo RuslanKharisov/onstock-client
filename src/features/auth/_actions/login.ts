@@ -6,6 +6,8 @@ import { LoginSchema } from "@/entities/user/_domain/schemas"
 import { DEFAULT_LOGIN_REDIRECT } from "@/shared/lib/routes"
 import { AuthError } from "next-auth"
 import { revalidatePath } from "next/cache"
+import { userRepository } from "@/entities/user/_repositories/user"
+import { generateVerificationToken } from "@/shared/lib/tokens"
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values)
@@ -15,6 +17,19 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   const { email, password } = validatedFields.data
+
+  const existingUser = await userRepository.getUsByEmail(email)
+
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return { error: "Пользователь с данным Email не зарегистрирован" }
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email,
+    );
+    return { success: "На указанную почту отправлено письмо для подтверждения адреса!"}
+  }
 
   try {
     await signIn("credentials", {

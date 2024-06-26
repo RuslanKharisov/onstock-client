@@ -27,14 +27,27 @@ export const {
     signIn: "./auth/login",
   },
   events: {
-    async linkAccount ({ user }) {
+    async linkAccount({ user }) {
       await dbClient.user.update({
         where: { id: user.id },
-        data: { emailVerified: new Date() }
-    })
-  }
-},
+        data: { emailVerified: new Date() },
+      })
+    },
+  },
   callbacks: {
+    async signIn({ user, account }) {
+      // Если провайдер не "credentials", разрешаем вход
+      if (account?.provider !== "credentials") return true
+
+      const existingUser = await userRepository.getUserById(user.id)
+
+      // Если Email не подтвержден, вход не разрешаем
+      if (!existingUser?.emailVerified) return false
+
+      // TODO: Add 2FA check
+      return true
+    },
+
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub
