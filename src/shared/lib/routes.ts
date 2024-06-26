@@ -8,6 +8,16 @@ export const publicRoutes: string[] = [
 ]
 
 /**
+ * Массив роутов с доступом для роли Admin
+ * @type {string[]}
+ */
+export const adminRoutes: string[] = [
+  "/settings",
+]
+
+
+
+/**
  * Массив роутов для процесса аутентификации
  * @type {string[]}
  */

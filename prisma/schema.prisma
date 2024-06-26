@@ -74,7 +74,7 @@ model User {
   name          String?
   emailVerified DateTime?
   image         String?
-  password     String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
   Supplier      Supplier?
@@ -83,11 +83,12 @@ model User {
 }
 
 model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+  id      String   @id @default(cuid())
+  token   String   @unique
+  email   String
+  expires DateTime
 
-  @@unique([identifier, token])
+  @@unique([email, token])
 }
 
 enum ROLE {

@@ -2,6 +2,10 @@ import { dbClient } from "@/shared/lib/db"
 import { CreateUserCommand, UserEntity, UserId } from "../_domain/types"
 
 export class UserRepository {
+  async getAllUsers(): Promise<UserEntity[]> {
+    return dbClient.user.findMany()
+  }
+
   async getUserById(userId: UserId): Promise<UserEntity> {
     return dbClient.user.findUniqueOrThrow({
       where: {

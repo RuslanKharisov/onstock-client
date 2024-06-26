@@ -1,5 +1,6 @@
 import authConfig from "@/entities/user/auth.config"
 import NextAuth from "next-auth"
+
 const { auth } = NextAuth(authConfig)
 
 import {
@@ -17,6 +18,8 @@ export default auth(
     ctx: AppRouteHandlerFnContext,
   ): Promise<Response | void> => {
     const { nextUrl } = req
+
+    const session = await auth()
 
     const isLoggedIn = !!req.auth
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)

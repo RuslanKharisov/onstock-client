@@ -3,8 +3,8 @@
 import * as z from "zod"
 import bcrypt from "bcryptjs"
 import { RegisterSchema } from "@/entities/user/_domain/schemas"
-import { dbClient } from "@/shared/lib/db"
 import { userRepository } from "@/entities/user/_repositories/user"
+import { generateVerificationToken } from "@/shared/lib/tokens"
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values)
@@ -28,7 +28,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     password: hashedPassword,
   })
 
-  //TODO: Send verification token email
+  const verificationToken = await generateVerificationToken(email)
 
-  return { success: "Пользователь создан!" }
+  return { success: "На указанную почту отправлено письмо для подтверждения!" }
 }

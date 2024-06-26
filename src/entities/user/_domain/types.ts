@@ -43,7 +43,7 @@ export type Profile = {
 }
 
 export type VerificationToken = {
-  id: String
+  id: string
   token: String
   email: String
   expires: Date

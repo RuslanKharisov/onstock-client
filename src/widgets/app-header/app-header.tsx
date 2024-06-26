@@ -17,9 +17,7 @@ export async function AppHeader({
 }: {
   variant: "auth" | "private" | "public"
 }) {
-  console.log("🚀 ~ AppHeader variant:", variant)
   const isProfile = variant !== "auth"
-
   const session = await auth()
 
   return (
@@ -36,7 +34,7 @@ export async function AppHeader({
               <SheetHeader className=" mb-5 border-b pb-5">
                 <Logo />
               </SheetHeader>
-              <MainNav />
+              <MainNav role={session?.user?.role}/>
             </SheetContent>
           </Sheet>
         </div>
@@ -46,11 +44,12 @@ export async function AppHeader({
         </div>
         <div className="flex flex-1 items-center">
           <div className="hidden md:flex">
-            <MainNav />
+            <MainNav role={session?.user?.role} />
           </div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">
             <ToggleTheme />
-            {isProfile && <Profile session={session}/>}
+            {<Profile session={session}/>}
+            {/* {isProfile && <Profile session={session}/>} */}
           </div>
         </div>
       </div>

@@ -23,17 +23,19 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  pages: {
+    signIn: "./auth/login",
+  },
+  events: {
+    async linkAccount ({ user }) {
+      await dbClient.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() }
+    })
+  }
+},
   callbacks: {
-    // колбэк для проверки записи в БД прошла ли верификацию указанная при регистрации почта
-    // async signIn({ user }) {
-    //   const existingUser = await userRepository.getUserById(user.id)
-    //   if (!existingUser || !existingUser.emailVerified) {
-    //     return false
-    //   }
-    //   return true
-    // },
     async session({ token, session }) {
-      console.log("🚀 ~ session token:", token)
       if (token.sub && session.user) {
         session.user.id = token.sub
       }
@@ -46,8 +48,6 @@ export const {
       return session
     },
     async jwt({ token }) {
-      console.log("🚀 ~ jwt ~ token:", token)
-
       if (!token.sub) return token
       const existingUser = await userRepository.getUserById(token.sub)
       if (!existingUser) return token
