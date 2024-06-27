@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs"
 import { RegisterSchema } from "@/entities/user/_domain/schemas"
 import { userRepository } from "@/entities/user/_repositories/user"
 import { generateVerificationToken } from "@/shared/lib/tokens"
+import { sendVerifificationEmail } from "@/shared/lib/mail"
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values)
@@ -29,6 +30,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   })
 
   const verificationToken = await generateVerificationToken(email)
+  await sendVerifificationEmail(verificationToken.email, verificationToken.token)
 
   return { success: "На указанную почту отправлено письмо для подтверждения!" }
 }

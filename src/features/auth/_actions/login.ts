@@ -8,6 +8,7 @@ import { AuthError } from "next-auth"
 import { revalidatePath } from "next/cache"
 import { userRepository } from "@/entities/user/_repositories/user"
 import { generateVerificationToken } from "@/shared/lib/tokens"
+import { sendVerifificationEmail } from "@/shared/lib/mail"
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values)
@@ -28,6 +29,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     const verificationToken = await generateVerificationToken(
       existingUser.email,
     );
+    
+    await sendVerifificationEmail(verificationToken.email, verificationToken.token)
     return { success: "На указанную почту отправлено письмо для подтверждения адреса!"}
   }
 
