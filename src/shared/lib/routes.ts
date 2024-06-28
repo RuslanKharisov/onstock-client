@@ -4,7 +4,8 @@
  */
 export const publicRoutes: string[] = [
   "/",
-  "/news"
+  "/news",
+  "/auth/new-verification",
 ]
 
 /**

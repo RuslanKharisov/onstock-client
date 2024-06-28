@@ -21,7 +21,7 @@ const FormWrapper = ({
 }: CardWrapperProps) => {
   return (
     <Card className="mx-auto w-[320px]">
-      <CardHeader className="flex flex-col space-y-2 text-center">
+      <CardHeader className="flex flex-col space-y-2 text-center mb-5">
         <h1 className="text-2xl font-semibold">{headerLabel}</h1>
       </CardHeader>
       <CardContent className="grid gap-4">{children}</CardContent>

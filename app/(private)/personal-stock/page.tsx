@@ -11,12 +11,10 @@ export default async function PersonalStock({
 }) {
   const session = await auth()
   const sessionId = session?.user.id
-  console.log("🚀 ~ sessionID:", session?.user.id)
 
   if (!sessionId) return null
 
   const supplier = await productsRepository.getSupplierId(sessionId)
-  console.log("🚀 ~ supplier:", supplier)
   const stockProducts = await productsRepository.getStockListById(sessionId)
   console.log("🚀 ~ stockProducts:", stockProducts)
 

@@ -1,7 +1,7 @@
 import { dbClient } from "@/shared/lib/db"
-import { CreateUserCommand, UserEntity, UserId } from "../_domain/types"
+import { CreateUserCommand, UserEntity, UserId, VerificationToken } from "../_domain/types"
 
-export class UserRepository {
+class UserRepository {
   async getAllUsers(): Promise<UserEntity[]> {
     return dbClient.user.findMany()
   }
@@ -29,6 +29,16 @@ export class UserRepository {
       data: user,
     })
   }
+
+  async updateUser(user:UserEntity, existingToken:VerificationToken): Promise<UserEntity> {
+    return dbClient.user.update({
+      where: {id: user.id},
+      data: {
+        emailVerified: new Date(),
+        email: existingToken.email
+      }
+    })
+}
 }
 
 export const userRepository = new UserRepository()
