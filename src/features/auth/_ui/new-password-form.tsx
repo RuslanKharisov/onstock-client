@@ -2,10 +2,13 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { LoginSchema } from "@/entities/user/_domain/schemas"
+import { NewPasswordSchema } from "@/entities/user/_domain/schemas"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
+import { FormEroor } from "@/shared/ui/form-error"
+import { FormSuccess } from "@/shared/ui/form-success"
+import { useState, useTransition } from "react"
 import {
   Form,
   FormControl,
@@ -14,31 +17,30 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
-import { login } from "../_actions/login"
-import { useState, useTransition } from "react"
-import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { newPasword } from "../_actions/new-password"
 
-export function EmailLoginForm() {
+export function NewPasswordForm() {
+  const searchParams = useSearchParams()
+  const token = searchParams.get("token")
+
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: "",
       password: "",
     },
   })
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     setError("")
     setSuccess("")
 
     startTransition(() => {
-      login(values).then((data) => {
+      newPasword(values, token).then((data) => {
         setError(data?.error)
         setSuccess(data?.success)
       })
@@ -51,49 +53,18 @@ export function EmailLoginForm() {
         <div className="grid gap-3">
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Почта</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="name@example.com"
-                    type="email"
-                    autoCapitalize="none"
-                    autoComplete="email"
-                    autoCorrect="off"
-                    disabled={isPending}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Пароль</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="******"
+                    placeholder="********"
                     type="password"
-                    autoCapitalize="none"
-                    autoCorrect="off"
                     disabled={isPending}
                     {...field}
                   />
                 </FormControl>
-                <Button
-                  size="sm"
-                  variant="link"
-                  asChild
-                  className="px-0 font-normal"
-                >
-                  <Link href="/auth/reset">Забыли пароль?</Link>
-                </Button>
                 <FormMessage />
               </FormItem>
             )}
@@ -107,7 +78,7 @@ export function EmailLoginForm() {
                 aria-label="Загрузка выхода"
               />
             )}
-            Продолжить
+            Обновить пароль
           </Button>
         </div>
       </form>

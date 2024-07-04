@@ -48,3 +48,10 @@ export type VerificationToken = {
   email: string
   expires: Date
 }
+
+export type PasswordResetToken = {
+  id: string
+  token: string
+  email: string
+  expires: Date
+}

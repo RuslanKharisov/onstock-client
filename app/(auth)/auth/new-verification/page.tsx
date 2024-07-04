@@ -33,6 +33,7 @@ export default function NewVerificationPage() {
   useEffect(() => {
     onSubmit()
   }, [onSubmit])
+  
   return (
     <div className=" flex h-screen flex-col items-center justify-center">
       <FormWrapper

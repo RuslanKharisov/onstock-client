@@ -25,6 +25,9 @@ export const adminRoutes: string[] = [
 export const authRoutes: string[] = [
   "/auth/login",
   "/auth/register",
+  "/auth/reset",
+  "/auth/new-password",
+  "/auth/error",
 ]
 
 /**

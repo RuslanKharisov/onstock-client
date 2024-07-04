@@ -8,8 +8,20 @@ export const sendVerifificationEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: "Промышленный склад OnStock <onboarding@resend.dev>",
     to: email,
-    subject: "Hello world",
+    subject: "Подтвердите вашу почту",
     html: `<p> Click <a href="${confirmLink}"> here </a> to confirm </p>`,
+    // react: EmailTemplate({ firstName: "John" }),
+  })
+}
+
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const resetPasswordLink = `${process.env.RESEND_RESET_PASS_LINK}?token=${token}`
+
+  await resend.emails.send({
+    from: "Промышленный склад OnStock <onboarding@resend.dev>",
+    to: email,
+    subject: "Сброс пароля",
+    html: `<p> Click <a href="${resetPasswordLink}"> here </a> to reset password </p>`,
     // react: EmailTemplate({ firstName: "John" }),
   })
 }

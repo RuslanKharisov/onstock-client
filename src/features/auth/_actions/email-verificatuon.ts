@@ -19,10 +19,10 @@ export const newVerification = async (token: string) => {
   const existingUser = await userRepository.getUsByEmail(existingToken.email)
 
   if (!existingUser) {
-    return { error: "User does not exist!" }
+    return { error: "Email does not exist!" }
   }
 
-  await userRepository.updateUser(existingUser, existingToken)
+  await userRepository.updateUserEmail(existingUser, existingToken)
   await tokenRepository.deleteVerificationToken(existingToken)
 
   return { success : "Email verified!" }

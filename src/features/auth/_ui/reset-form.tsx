@@ -2,10 +2,14 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { LoginSchema } from "@/entities/user/_domain/schemas"
+import { ResetSchema } from "@/entities/user/_domain/schemas"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
+import { FormEroor } from "@/shared/ui/form-error"
+import { FormSuccess } from "@/shared/ui/form-success"
+import { useState, useTransition } from "react"
+import { resetPassword } from "../_actions/reset-password"
 import {
   Form,
   FormControl,
@@ -14,31 +18,25 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
-import { login } from "../_actions/login"
-import { useState, useTransition } from "react"
-import Link from "next/link"
 
-export function EmailLoginForm() {
+export function ResetForm() {
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: ""
     },
   })
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError("")
     setSuccess("")
 
     startTransition(() => {
-      login(values).then((data) => {
+      resetPassword(values).then((data) => {
         setError(data?.error)
         setSuccess(data?.success)
       })
@@ -66,34 +64,6 @@ export function EmailLoginForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Пароль</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="******"
-                    type="password"
-                    autoCapitalize="none"
-                    autoCorrect="off"
-                    disabled={isPending}
-                    {...field}
-                  />
-                </FormControl>
-                <Button
-                  size="sm"
-                  variant="link"
-                  asChild
-                  className="px-0 font-normal"
-                >
-                  <Link href="/auth/reset">Забыли пароль?</Link>
-                </Button>
                 <FormMessage />
               </FormItem>
             )}

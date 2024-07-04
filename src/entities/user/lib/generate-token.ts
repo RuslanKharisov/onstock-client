@@ -10,7 +10,7 @@ export const generateVerificationToken = async (email: string) => {
 
   if (existingToken) {
     await dbClient.verificationToken.delete({
-      where:{
+      where: {
         id: existingToken.id,
       },
     })
@@ -21,12 +21,30 @@ export const generateVerificationToken = async (email: string) => {
       email,
       token,
       expires,
-    }
+    },
   })
   return verificationToken
-
-}
-function getVerificationTokenByEmail(email: string) {
-  throw new Error("Function not implemented.")
 }
 
+export const generatePasswordResetToken = async (email: string) => {
+  const token = uuidv4()
+  const expires = new Date(new Date().getTime() + 3 * 3600 * 1000)
+
+  const existingToken =
+    await tokenRepository.getPasswordResetTokenByEmail(email)
+
+  if (existingToken) {
+    await dbClient.passwordResetToken.delete({
+      where: { id: existingToken.id },
+    })
+  }
+
+  const passwordResetToken = await dbClient.passwordResetToken.create({
+    data: {
+      email,
+      token,
+      expires,
+    },
+  })
+  return passwordResetToken
+}

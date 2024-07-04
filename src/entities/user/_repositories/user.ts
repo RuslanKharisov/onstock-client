@@ -1,5 +1,10 @@
 import { dbClient } from "@/shared/lib/db"
-import { CreateUserCommand, UserEntity, UserId, VerificationToken } from "../_domain/types"
+import {
+  CreateUserCommand,
+  UserEntity,
+  UserId,
+  VerificationToken,
+} from "../_domain/types"
 
 class UserRepository {
   async getAllUsers(): Promise<UserEntity[]> {
@@ -24,21 +29,43 @@ class UserRepository {
     }
   }
 
-  async createUser(user:CreateUserCommand): Promise<UserEntity> {
+  async createUser(user: CreateUserCommand): Promise<UserEntity> {
     return await dbClient.user.create({
       data: user,
     })
   }
 
-  async updateUser(user:UserEntity, existingToken:VerificationToken): Promise<UserEntity> {
+  /**
+   * асинхронно обновляет данные пользователя:
+   * дату подтверждения почты
+   * адрес почты
+   * @param user
+   * @param existingToken
+   */
+  async updateUserEmail(
+    user: UserEntity,
+    existingToken: VerificationToken,
+  ): Promise<UserEntity> {
     return dbClient.user.update({
-      where: {id: user.id},
+      where: { id: user.id },
       data: {
         emailVerified: new Date(),
-        email: existingToken.email
-      }
+        email: existingToken.email,
+      },
     })
-}
+  }
+
+  async updateUserPasword(
+    user: UserEntity,
+    password: string,
+  ): Promise<UserEntity> {
+    return dbClient.user.update({
+      where: { id: user.id },
+      data: {
+        password: password,
+      },
+    })
+  }
 }
 
 export const userRepository = new UserRepository()

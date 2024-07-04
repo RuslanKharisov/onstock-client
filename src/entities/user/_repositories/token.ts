@@ -1,5 +1,5 @@
 import { dbClient } from "@/shared/lib/db"
-import { VerificationToken } from "../_domain/types"
+import { PasswordResetToken, VerificationToken } from "../_domain/types"
 
 class TokenRepository {
   /**
@@ -65,6 +65,51 @@ class TokenRepository {
     } catch {
       return null
     }
+  }
+
+  /**
+   * Асинхронно извлекает уникальный токен сброса пароля из базы данных по значению токена.
+   *
+   * @param token - строка, представляющая токен, который нужно найти.
+   * @returns {Promise<PasswordResetToken | null>} Возвращает объект токена верификации или null, если токен не найден.
+   *
+   * Пример использования:
+   * ```
+   * const passwordResetToken = await getPasswordResetTokenByToken('12345');
+   * ```
+   */
+  async getPasswordResetTokenByToken(
+    token: string,
+  ): Promise<PasswordResetToken | null> {
+    try {
+      const passwordResetToken = await dbClient.passwordResetToken.findUnique({
+        where: { token },
+      })
+      return passwordResetToken
+    } catch {
+      return null
+    }
+  }
+
+  async getPasswordResetTokenByEmail(
+    email: string,
+  ): Promise<PasswordResetToken | null> {
+    try {
+      const passwordResetToken = await dbClient.passwordResetToken.findFirst({
+        where: { email },
+      })
+      return passwordResetToken
+    } catch {
+      return null
+    }
+  }
+
+  async deletePasswordResetToken(existingToken: PasswordResetToken) {
+    await dbClient.passwordResetToken.delete({
+      where: {
+        id: existingToken.id,
+      },
+    })
   }
 }
 
