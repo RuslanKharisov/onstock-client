@@ -46,12 +46,12 @@ export const Columns: ColumnDef<Stock>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Действия</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(stock.supplier)}
+              onClick={() => navigator.clipboard.writeText(stock.email)}
             >
-              Копировать адрес поставщика
+              Копировать Email поставщика
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><a href="https://sikraft.ru/contact-us">Сайт поставщика: {stock.supplier}</a>  </DropdownMenuItem>
+            <DropdownMenuItem><a target="blank" href={`https://${stock.siteUrl}`}>Перейти на сайт поставщика</a></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

@@ -9,6 +9,7 @@ type getSupplier = {
   id: number;
   name:   string;
   email:  string;
+  siteUrl:string
   userId: string;
 };
 
@@ -23,7 +24,7 @@ type StockListElementWithRelations = {
     name: string;
     description: string;
   };
-  supplier: { id: number; name: string; email: string };
+  supplier: getSupplier;
 };
 
 type Stock = {
@@ -33,6 +34,8 @@ type Stock = {
   description: string
   quantity: number
   supplier: string
+  email: string
+  siteUrl: string
 }
 
 type addOrUpdateProductCommand = {
