@@ -15,6 +15,7 @@ export function ProviderButton({ provider }: { provider: IProviders }) {
       disabled={oauthSignIn.isPending}
       onClick={() => oauthSignIn.signIn()}
     >
+      <GitHubLogoIcon />
       {provider.name}
     </Button>
   )

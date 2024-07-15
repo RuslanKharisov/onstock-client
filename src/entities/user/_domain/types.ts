@@ -14,13 +14,14 @@ export type CreateUserCommand = {
 }
 
 export type UserEntity = {
-  id?: string
+  id: string
   name?: string | null
   email: string
   image?: string | null
   role: Role
   emailVerified?: Date | null
   password?: string | null
+  isTwoFactorEnabled: boolean
 }
 
 export type SessionEntity = {

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
+import crypto from "crypto"
 import { dbClient } from "../../../shared/lib/db"
 import { tokenRepository } from "../_repositories/token"
 
@@ -47,4 +48,25 @@ export const generatePasswordResetToken = async (email: string) => {
     },
   })
   return passwordResetToken
+}
+
+export const generateTwoFactorToken = async (email: string) => {
+  const token = crypto.randomInt(100_000, 1_000_000).toString() 
+  const expires = new Date(new Date().getTime() + 15 * 60 * 1000)
+  // TODO: Изменить expires c 1 часа на 15 минут в Production
+
+  const existingToken = await tokenRepository.getTwoFactorTokenByEmail(email)
+
+  if (existingToken) {
+    await tokenRepository.deleteTwoFactorToken(existingToken.id)
+  }
+
+  const twoFatorToken = await dbClient.twoFactorToken.create({
+    data: {
+      email,
+      token,
+      expires,
+    },
+  })
+  return twoFatorToken
 }

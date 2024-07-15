@@ -2,7 +2,7 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export const sendVerifificationEmail = async (email: string, token: string) => {
+export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${process.env.RESEND_CONFIRM_URL}?token=${token}`
 
   await resend.emails.send({
@@ -23,5 +23,14 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     subject: "Сброс пароля",
     html: `<p> Click <a href="${resetPasswordLink}"> here </a> to reset password </p>`,
     // react: EmailTemplate({ firstName: "John" }),
+  })
+}
+
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  await resend.emails.send({
+    from: "Промышленный склад. Проверочный код. OnStock <onboarding@resend.dev>",
+    to: email,
+    subject: "2FA Code",
+    html: `<p> Your 2FA code: ${token} </p>`,
   })
 }

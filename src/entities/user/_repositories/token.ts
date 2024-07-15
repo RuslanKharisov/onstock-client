@@ -75,7 +75,7 @@ class TokenRepository {
    *
    * Пример использования:
    * ```
-   * const passwordResetToken = await getPasswordResetTokenByToken('12345');
+   * const passwordResetToken = await getPasswordResetTokenByToken('sometoken');
    * ```
    */
   async getPasswordResetTokenByToken(
@@ -91,6 +91,17 @@ class TokenRepository {
     }
   }
 
+  /**
+   * Асинхронно извлекает уникальный токен сброса пароля из базы данных по переданному Email.
+   *
+   * @param token - строка, представляющая токен, который нужно найти.
+   * @returns {Promise<PasswordResetToken | null>} Возвращает объект токена верификации или null, если токен не найден.
+   *
+   * Пример использования:
+   * ```
+   * const passwordResetToken = await getPasswordResetTokenByEmailToken('someEmail');
+   * ```
+   */
   async getPasswordResetTokenByEmail(
     email: string,
   ): Promise<PasswordResetToken | null> {
@@ -110,6 +121,60 @@ class TokenRepository {
         id: existingToken.id,
       },
     })
+  }
+
+  async getTwoFactorTokenByToken(token: string) {
+    try {
+      const twoFactorToken = await dbClient.twoFactorToken.findUnique({
+        where: { token },
+      })
+      return twoFactorToken
+    } catch {
+      return null
+    }
+  }
+
+  async getTwoFactorTokenByEmail(email: string) {
+    try {
+      const twoFactorToken = await dbClient.twoFactorToken.findFirst({
+        where: { email },
+      })
+      return twoFactorToken
+    } catch {
+      return null
+    }
+  }
+
+  async deleteTwoFactorToken(id: string) {
+    dbClient.twoFactorToken.delete({
+      where: { id: id },
+    })
+  }
+
+  async createTwoFactorConfirmationByUserId(userId:string) {
+    await dbClient.twoFactorConfirmation.create({
+      data: {
+        userId: userId,
+      },
+    })
+  }
+
+  async getTwoFactorConfirmationByUserId(userId: string) {
+    try {
+      const twoFactorConfirmation =
+        await dbClient.twoFactorConfirmation.findUnique({
+          where: { userId },
+        })
+      return twoFactorConfirmation
+    } catch {
+      return null
+    }
+  }
+
+  async deleteTwoFactorConfirmation(id: string) {
+    where: {
+      id: id
+    }
   }
 }
 

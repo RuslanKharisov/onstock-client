@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { dbClient } from "@/shared/lib/db"
 import { userRepository } from "./_repositories/user"
 import { ROLE } from "@prisma/client"
+import { tokenRepository } from "./_repositories/token"
 
 declare module "next-auth" {
   /**
@@ -44,7 +45,19 @@ export const {
       // Если Email не подтвержден, вход не разрешаем
       if (!existingUser?.emailVerified) return false
 
-      // TODO: Add 2FA check
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation =
+        await tokenRepository.getTwoFactorConfirmationByUserId(
+          existingUser.id,
+        )
+
+        if (!twoFactorConfirmation) return false
+
+        await tokenRepository.deleteTwoFactorConfirmation(
+          twoFactorConfirmation.id,
+        )
+      }
+
       return true
     },
 

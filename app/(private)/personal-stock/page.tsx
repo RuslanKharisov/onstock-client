@@ -16,7 +16,6 @@ export default async function PersonalStock({
 
   const supplier = await productsRepository.getSupplierId(sessionId)
   const stockProducts = await productsRepository.getStockListById(sessionId)
-  console.log("🚀 ~ stockProducts:", stockProducts)
 
   if (!supplier) return (
     <main className="container mx-auto py-10">

@@ -68,16 +68,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  role          ROLE      @default(USER)
-  name          String?
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  accounts      Account[]
-  sessions      Session[]
-  Supplier      Supplier?
+  id                      String                 @id @default(cuid())
+  email                   String                 @unique
+  role                    ROLE                   @default(USER)
+  name                    String?
+  emailVerified           DateTime?
+  image                   String?
+  password                String?
+  accounts                Account[]
+  sessions                Session[]
+  Supplier                Supplier?
+  isTwoFactorEnabled      Boolean                @default(false)
+  twoFactorConfirmationId String?
+  TwoFactorConfirmation   TwoFactorConfirmation?
 
   @@map("users")
 }
@@ -98,6 +101,23 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  token   String   @unique
+  email   String
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(onDelete: Cascade, fields: [userId], references: [id])
+
+  @@unique([userId])
 }
 
 enum ROLE {

@@ -6,7 +6,6 @@ import { ClientSafeProvider } from "node_modules/next-auth/lib/client";
 export function useOAuthSignIn(provider: ClientSafeProvider) {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  console.log("🚀 ~ useOAuthSignIn ~ callbackUrl:", callbackUrl)
   const oauthSignInMutation = useMutation({
     mutationFn: () =>
       signIn(provider.id, {

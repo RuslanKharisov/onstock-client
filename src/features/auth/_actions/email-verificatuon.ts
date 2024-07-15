@@ -16,7 +16,7 @@ export const newVerification = async (token: string) => {
     return { error: "Token has expired!" }
   }
 
-  const existingUser = await userRepository.getUsByEmail(existingToken.email)
+  const existingUser = await userRepository.getUserByEmail(existingToken.email)
 
   if (!existingUser) {
     return { error: "Email does not exist!" }

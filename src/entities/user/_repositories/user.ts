@@ -19,7 +19,7 @@ class UserRepository {
     })
   }
 
-  async getUsByEmail(email: string) {
+  async getUserByEmail(email: string) {
     try {
       return dbClient.user.findUnique({
         where: { email },

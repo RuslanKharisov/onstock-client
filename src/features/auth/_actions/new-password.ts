@@ -28,7 +28,7 @@ export const newPasword = async (
     return { error: "invalid token!" }
   }
 
-  const existingUser = await userRepository.getUsByEmail(existingToken.email)
+  const existingUser = await userRepository.getUserByEmail(existingToken.email)
 
   if (!existingUser) {
     return { error: "Email does not exist!" }
