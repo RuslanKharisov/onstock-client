@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { updateProfileAction } from "../_actions/update-profile";
-import { useAppSession } from "@/entities/user/session";
 import { useInvalidateProfile } from "@/entities/user/_queries";
+import { useSession } from "next-auth/react";
 
 export const useUpdateProfile = () => {
-  const { update: updateSession } = useAppSession();
+  const { update: updateSession } = useSession();
   const invalidateProfile = useInvalidateProfile();
 
   const { mutateAsync, isPending } = useMutation({

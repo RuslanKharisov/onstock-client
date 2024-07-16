@@ -23,7 +23,7 @@ export default async function Home() {
             <div className="flex w-11/12 md:w-8/12 xl:w-6/12">
                 <div className="flex rounded-md w-full">
                     <input type="text" name="q"
-                        className="w-full p-3 rounded-md rounded-r-none border border-2 border-gray-300 placeholder-current dark:bg-gray-500  dark:text-gray-300 dark:border-none "
+                        className="w-full p-3 rounded-md rounded-r-none border-2 border-gray-300 placeholder-current dark:bg-gray-500  dark:text-gray-300 dark:border-none "
                         placeholder="keyword" />
                     <button
                         className="inline-flex items-center gap-2 bg-violet-700 text-white text-lg font-semibold py-3 px-6 rounded-r-md">

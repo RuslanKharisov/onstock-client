@@ -1,11 +1,10 @@
 "use client"
 import { Role } from "@/entities/user/_domain/types"
-import { useAppSession } from "@/entities/user/session"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 export function MainNav({ role }: { role: Role | undefined }) {
-  const session = useAppSession()
-  // const id = session?.data?.user.id
+  const session = useSession()
 
   return (
     <nav className="flex flex-col items-start gap-6 text-sm font-medium md:flex-row md:items-center ">
