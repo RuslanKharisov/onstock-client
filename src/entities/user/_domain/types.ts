@@ -1,4 +1,4 @@
-export type UserId = string | undefined
+export type UserId = string
 export type Role = "ADMIN" | "SUPPLIER" | "USER"
 
 export const ROLES: Record<Role, Role> = {
@@ -24,6 +24,7 @@ export type UserEntity = {
   isTwoFactorEnabled: boolean
 }
 
+
 export type SessionEntity = {
   user?: {
     id?: string
@@ -38,10 +39,12 @@ export type SessionEntity = {
 // Projetions
 
 export type Profile = {
-  email: string
-  name?: string | null
-  image?: string | null
-}
+  id?: string
+    name?: string | null
+    email?: string | null
+    image?: string | null
+    role?: Role
+} 
 
 export type VerificationToken = {
   id: string

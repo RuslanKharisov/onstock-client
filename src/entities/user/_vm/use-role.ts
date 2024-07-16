@@ -1,6 +1,6 @@
-import { useAppSession } from "./use-app-session";
+import { useCurrentUser } from "./use-current-user-session"
 
 export const useRole = () => {
-  const session = useAppSession();
-  return session?.data?.user?.role;
-};
+  const session = useCurrentUser()
+  return session?.role
+}

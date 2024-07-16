@@ -17,26 +17,20 @@ import { LoginButton } from "@/features/auth/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { SessionEntity } from "@/entities/user/_domain/types"
 
-export function Profile({
-  session
-}: {
-  session: SessionEntity | null
-}) {
-
+export function Profile({ session }: { session: SessionEntity | null }) {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
-
-  if ( !session ) {
+  if (!session) {
     return (
       <LoginButton>
-        <Button variant={"outline"} >
+        <Button variant={"outline"}>
           <EnterIcon className="mr-2 h-4 w-4" /> Войти
         </Button>
       </LoginButton>
     )
   }
 
-   const user = session?.user
+  const user = session?.user
 
   return (
     <DropdownMenu>
@@ -45,7 +39,7 @@ export function Profile({
           variant="ghost"
           className="h-8 w-8 self-center rounded-full p-px"
         >
-           <ProfileAvatar profile={user} className="h-8 w-8" />
+          <ProfileAvatar profile={user} className="h-8 w-8" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-2 w-56 ">
