@@ -146,16 +146,33 @@ class TokenRepository {
   }
 
   async deleteTwoFactorToken(id: string) {
-    dbClient.twoFactorToken.delete({
-      where: { id: id },
-    })
+    try {
+      const result = await dbClient.twoFactorToken.delete({
+        where: { id: id },
+      })
+      console.log("token deleting:", result)
+    } catch (error) {
+      console.log("Deleting token Error")
+      throw error
+    }
   }
+
+  
+  // TwoFactorConfirmation
 
   async createTwoFactorConfirmationByUserId(userId:string) {
     await dbClient.twoFactorConfirmation.create({
       data: {
         userId: userId,
       },
+    })
+  }
+
+  async deleteTwoFactorConfirmation(id: string) {
+    await dbClient.twoFactorConfirmation.delete({
+      where: {
+        id: id
+      }
     })
   }
 
@@ -170,12 +187,7 @@ class TokenRepository {
       return null
     }
   }
-
-  async deleteTwoFactorConfirmation(id: string) {
-    where: {
-      id: id
-    }
-  }
+  
 }
 
 export const tokenRepository = new TokenRepository()
