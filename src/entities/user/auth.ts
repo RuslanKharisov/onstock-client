@@ -5,6 +5,7 @@ import { dbClient } from "@/shared/lib/db"
 import { userRepository } from "./_repositories/user"
 import { ROLE } from "@prisma/client"
 import { tokenRepository } from "./_repositories/token"
+import { UserEntity } from "./_domain/types"
 
 declare module "next-auth" {
   /**
@@ -13,7 +14,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: ROLE
-      customeFieldTemplate: string
+      isTwoFactorEnabled:boolean
     } & DefaultSession["user"]
   }
 }
@@ -47,9 +48,9 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation =
-        await tokenRepository.getTwoFactorConfirmationByUserId(
-          existingUser.id,
-        )
+          await tokenRepository.getTwoFactorConfirmationByUserId(
+            existingUser.id,
+          )
 
         if (!twoFactorConfirmation) return false
 
@@ -65,11 +66,19 @@ export const {
       if (token.sub && session.user) {
         session.user.id = token.sub
       }
+
       if (token.role && session.user) {
         session.user.role = token.role as ROLE
       }
 
-      session.user.customeFieldTemplate = "some custom field"
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
+      }
+
+      if (session.user) {
+        session.user.name = token.name
+        session.user.email = token.email as string
+      }
 
       return session
     },
@@ -77,7 +86,11 @@ export const {
       if (!token.sub) return token
       const existingUser = await userRepository.getUserById(token.sub)
       if (!existingUser) return token
+      token.name = existingUser.name
+      token.email = existingUser.email
       token.role = existingUser.role
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
+
       return token
     },
   },
