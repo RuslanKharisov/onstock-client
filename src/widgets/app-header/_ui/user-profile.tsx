@@ -17,7 +17,7 @@ import { LoginButton } from "@/features/auth/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { SessionEntity } from "@/entities/user/_domain/types"
 
-export function Profile({ session }: { session: SessionEntity | null }) {
+export function UserProfile({ session }: { session: SessionEntity | null }) {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
   if (!session) {

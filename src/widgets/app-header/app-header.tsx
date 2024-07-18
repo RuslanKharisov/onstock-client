@@ -1,7 +1,6 @@
 import { ToggleTheme } from "@/features/theme/toggle-theme"
 import { Logo } from "./_ui/logo"
 import { MainNav } from "./_ui/main-nav"
-import { Profile } from "./_ui/profile"
 import { Button } from "@/shared/ui/button"
 import {
   Sheet,
@@ -11,6 +10,7 @@ import {
 } from "@/shared/ui/sheet"
 import { Menu } from "lucide-react"
 import { auth } from "@/entities/user/auth"
+import { UserProfile } from "./_ui/user-profile"
 
 export async function AppHeader({
   variant,
@@ -48,8 +48,7 @@ export async function AppHeader({
           </div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">
             <ToggleTheme />
-            {<Profile session={session}/>}
-            {/* {isProfile && <Profile session={session}/>} */}
+            {<UserProfile session={session}/>}
           </div>
         </div>
       </div>
