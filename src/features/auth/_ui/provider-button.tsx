@@ -1,22 +1,12 @@
-"use client";
-import { Button } from "@/shared/ui/button";
-import { Spinner } from "@/shared/ui/spinner";
-import { Github } from "lucide-react";
-import { ClientSafeProvider } from "next-auth/react";
-import { useOAuthSignIn } from "../_vm/use-oauth-sign-in";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+"use client"
+import { Button } from "@/shared/ui/button"
+import { Spinner } from "@/shared/ui/spinner"
+import { useOAuthSignIn } from "../_vm/use-oauth-sign-in"
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import { IProviders } from "../models/types"
 
-export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
-  const oauthSignIn = useOAuthSignIn(provider);
-
-  const getIcon = (provider: ClientSafeProvider) => {
-    switch (provider.id) {
-      case "github":
-        return <GitHubLogoIcon className="mr-2 h-4 w-4" />;
-      default:
-        return null;
-    }
-  };
+export function ProviderButton({ provider }: { provider: IProviders }) {
+  const oauthSignIn = useOAuthSignIn(provider)
 
   return (
     <Button
@@ -25,12 +15,8 @@ export function ProviderButton({ provider }: { provider: ClientSafeProvider }) {
       disabled={oauthSignIn.isPending}
       onClick={() => oauthSignIn.signIn()}
     >
-      {oauthSignIn.isPending ? (
-        <Spinner className="mr-2 h-4 w-4 animate-spin" aria-label="Вход" />
-      ) : (
-        getIcon(provider)
-      )}
+      <GitHubLogoIcon />
       {provider.name}
     </Button>
-  );
+  )
 }

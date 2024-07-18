@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
+import { User } from 'lucide-react';
 import { Profile } from "../_domain/types";
 import { cn } from "@/shared/ui/utils";
 
@@ -16,7 +17,9 @@ export const ProfileAvatar = ({
   return (
     <Avatar className={cn(className)}>
       <AvatarImage src={profile.image ?? ""} className="object-cover" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarFallback>
+        <User/>
+      </AvatarFallback>
     </Avatar>
   );
 };

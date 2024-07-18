@@ -1,7 +1,6 @@
 import { ToggleTheme } from "@/features/theme/toggle-theme"
 import { Logo } from "./_ui/logo"
 import { MainNav } from "./_ui/main-nav"
-import { Profile } from "./_ui/profile"
 import { Button } from "@/shared/ui/button"
 import {
   Sheet,
@@ -10,13 +9,16 @@ import {
   SheetHeader,
 } from "@/shared/ui/sheet"
 import { Menu } from "lucide-react"
+import { auth } from "@/entities/user/auth"
+import { UserProfile } from "./_ui/user-profile"
 
-export function AppHeader({
+export async function AppHeader({
   variant,
 }: {
   variant: "auth" | "private" | "public"
 }) {
   const isProfile = variant !== "auth"
+  const session = await auth()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -32,7 +34,7 @@ export function AppHeader({
               <SheetHeader className=" mb-5 border-b pb-5">
                 <Logo />
               </SheetHeader>
-              <MainNav />
+              <MainNav role={session?.user?.role}/>
             </SheetContent>
           </Sheet>
         </div>
@@ -42,11 +44,11 @@ export function AppHeader({
         </div>
         <div className="flex flex-1 items-center">
           <div className="hidden md:flex">
-            <MainNav />
+            <MainNav role={session?.user?.role} />
           </div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">
             <ToggleTheme />
-            {isProfile && <Profile />}
+            {<UserProfile session={session}/>}
           </div>
         </div>
       </div>

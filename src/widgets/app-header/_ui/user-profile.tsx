@@ -11,32 +11,26 @@ import {
 import { LogOut, User } from "lucide-react"
 import { Button } from "@/shared/ui/button"
 import Link from "next/link"
-import { useAppSession } from "@/entities/user/session"
-import { Skeleton } from "@/shared/ui/skeleton"
 import { useSignOut } from "@/features/auth/use-sign-out"
 import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile"
 import { LoginButton } from "@/features/auth/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
+import { SessionEntity } from "@/entities/user/_domain/types"
 
-export function Profile() {
-  const session = useAppSession()
+export function UserProfile({ session }: { session: SessionEntity | null }) {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
-  if (session.status === "loading") {
-    return <Skeleton className="h-8 w-8 rounded-full" />
-  }
-
-  if (session.status === "unauthenticated") {
+  if (!session) {
     return (
       <LoginButton>
-        <Button variant={"outline"} >
+        <Button variant={"outline"}>
           <EnterIcon className="mr-2 h-4 w-4" /> Войти
         </Button>
       </LoginButton>
     )
   }
 
-  const user = session?.data?.user
+  const user = session?.user
 
   return (
     <DropdownMenu>

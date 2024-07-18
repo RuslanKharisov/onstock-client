@@ -19,7 +19,10 @@ export function SmartDataTable({
       name: stockItem.product.name,
       description: stockItem.product.description,
       quantity: stockItem.quantity,
-      supplier: stockItem.supplier.name
+      supplier: stockItem.supplier.name,
+      email: stockItem.supplier.email,
+      siteUrl: stockItem.supplier.siteUrl
+
     }));
   };
   const stockArray: Stock[] = convertToStockArray(stockList);

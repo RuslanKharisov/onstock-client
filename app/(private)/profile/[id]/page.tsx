@@ -1,4 +1,4 @@
-import { UpdateProfileForm } from "@/features/update-profile/update-profile-form";
+// import { UpdateProfileForm } from "@/features/update-profile/update-profile-form";
 import { Separator } from "@/shared/ui/separator";
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
@@ -11,7 +11,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         </p>
       </div>
       <Separator />
-      <UpdateProfileForm userId={params.id} />
+      {/* <UpdateProfileForm userId={params.id} /> */}
     </main>
   );
 }
