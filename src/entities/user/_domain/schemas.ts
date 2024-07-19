@@ -1,8 +1,8 @@
 import { z } from "zod"
 
 export const profileSchema = z.object({
-  email: z.string(),
-  name: z.string().nullable().optional(),
+  name: z.string().optional(),
+  email: z.string().optional(),
   image: z.string().nullable().optional(),
 })
 
