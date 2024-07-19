@@ -1,4 +1,5 @@
 
+import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns";
 import { productsRepository } from "@/features/products-list/products.repository";
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table";
 
@@ -34,7 +35,11 @@ export default async function Home() {
         </div>
     </div>
 </div>
-      <SmartDataTable stockList={stockProducts} variant="public" />
+      <SmartDataTable
+       stockList={stockProducts} 
+       columns={ProductsTableColumns} 
+       variant="public" 
+       />
     </main>
   );
 }

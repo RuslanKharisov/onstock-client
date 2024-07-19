@@ -8,7 +8,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const Columns: ColumnDef<Stock>[] = [
+export const ProductsTableColumns: ColumnDef<Stock>[] = [
   {
     accessorKey: "sku",
     header: "Артикул",
@@ -34,7 +34,6 @@ export const Columns: ColumnDef<Stock>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const stock = row.original
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -58,4 +57,3 @@ export const Columns: ColumnDef<Stock>[] = [
     },
   },
 ]
-

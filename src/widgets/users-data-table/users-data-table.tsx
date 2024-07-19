@@ -4,24 +4,22 @@ import { DataTable } from "./_ui/DataTable";
 import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns";
 import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns";
 import { ColumnDef } from "@tanstack/react-table";
+import { UserEntity } from "@/entities/user/_domain/types";
 
-export function SmartDataTable({
-  stockList,
+export function UsersDataTable({
+  tableData,
   columns,
   variant,
 }: {
-  stockList: StockListElementWithRelations[];
-  columns: ColumnDef<Stock>[]
+  tableData: UserEntity[];
+  columns: ColumnDef<UserEntity>[]
   variant: "auth" | "private" | "public"
 }) {
   const isProfile = variant === "private";
 
-  const stockArray: Stock[] = convertToStockArray(stockList);
-
   return (
     <DataTable
-    // columns={isProfile ? StockTableColumns : ProductsTableColumns}
     columns={columns}
-    data={stockArray}/>
+    data={tableData}/>
   )
 }
