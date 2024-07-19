@@ -17,7 +17,7 @@ const SettingsPage = async () => {
       </ul>
     ) ) }
     <br />
-    Session is : 
+    Server session is : 
     {JSON.stringify(session)}
   </div>
 }

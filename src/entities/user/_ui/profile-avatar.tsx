@@ -1,13 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import { User } from 'lucide-react';
-import { Profile } from "../_domain/types";
+import { SessionUser } from "../_domain/types";
 import { cn } from "@/shared/ui/utils";
 
 export const ProfileAvatar = ({
   profile,
   className,
 }: {
-  profile?: Profile;
+  profile?: SessionUser;
   className?: string;
 }) => {
     if (!profile) {

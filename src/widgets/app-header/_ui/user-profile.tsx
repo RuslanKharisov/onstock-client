@@ -16,11 +16,12 @@ import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile"
 import { LoginButton } from "@/features/auth/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { SessionEntity } from "@/entities/user/_domain/types"
+import { useCurrentUser } from "@/entities/user/_vm/use-current-user-session"
 
-export function UserProfile({ session }: { session: SessionEntity | null }) {
+export function UserProfile({ serverSession }: { serverSession: SessionEntity | null }) {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
-  if (!session) {
+  if (!serverSession) {
     return (
       <LoginButton>
         <Button variant={"outline"}>
@@ -30,7 +31,8 @@ export function UserProfile({ session }: { session: SessionEntity | null }) {
     )
   }
 
-  const user = session?.user
+  const clientSession = useCurrentUser()
+  const user = clientSession.data?.user
 
   return (
     <DropdownMenu>
@@ -53,7 +55,7 @@ export function UserProfile({ session }: { session: SessionEntity | null }) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/${user?.id}`}>
+            <Link href="/profile">
               <User className="mr-2 h-4 w-4" />
               <span>Профиль</span>
             </Link>
