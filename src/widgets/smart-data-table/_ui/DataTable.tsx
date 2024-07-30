@@ -40,16 +40,25 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="w-full">
-            <div className="flex items-center py-4">
+        <div className="w-full mx-auto">
+            <div className="flex gap-5 flex-col lg:flex-row items-center justify-center py-4 my-5">
                 <Input
                   name="sku"
-                    placeholder="Filter sku..."
+                    placeholder="Искать по артикулу ..."
                     value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("sku")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="max-w-sm border-2"
+                />
+                <Input
+                  name="description"
+                    placeholder="Искать в описании ..."
+                    value={(table.getColumn("description")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) =>
+                        table.getColumn("description")?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm border-2"
                 />
             </div>
             <DataTablePagination table={table}/>

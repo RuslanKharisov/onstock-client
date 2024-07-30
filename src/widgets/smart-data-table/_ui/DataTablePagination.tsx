@@ -18,14 +18,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
     table,
   }: DataTablePaginationProps<TData>) {
     return (
-      <div className="flex items-center justify-between px-2">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div className="flex flex-col items-center px-2 my-5">
+        <div className="flex-1 text-sm text-muted-foreground mb-5">
+          {table.getFilteredSelectedRowModel().rows.length} из{" "}
+          {table.getFilteredRowModel().rows.length} строк(и) выбрано.
         </div>
-        <div className="flex items-center space-x-6 lg:space-x-8">
+        <div className="flex items-center space-x-3 lg:space-x-8">
           <div className="flex items-center space-x-2">
-            <p className="text-sm font-medium">Rows per page</p>
+            <p className="text-sm font-medium">Показать</p>
             <Select
               value={`${table.getState().pagination.pageSize}`}
               onValueChange={(value) => {
