@@ -1,10 +1,27 @@
 import { z } from "zod"
 
-export const profileSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().optional(),
-  image: z.string().nullable().optional(),
-})
+export const ProfileSchema = z
+  .object({
+    name: z.string().optional(),
+    email: z.string().optional(),
+    image: z.string().nullable().optional(),
+    password: z.string().min(6).optional(),
+    newPassword: z.string().min(6).optional(),
+  })
+  .refine(
+    (data) => !data.password || !!data.newPassword,
+    {
+      message: "Укажите новый пароль",
+      path: ["newPassword"],
+    },
+  )
+  .refine(
+    (data) => !!data.password || !data.newPassword,
+    {
+      message: "Укажите пароль",
+      path: ["password"],
+    },
+  )
 
 export const LoginSchema = z.object({
   email: z.string().email({

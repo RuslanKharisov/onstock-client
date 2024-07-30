@@ -7,11 +7,11 @@ import {
 } from "../_domain/types"
 
 class UserRepository {
-  async getAllUsers(): Promise<UserEntity[]> {
+  async getAllUsers() {
     return dbClient.user.findMany()
   }
 
-  async getUserById(userId: UserId): Promise<UserEntity> {
+  async getUserById(userId: UserId) {
     return dbClient.user.findUniqueOrThrow({
       where: {
         id: userId,
@@ -29,7 +29,7 @@ class UserRepository {
     }
   }
 
-  async createUser(user: CreateUserCommand): Promise<UserEntity> {
+  async createUser(user: CreateUserCommand) {
     return await dbClient.user.create({
       data: user,
     })
@@ -45,7 +45,7 @@ class UserRepository {
   async updateUserEmail(
     user: UserEntity,
     existingToken: VerificationToken,
-  ): Promise<UserEntity> {
+  ) {
     return dbClient.user.update({
       where: { id: user.id },
       data: {
@@ -58,7 +58,7 @@ class UserRepository {
   async updateUserPasword(
     user: UserEntity,
     password: string,
-  ): Promise<UserEntity> {
+  ) {
     return dbClient.user.update({
       where: { id: user.id },
       data: {

@@ -6,6 +6,7 @@ import { userRepository } from "./_repositories/user"
 import { ROLE } from "@prisma/client"
 import { tokenRepository } from "./_repositories/token"
 import { UserEntity } from "./_domain/types"
+import { accountRepository } from "./_repositories/account"
 
 declare module "next-auth" {
   /**
@@ -14,7 +15,8 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: ROLE
-      isTwoFactorEnabled:boolean
+      isTwoFactorEnabled: boolean
+      isOAuth: boolean
     } & DefaultSession["user"]
   }
 }
@@ -78,14 +80,21 @@ export const {
       if (session.user) {
         session.user.name = token.name
         session.user.email = token.email as string
+        session.user.isOAuth = token.isOAuth as boolean
       }
-
       return session
     },
+
     async jwt({ token }) {
       if (!token.sub) return token
       const existingUser = await userRepository.getUserById(token.sub)
       if (!existingUser) return token
+
+      const existingAccount = await accountRepository.getAcount(existingUser.id)
+      console.log("🚀 ~ jwt ~ existingAccount:", existingAccount)
+      console.log("🚀 ~ jwt ~ existingAccount_bool:", !!existingAccount)
+
+      token.isOAuth = !!existingAccount
       token.name = existingUser.name
       token.email = existingUser.email
       token.role = existingUser.role

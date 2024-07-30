@@ -15,7 +15,7 @@ export type CreateUserCommand = {
 
 export type UserEntity = {
   id: string
-  name?: string
+  name?: string | null
   email: string
   image?: string | null
   role: Role
