@@ -16,6 +16,12 @@ export function MainNav({ role }: { role: Role | undefined }) {
       </Link>
       <Link
         className="text-foreground/60 transition-colors hover:text-foreground/80"
+        href={`/prising`}
+      >
+        Тарифы
+      </Link>
+      <Link
+        className="text-foreground/60 transition-colors hover:text-foreground/80"
         href="/news"
       >
         Новости

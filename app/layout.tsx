@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import "@/globalStyles*"
-import { Inter, Roboto_Mono } from "next/font/google"
+import { Roboto_Mono } from "next/font/google"
 import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
 import { auth } from "@/entities/user/auth"
@@ -11,12 +11,6 @@ export const metadata: Metadata = {
   description:
     "Поиск оборудования и запасных частей на складах Российских компаний по всей стране",
 }
-
-const inter = Inter({
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  variable: "--font-inter",
-})
 
 const roboto_mono = Roboto_Mono({
   subsets: ["latin", "cyrillic"],
@@ -34,7 +28,7 @@ export default async function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "h-screen bg-background font-sans antialiased",
           `${roboto_mono.variable}`,
         )}
       >
