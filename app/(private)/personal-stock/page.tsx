@@ -16,7 +16,6 @@ export default async function PersonalStock({
   if (!sessionId) return null
 
   const supplier = await productsRepository.getSupplierId(sessionId)
-  console.log("🚀 ~ supplier:", supplier)
   const stockProducts = await productsRepository.getStockListById(sessionId)
 
   if (!supplier)
