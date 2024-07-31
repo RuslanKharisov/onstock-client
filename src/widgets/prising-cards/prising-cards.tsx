@@ -15,7 +15,7 @@ import { Item } from "@radix-ui/react-dropdown-menu"
 
 export const PrisingCards = ({ CaseList }: { CaseList: PriceCase[] }) => {
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="">
       <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
         <div className="mx-auto mb-8 max-w-screen-md text-center lg:mb-12">
           <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -41,11 +41,11 @@ export const PrisingCards = ({ CaseList }: { CaseList: PriceCase[] }) => {
               </CardHeader>
               <CardContent className="grid gap-4 flex-grow">
                 <div className="flex items-center justify-center">
-                  <RussianRuble size={36} strokeWidth={3} color="#7349E5" />
+                  <RussianRuble size={36} strokeWidth={3} className="text-primary" />
                   <span className="mr-2 text-4xl font-extrabold">
                     {caseItem.price}
                   </span>
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-foreground">
                     /месяц
                   </span>
                 </div>
@@ -56,7 +56,7 @@ export const PrisingCards = ({ CaseList }: { CaseList: PriceCase[] }) => {
                       className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
                     >
                       <span>
-                        <Check size={20} color="#53C069" />
+                        <Check size={20} className="text-primary" />
                       </span>
                       <p className=" leading-none">
                         {item.name} :
