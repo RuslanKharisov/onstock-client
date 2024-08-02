@@ -21,6 +21,18 @@ model Supplier {
   stocks  Stock[]
   userId  String  @unique
   user    User    @relation(fields: [userId], references: [id])
+  tariff       TariffType?  // Добавлено поле для хранения выбранного тарифа
+  subscriptions Subscription[] // Связь с подписками поставщика
+}
+
+model Subscription {
+  id            Int       @id @default(autoincrement())
+  supplier      Supplier  @relation(fields: [supplierId], references: [id])
+  supplierId    Int
+  tariffType    TariffType
+  maxProducts   Int       // Максимальное количество товаров по тарифу
+  startDate     DateTime  @default(now())
+  endDate       DateTime  // Дата истечения срока подписки
 }
 
 model Stock {
@@ -124,4 +136,10 @@ enum ROLE {
   ADMIN
   SUPPLIER
   USER
+}
+
+enum TariffType {
+  TARIFF_1
+  TARIFF_2
+  TARIFF_3
 }
