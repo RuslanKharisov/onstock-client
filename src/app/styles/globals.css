@@ -66,6 +66,15 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground flex flex-col;
   }
+
+  main {
+    flex-grow: 1;
+  }
+
+  h1 {
+    @apply mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white
+  }
+
 }

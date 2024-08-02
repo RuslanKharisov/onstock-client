@@ -16,7 +16,7 @@ import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile"
 import { LoginButton } from "@/features/auth/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { SessionEntity } from "@/entities/user/_domain/types"
-import { useCurrentUser } from "@/entities/user/_vm/use-current-user-session"
+import { useAppSession } from "@/entities/user/_vm/use-current-user-session"
 
 export function UserProfile({ serverSession }: { serverSession: SessionEntity | null }) {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
@@ -31,7 +31,7 @@ export function UserProfile({ serverSession }: { serverSession: SessionEntity | 
     )
   }
 
-  const clientSession = useCurrentUser()
+  const clientSession = useAppSession()
   const user = clientSession.data?.user
 
   return (

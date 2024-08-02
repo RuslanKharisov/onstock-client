@@ -1,7 +1,6 @@
 "use client"
 
-import { useCurrentUser } from "@/entities/user/_vm/use-current-user-session"
-import { profileSettings } from "../user/_actions/profile-settings"
+import { useAppSession } from "@/entities/user/_vm/use-current-user-session"
 import { ProfileSchema } from "@/entities/user/_domain/schemas"
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -22,13 +21,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
+import { ProfileAvatar } from "@/entities/user/profile"
+import { updateProfileData } from "@/entities/user/_use-cases/update-profile"
 
 const UpdateProfileForm = () => {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
   const [isPending, startTransition] = useTransition()
   const { update } = useSession()
-  const clientSession = useCurrentUser()
+  const clientSession = useAppSession()
   const user = clientSession.data?.user
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
@@ -41,10 +42,9 @@ const UpdateProfileForm = () => {
     },
   })
 
-
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
-      profileSettings(values)
+      updateProfileData(values)
         .then((data) => {
           if (data?.error) {
             setError(data.error)
@@ -58,10 +58,10 @@ const UpdateProfileForm = () => {
     })
   }
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <h2> Данные пользователя</h2>
+      <Card className="w-[315px]">
+        <CardHeader className=" items-center gap-3">
+        <h2 className="text-center text-lg font-bold">Форма редактирования профиля</h2>
+          <ProfileAvatar profile={user} />
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -72,11 +72,11 @@ const UpdateProfileForm = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>Имя</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder="name"
+                          placeholder="Имя"
                           disabled={isPending}
                         />
                       </FormControl>
@@ -107,12 +107,12 @@ const UpdateProfileForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Почта</FormLabel>
+                      <FormLabel>Текущий пароль</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type="password"
-                          placeholder="Пароль"
+                          placeholder="********"
                           disabled={isPending}
                         />
                       </FormControl>
@@ -125,12 +125,12 @@ const UpdateProfileForm = () => {
                   name="newPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Почта</FormLabel>
+                      <FormLabel>Новый пароль</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type="password"
-                          placeholder="Новый пароль"
+                          placeholder="********"
                           disabled={isPending}
                         />
                       </FormControl>
@@ -149,12 +149,6 @@ const UpdateProfileForm = () => {
           </Form>
         </CardContent>
       </Card>
-      <br />
-      <p>
-        <span className=" font-semibold">Image: </span>
-        {user?.image}
-      </p>
-    </>
   )
 }
 

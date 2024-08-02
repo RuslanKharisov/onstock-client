@@ -6,7 +6,7 @@ type Stock = {
   quantity: number
   supplier: string
   email: string
-  siteUrl: string
+  siteUrl: string | null
 }
 
 type StockListElementWithRelations = {
@@ -38,6 +38,6 @@ type getSupplier = {
   id: number
   name: string
   email: string
-  siteUrl: string
+  siteUrl: string | null
   userId: string
 }

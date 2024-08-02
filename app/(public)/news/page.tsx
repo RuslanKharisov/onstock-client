@@ -1,8 +1,8 @@
 
 export default async function News () {
     return (
-        <main className="container min-h-screen px-8">
-            <h1 className=" text-center text-3xl my-10">Новости</h1>
+        <main className="mx-auto container px-4 py-8 lg:px-6 lg:py-16">
+            <h1 className="text-center">Новости</h1>
         </main>
       );
 }

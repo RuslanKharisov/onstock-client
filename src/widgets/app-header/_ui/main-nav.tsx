@@ -10,22 +10,32 @@ export function MainNav({ role }: { role: Role | undefined }) {
     <nav className="flex flex-col items-start gap-6 text-sm font-medium md:flex-row md:items-center ">
       <Link
         className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href={`/personal-stock`}
+        href={`/stock`}
       >
-        Мой склад
+        Онлайн склад
       </Link>
+
+      {/* <Link
+        className="text-foreground/60 transition-colors hover:text-foreground/80"
+        href="/news"
+      >
+        Новости
+      </Link> */}
+
       <Link
         className="text-foreground/60 transition-colors hover:text-foreground/80"
         href={`/prising`}
       >
         Тарифы
       </Link>
+
       <Link
         className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href="/news"
+        href={`/personal-stock`}
       >
-        Новости
+        Мой склад
       </Link>
+
       {role === "ADMIN" && (
         <Link
           className="text-foreground/60 transition-colors hover:text-foreground/80"

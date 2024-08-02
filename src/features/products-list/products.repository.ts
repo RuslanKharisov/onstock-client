@@ -1,7 +1,7 @@
 import { dbClient } from "@/shared/lib/db"
 import { cache } from "react"
 class ProductsRepository {
-  async getSupplierId(id: string): Promise<getSupplier | null> {
+  async getSupplierId(id: string) {
     // const connection = await dbClient.$connect();
     try {
       const supplier = await dbClient.supplier.findUnique({
@@ -18,7 +18,7 @@ class ProductsRepository {
     }
   }
 
-  async getProductsList(): Promise<ProductListElement[]> {
+  async getProductsList() {
     // const connection = await dbClient.$connect();
     try {
       const products = await dbClient.product.findMany()
@@ -30,7 +30,7 @@ class ProductsRepository {
     }
   }
 
-  async getStockList(): Promise<StockListElementWithRelations[]> {
+  async getStockList() {
     // const connection = await dbClient.$connect();
     try {
       const stocks = await dbClient.stock.findMany({
@@ -47,7 +47,7 @@ class ProductsRepository {
     }
   }
 
-  async getStockListById(id: string): Promise<StockListElementWithRelations[]> {
+  async getStockListById(id: string) {
     // поиск поставщика по id
     const supplier = await dbClient.supplier.findUnique({
       where: {
@@ -93,7 +93,6 @@ class ProductsRepository {
       // если товар в базе данных существует
       if (existingProduct) {
         if (isProductExistInSupplierStock?.id) {
-          console.log("Товар найден у поствщика, обновляем количество")
           await dbClient.stock.update({
             where: {
               id: isProductExistInSupplierStock.id,
@@ -114,9 +113,6 @@ class ProductsRepository {
         }
       } else {
         // Если продукт не существует, создаем новый продукт
-        console.log(
-          "🚀 ~ ProductsRepository ~Продукт не существует, создаем новый продукт:",
-        )
         const newProduct = await dbClient.product.create({
           data: {
             sku: command.sku,

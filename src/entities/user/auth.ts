@@ -91,9 +91,6 @@ export const {
       if (!existingUser) return token
 
       const existingAccount = await accountRepository.getAcount(existingUser.id)
-      console.log("🚀 ~ jwt ~ existingAccount:", existingAccount)
-      console.log("🚀 ~ jwt ~ existingAccount_bool:", !!existingAccount)
-
       token.isOAuth = !!existingAccount
       token.name = existingUser.name
       token.email = existingUser.email

@@ -1,24 +1,33 @@
-import { Profile, SessionEntity, UserId } from "../_domain/types";
-import { createProfileAbility } from "../_domain/ability";
-import { AuthorizatoinError } from "@/shared/lib/errors";
+"use server"
+
+import { z } from "zod";
+import { ProfileSchema } from "../_domain/schemas";
 import { profileRepository } from "../_repositories/profile";
+import { userRepository } from "../_repositories/user";
+import { getAppSessionServer } from "../session.server";
 
-type UpdateProfile = {
-  userId: UserId;
-  data: Partial<Profile>;
-  session: SessionEntity;
-};
-
-export class UpdateProfileUseCase {
-  async exec({ userId, session, data }: UpdateProfile): Promise<Profile> {
-    const profileAbility = createProfileAbility(session);
-
-    if (!profileAbility.canUpdateProfile(userId)) {
-      throw new AuthorizatoinError();
+export const updateProfileData = async (
+  values: z.infer<typeof ProfileSchema>,
+) => {
+  const session = await getAppSessionServer()
+    const user = session?.user
+  
+    if (!user) {
+      return { error: "Unauthorized" }
     }
+  
+    const dbUser = await userRepository.getUserById(user.id)
+  
+    if (!dbUser) {
+      return { error: "Unauthorised" }
+    }
+  
+    if (user.isOAuth) {
+      values.email = undefined
+      values.password = undefined
+    }
+  
+    await profileRepository.updateUser(dbUser.id, values)
+    return { success: "Данные обновлены" }
 
-    return await profileRepository.update(userId, data);
-  }
 }
-
-export const updateProfileUseCase = new UpdateProfileUseCase();
