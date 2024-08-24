@@ -20,6 +20,6 @@ type addOrUpdateProductCommand = {
   name: string
   description: string
   quantity: number | string
-  supplierId?: number | string
+  supplierId: number 
   email?: string
 }

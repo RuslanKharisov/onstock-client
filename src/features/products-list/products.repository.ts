@@ -1,6 +1,9 @@
 import { dbClient } from "@/shared/lib/db"
 import { cache } from "react"
 class ProductsRepository {
+
+
+
   async getSupplierId(id: string) {
     // const connection = await dbClient.$connect();
     try {
@@ -75,8 +78,42 @@ class ProductsRepository {
     }
   }
 
+ 
+
   addOrUpdateProduct = async (command: addOrUpdateProductCommand) => {
+    console.log("🚀 ~ ProductsRepository ~ addOrUpdateProduct= ~ command:", command)
     try {
+      // Получаем поставщика и его тариф
+      const supplier = await dbClient.supplier.findUnique({
+        where: { id: Number(command.supplierId) },
+        include: { subscriptions: true },
+      })
+      console.log("🚀 ~ ProductsRepository ~ addOrUpdateProduct= ~ supplier:", supplier)
+
+      if (!supplier) {
+        return { error: "Поставщик не найден" }
+      }
+
+      const currentSubscription = supplier.subscriptions.find(
+        (subscription) => {
+          const now = new Date()
+          return subscription.startDate <= now && subscription.endDate >= now
+        },
+      )
+
+      if (!currentSubscription) {
+        return { error: "Нет активной подписки" } 
+      }
+
+      // Проверяем лимит уникальных SKU в зависимости от тарифа
+      const currentProductsCount = await dbClient.stock.count({
+        where: { supplierId: Number(command.supplierId) },
+      })
+
+      if (currentProductsCount >= currentSubscription.maxProducts) {
+        return { error: `Достигнут лимит в ${currentSubscription?.maxProducts} уникальных товаров для этого тарифа` }
+      }
+
       // получение продукта по sku
       const existingProduct = await dbClient.product.findUnique({
         where: {
@@ -132,10 +169,9 @@ class ProductsRepository {
           },
         })
       }
+      return { success: "Продукты успешно добавлены или обновлены" };
     } catch (error) {
-      console.error("Error creating or updating product:", error)
-    } finally {
-      await dbClient.$disconnect()
+    return { error: 'Неизвестная ошибка'};
     }
   }
 

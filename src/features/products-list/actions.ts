@@ -7,15 +7,32 @@ export const createProductAction = async (
   command: addOrUpdateProductCommand,
   revalidatePagePath: string,
 ) => {
-  await productsRepository.addOrUpdateProduct(command);
-  revalidatePath(revalidatePagePath);
+  try {
+    const data = await productsRepository.addOrUpdateProduct(command);
+    
+    if (data?.error) {
+      return { error: data.error };
+    }
+    
+    if (data.success) {
+      return { success: data.success };
+    }
+
+    // Если нет ни ошибки, ни успешного результата
+    return { error: "Unknown error occurred" };
+  } catch (error) {
+    // Обработка неожиданных ошибок
+    return { error: "Internal server error: " + (error as Error).message };
+  } finally {
+    revalidatePath(revalidatePagePath);
+  }
 };
 
 
 export const deleteStockElementItemAction = async (
-  command: DeleteStockElementCommand,
+  stockId: string,
   revalidatePagePath: string,
 ) => {
-    await productsRepository.deleteStockElement(command)
+    await productsRepository.deleteStockElement(stockId)
     revalidatePath(revalidatePagePath);
 }

@@ -13,7 +13,7 @@ import { Textarea } from "@/shared/ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { startTransition, useState, useTransition } from "react";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/ui/utils";
 import { createProductAction } from "@/features/products-list/actions";
@@ -34,6 +34,8 @@ export function UpdateFromForm({
     supplier: getSupplier;
     revalidatePagePath: string;
 }) {
+  const [error, setError] = useState<string | undefined>()
+  const [success, setSuccess] = useState<string | undefined>()
     const [isCreateTransiton, startCreateTransition] = useTransition();
 
     const form = useForm({
@@ -48,10 +50,20 @@ export function UpdateFromForm({
     });
 
     const onSubmit = (data: any) => {
-        startCreateTransition(async () => {
-            createProductAction(data, revalidatePagePath);
-        });
-    };
+      startTransition(() => {
+         createProductAction(data, revalidatePagePath)
+         .then((data) => {
+          if (data?.error) {
+            setError(data.error)
+          }
+          if (data.success) {
+            setSuccess(data.success)
+          }
+        })
+        .catch(() => setError("Что-то пошло не так"))
+        
+      })
+    }
 
     return (
         <Card className="w-[320px] ">
@@ -139,6 +151,10 @@ export function UpdateFromForm({
                     </form>
                 </Form>
             </CardContent>
+            <CardContent>
+        { success && <h2 className="text-center bg-green-300 text-xs rounded-lg px-3 py-3 mb-2 ">{success}</h2> }
+        { error && <h2 className="text-center bg-red-200 text-xs rounded-lg px-3 py-3 ">{error}</h2> }
+      </CardContent>
         </Card>
     );
 }

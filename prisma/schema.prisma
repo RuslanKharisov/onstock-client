@@ -25,15 +25,6 @@ model Supplier {
   subscriptions Subscription[] // Связь с подписками поставщика
 }
 
-model Subscription {
-  id            Int       @id @default(autoincrement())
-  supplier      Supplier  @relation(fields: [supplierId], references: [id])
-  supplierId    Int
-  tariffType    TariffType
-  maxProducts   Int       // Максимальное количество товаров по тарифу
-  startDate     DateTime  @default(now())
-  endDate       DateTime  // Дата истечения срока подписки
-}
 
 model Stock {
   id         String   @id @default(cuid())
@@ -136,6 +127,16 @@ enum ROLE {
   ADMIN
   SUPPLIER
   USER
+}
+
+model Subscription {
+  id            Int       @id @default(autoincrement())
+  supplier      Supplier  @relation(fields: [supplierId], references: [id])
+  supplierId    Int
+  tariffType    TariffType
+  maxProducts   Int       // Максимальное количество товаров по тарифу
+  startDate     DateTime  @default(now())
+  endDate       DateTime  // Дата истечения срока подписки
 }
 
 enum TariffType {
