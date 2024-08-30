@@ -1,4 +1,5 @@
 import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
+import { tariffRepository } from "@/entities/tariff/_repositories/tariff.repository"
 import { getAppSessionServer } from "@/entities/user/session.server"
 import { productsRepository } from "@/features/products-list/products.repository"
 import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
@@ -20,6 +21,7 @@ export default async function PersonalStock({
 
   const supplier = await productsRepository.getSupplierId(sessionId)
   const stockProducts = await productsRepository.getStockListById(sessionId)
+  console.log("🚀 ~ stockProducts:", stockProducts.length)
 
   if (!supplier)
     return (
@@ -35,9 +37,31 @@ export default async function PersonalStock({
       </main>
     )
 
+  const currentTariff = await tariffRepository.getSupplierTariffById(
+    supplier.tariffId,
+  )
+  console.log("🚀 ~ currentTariff:", currentTariff)
+
   return (
     <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-16">
-      <h1 className=" mb-8 text-center ">Склад: {supplier?.name} </h1>
+      <div className="text-center mb-8">
+        <h1 className="   ">Склад: {supplier?.name} </h1>
+        <p className=" font-semibold">
+          {" "}
+          Текущий тариф:{" "}
+          <span className="font-normal">{currentTariff?.name}</span>{" "}
+        </p>
+        <p className=" font-semibold">
+          {" "}
+          Максимальное количество по текущему тарифу:{" "}
+          <span className="font-normal">{currentTariff?.maxProducts}</span>{" "}
+        </p>
+        <p className=" font-semibold">
+          {" "}
+          Товарных позиций на складе:{" "}
+          <span className="font-normal">{stockProducts.length}</span>{" "}
+        </p>
+      </div>
       <section className="mb-8">
         {supplier && (
           <ApdateStock

@@ -86,13 +86,14 @@ class ProductsRepository {
       // Получаем поставщика и его тариф
       const supplier = await dbClient.supplier.findUnique({
         where: { id: Number(command.supplierId) },
-        include: { subscriptions: true },
+        include: { tariff: true, subscriptions: true },
       })
       console.log("🚀 ~ ProductsRepository ~ addOrUpdateProduct= ~ supplier:", supplier)
 
       if (!supplier) {
         return { error: "Поставщик не найден" }
       }
+
 
       const currentSubscription = supplier.subscriptions.find(
         (subscription) => {
@@ -110,8 +111,8 @@ class ProductsRepository {
         where: { supplierId: Number(command.supplierId) },
       })
 
-      if (currentProductsCount >= currentSubscription.maxProducts) {
-        return { error: `Достигнут лимит в ${currentSubscription?.maxProducts} уникальных товаров для этого тарифа` }
+      if (supplier.tariff && currentProductsCount >= supplier.tariff.maxProducts) {
+        return { error: `Достигнут лимит в ${supplier.tariff?.maxProducts} уникальных товаров для этого тарифа` }
       }
 
       // получение продукта по sku
@@ -133,7 +134,7 @@ class ProductsRepository {
           await dbClient.stock.update({
             where: {
               id: isProductExistInSupplierStock.id,
-              productId: existingProduct?.id,
+              // productId: existingProduct?.id,
             },
             data: {
               quantity: Number(command.quantity),
@@ -191,6 +192,7 @@ class ProductsRepository {
     command: DeleteProductListElementCommand,
   ): Promise<void> => {
     try {
+      console.log('deleting')
       await dbClient.product.delete({
         where: { id: command.id },
       })

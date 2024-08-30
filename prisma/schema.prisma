@@ -13,17 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Supplier {
-  id      Int     @id @default(autoincrement())
-  name    String
-  email   String
-  siteUrl String?
-  stocks  Stock[]
-  userId  String  @unique
-  user    User    @relation(fields: [userId], references: [id])
-  tariff       TariffType?  // Добавлено поле для хранения выбранного тарифа
-  subscriptions Subscription[] // Связь с подписками поставщика
-}
 
 
 model Stock {
@@ -129,18 +118,36 @@ enum ROLE {
   USER
 }
 
+model Supplier {
+  id      Int     @id @default(autoincrement())
+  name    String
+  email   String
+  siteUrl String?
+  stocks  Stock[]
+  userId  String  @unique
+  user    User    @relation(fields: [userId], references: [id])
+  tariffId      Int           // Связь с тарифом
+  tariff        Tariff        @relation(fields: [tariffId], references: [id])
+  subscriptions Subscription[] // Связь с подписками поставщика
+}
+
 model Subscription {
   id            Int       @id @default(autoincrement())
   supplier      Supplier  @relation(fields: [supplierId], references: [id])
   supplierId    Int
-  tariffType    TariffType
-  maxProducts   Int       // Максимальное количество товаров по тарифу
+  tariff        Tariff    @relation(fields: [tariffId], references: [id])
+  tariffId      Int
   startDate     DateTime  @default(now())
   endDate       DateTime  // Дата истечения срока подписки
 }
 
-enum TariffType {
-  TARIFF_1
-  TARIFF_2
-  TARIFF_3
+// Модель для хранения тарифов
+model Tariff {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  maxProducts   Int       // Максимальное количество товаров по тарифу
+  pricePerUnit  Float     // Стоимость за единицу товара
+  subscriptions Subscription[] // Связь с подписками
+  Supplier Supplier[]
 }
+

@@ -87,8 +87,8 @@ export function UpdateFromFile({ supplier }: { supplier: getSupplier }) {
         </Button>
       </CardContent>
       <CardContent>
-        { success && <h2 className="text-center bg-green-300 text-xs rounded-lg px-3 py-3 mb-2 ">{success}</h2> }
-        { error && <h2 className="text-center bg-red-200 text-xs rounded-lg px-3 py-3 ">{error}</h2> }
+        { success && <p className="text-center bg-green-300 text-xs rounded-lg px-3 py-3 mb-2 ">{success}</p> }
+        { error && <p className="text-center bg-red-200 text-xs rounded-lg px-3 py-3 ">{error}</p> }
       </CardContent>
     </Card>
   )

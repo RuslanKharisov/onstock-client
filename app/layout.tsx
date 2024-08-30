@@ -28,7 +28,7 @@ export default async function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body
         className={cn(
-          "h-screen bg-background font-sans antialiased",
+          "h-screen bg-background font-sans antialiased ",
           `${roboto_mono.variable}`,
         )}
       >
