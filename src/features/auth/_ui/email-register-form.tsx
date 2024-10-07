@@ -6,7 +6,6 @@ import { RegisterSchema } from "@/entities/user/_domain/schemas"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
-// import { useEmailSignIn } from "../_vm/use-email-sign-in";
 import {
   Form,
   FormControl,
@@ -18,12 +17,11 @@ import {
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { useState, useTransition } from "react"
-import { register } from "../_actions/register"
+import { useRegisterUser } from "@/features/user/registration/useRegister"
 
 export function EmailRegisterForm() {
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
-  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -34,17 +32,23 @@ export function EmailRegisterForm() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    setError("")
-    setSuccess("")
+    const { mutate, isPending } = useRegisterUser()
 
-    startTransition(() => {
-      register(values).then((data) => {
-        setError(data.error)
-        setSuccess(data.success)
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+      setError("")
+      setSuccess("")
+  
+      mutate(values, {
+        onSuccess: (data) => {
+          console.log("🚀 ~ onSubmit ~ data:", data)
+          
+          setSuccess(data)
+        },
+        onError: (error: any) => {
+          setError(error || "Произошла ошибка")
+        }
       })
-    })
-  }
+    }
 
   return (
     <Form {...form}>
