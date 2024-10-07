@@ -7,6 +7,7 @@ import { ButtonWrapper } from "@/shared/lib/button-wrapper"
 import { Button } from "@/shared/ui/button"
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
+import Link from "next/link"
 import { useEffect } from "react"
 
 export default async function PersonalStock({
@@ -49,7 +50,7 @@ export default async function PersonalStock({
         <p className=" font-semibold">
           {" "}
           Текущий тариф:{" "}
-          <span className="font-normal">{currentTariff?.name}</span>{" "}
+          <span className="font-normal">{currentTariff?.name}</span> <span> <Button size="sm" variant="link"><Link className="uppercase text-secondary font-bold" href="/profile">Изменить</Link></Button>  </span> {" "}
         </p>
         <p className=" font-semibold">
           {" "}

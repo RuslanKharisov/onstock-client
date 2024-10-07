@@ -4,6 +4,7 @@ import { productsRepository } from "@/features/products-list/products.repository
 import UpdateProfileForm from "@/features/update-profile/update-profile-form"
 import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
 import { Separator } from "@/shared/ui/separator"
+import { Bill } from "@/widgets/bill/index"
 
 export default async function ProfilePage() {
   const session = await getAppSessionServer()
@@ -30,6 +31,7 @@ export default async function ProfilePage() {
           <UpdateProfileForm />
         </div>
       </div>
+      <Bill/>
     </main>
   )
 }
