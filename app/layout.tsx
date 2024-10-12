@@ -3,8 +3,7 @@ import "@/globalStyles*"
 import { Roboto_Mono } from "next/font/google"
 import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
-import { auth } from "@/entities/user/auth"
-import { SessionProvider } from "next-auth/react"
+
 
 export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
@@ -19,11 +18,10 @@ const roboto_mono = Roboto_Mono({
 })
 
 export default async function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
-  const session = await auth()
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
@@ -31,10 +29,8 @@ export default async function RootLayout({
           "h-screen bg-background font-sans antialiased ",
           `${roboto_mono.variable}`,
         )}
-      >
-        <SessionProvider session={session} >
+        >
           <AppProvider>{children}</AppProvider>
-        </SessionProvider>
       </body>
     </html>
   )

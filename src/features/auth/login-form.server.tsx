@@ -1,6 +1,5 @@
 "use server"
 
-import { privateConfig } from "@/shared/config/private"
 import { Divider } from "./_ui/divider"
 import { cn } from "@/shared/ui/utils"
 import { ProviderButton } from "./_ui/provider-button"

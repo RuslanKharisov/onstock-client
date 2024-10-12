@@ -1,12 +1,11 @@
 import { dbClient } from "@/shared/lib/db"
-import { UserId } from "../_domain/types"
-
+import { UserId } from "../types/types"
 
 class AccountRepository {
-  async getAcount(userId: UserId){
+  async getAcount(userId: UserId) {
     try {
       return dbClient.account.findFirst({
-        where: { userId }
+        where: { userId },
       })
     } catch (error) {
       return null

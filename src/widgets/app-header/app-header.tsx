@@ -10,7 +10,6 @@ import {
 } from "@/shared/ui/sheet"
 import { Menu } from "lucide-react"
 import { UserProfile } from "./_ui/user-profile"
-import { getAppSessionServer } from "@/entities/user/session.server"
 
 export async function AppHeader({
   variant,
@@ -18,9 +17,8 @@ export async function AppHeader({
   variant: "auth" | "private" | "public"
 }) {
   const isProfile = variant !== "auth"
-  const serverSession = await getAppSessionServer()
 
-  const user = serverSession?.user
+  // const user = serverSession?.user
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,7 +34,7 @@ export async function AppHeader({
               <SheetHeader className=" mb-5 border-b pb-5">
                 <Logo />
               </SheetHeader>
-              <MainNav role={user?.role}/>
+              {/* <MainNav role={user?.role}/> */}
             </SheetContent>
           </Sheet>
         </div>
@@ -46,11 +44,11 @@ export async function AppHeader({
         </div>
         <div className="flex flex-1 items-center">
           <div className="hidden md:flex">
-            <MainNav role={user?.role} />
+            {/* <MainNav role={user?.role} /> */}
           </div>
           <div className="flex flex-1 items-center justify-end space-x-3 ">
             <ToggleTheme />
-           <UserProfile serverSession={serverSession}/>
+           <UserProfile/>
           </div>
         </div>
       </div>

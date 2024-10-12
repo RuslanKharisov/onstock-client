@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs"
 import Credentials from "next-auth/providers/credentials"
 import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
-import { userRepository } from "./_repositories/user"
 import { CredentialsSignin, NextAuthConfig } from "next-auth"
+import { loginUserAPI } from "@/shared/api/auth"
 
 class InvalidLoginError extends CredentialsSignin {
   code = "Invalid identifier or password"
@@ -13,7 +13,7 @@ export default {
   providers: [
     Yandex({
       clientId: process.env.YANDEX_CLIENT_ID,
-      clientSecret: process.env.YANDEX_CLIENT_SECRET
+      clientSecret: process.env.YANDEX_CLIENT_SECRET,
     }),
     Credentials({
       credentials: {
@@ -26,14 +26,21 @@ export default {
         if (validatedFields.success) {
           const { email, password } = validatedFields.data
 
-          const user = await userRepository.getUserByEmail(email)
-          if (!user || !user.password) return null
+          try {
+            const res = await loginUserAPI(validatedFields.data)
 
-          const passwordsMatch = await bcrypt.compare(password, user.password)
+            if (res.status === 401) {
+              return null // неавторизованный пользователь
+            }
 
-          if (passwordsMatch) return user
+            const user = await res.json() // получаем пользователя
+            return user
+          } catch (error) {
+            console.error("Error in authorize:", error)
+            return null
+          }
         }
-        throw new InvalidLoginError()
+        return null
       },
     }),
   ],

@@ -34,7 +34,7 @@ export function EmailLoginForm() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {    
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("")
     setSuccess("")
 
@@ -49,9 +49,9 @@ export function EmailLoginForm() {
             form.reset()
             setError(data.error)
           }
-          if (data?.twoFactor) {
-            setShowTwoFactor(true)
-          }
+          // if (data?.twoFactor) {
+          //   setShowTwoFactor(true)
+          // }
         })
         .catch(() => setError("Что-то пошло не так"))
     })

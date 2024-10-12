@@ -1,4 +1,4 @@
-import { ROLES, SessionEntity, UserId } from "./types"
+import { ROLES, SessionEntity, UserId } from "../types/types"
 
 export const createUserAbility = (session: SessionEntity) => ({
   canGetUser: (userId: UserId) =>

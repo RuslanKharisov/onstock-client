@@ -1,4 +1,4 @@
-import { UserId } from "@/entities/user/_domain/types"
+import { UserId } from "@/entities/user/types/types"
 import { dbClient } from "@/shared/lib/db"
 
 class SupplierRepository {
@@ -67,33 +67,34 @@ class SupplierRepository {
       },
     })
   }
-  
-  async updateSupplierTariff(supplierId: number, newTariffName: string) {
-  // Найти новый тариф
-  const newTariff = await dbClient.tariff.findUnique({
-    where: { name: newTariffName }
-  });
-  
-  if (!newTariff) {
-    throw new Error('New tariff not found');
-  }
-  
-  // Обновление тарифа поставщика и создание новой подписки
-  await dbClient.supplier.update({
-    where: { id: supplierId },
-    data: {
-      tariffId: newTariff.id,
-      subscriptions: {
-        create: {
-          tariffId: newTariff.id,
-          startDate: new Date(),
-          endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // 1 год
-        }
-      }
-    }
-  });
-}
 
+  async updateSupplierTariff(supplierId: number, newTariffName: string) {
+    // Найти новый тариф
+    const newTariff = await dbClient.tariff.findUnique({
+      where: { name: newTariffName },
+    })
+
+    if (!newTariff) {
+      throw new Error("New tariff not found")
+    }
+
+    // Обновление тарифа поставщика и создание новой подписки
+    await dbClient.supplier.update({
+      where: { id: supplierId },
+      data: {
+        tariffId: newTariff.id,
+        subscriptions: {
+          create: {
+            tariffId: newTariff.id,
+            startDate: new Date(),
+            endDate: new Date(
+              new Date().setFullYear(new Date().getFullYear() + 1),
+            ), // 1 год
+          },
+        },
+      },
+    })
+  }
 }
 
 export const supplierRepository = new SupplierRepository()

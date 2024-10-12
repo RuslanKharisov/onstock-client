@@ -1,4 +1,4 @@
-import { LoginButton } from "@/features/auth/login-button"
+import { LoginButton } from "@/features/login-user/login-button"
 import { GoToStockButton } from "@/features/stock/go-to-stock-btn"
 import { Button } from "@/shared/ui/button"
 
@@ -11,10 +11,13 @@ export const HeroSection = () => {
             Поможем найти
           </h2>
           <p className="text-center text-base font-extrabold text-white sm:text-2xl md:text-2xl lg:text-2xl xl:text-3xl">
-            Переходите в онлайн склад и находите оборудование на складах в России
+            Переходите в онлайн склад и находите оборудование на складах в
+            России
           </p>
           <GoToStockButton>
-            <Button variant="default" size="lg">Перейти в каталог</Button>
+            <Button variant="default" size="lg">
+              Перейти в каталог
+            </Button>
           </GoToStockButton>
         </div>
       </div>
@@ -27,7 +30,9 @@ export const HeroSection = () => {
             Зарегистрируйтесь и продавайте оборудование с вашего склада
           </p>
           <LoginButton>
-            <Button variant="outline" size="lg">Стать поставщиком</Button>
+            <Button variant="outline" size="lg">
+              Стать поставщиком
+            </Button>
           </LoginButton>
         </div>
       </div>

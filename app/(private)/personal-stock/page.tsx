@@ -1,47 +1,52 @@
+"use client"
 import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
 import { tariffRepository } from "@/entities/tariff/_repositories/tariff.repository"
 import { getAppSessionServer } from "@/entities/user/session.server"
 import { productsRepository } from "@/features/products-list/products.repository"
 import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
+import { getSessionFromToken } from "@/features/user/_session/session"
 import { ButtonWrapper } from "@/shared/lib/button-wrapper"
+import { useUserStore } from "@/shared/store/userStore"
 import { Button } from "@/shared/ui/button"
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
 import Link from "next/link"
 import { useEffect } from "react"
 
-export default async function PersonalStock({
+export default function PersonalStock({
   params,
 }: {
   params: { id: string }
 }) {
-  const session = await getAppSessionServer()
-  const sessionId = session?.user.id
+  const { userId, email } = useUserStore();
+  console.log("🚀 ~ userId:", userId)
 
-  if (!sessionId) return null
+  // const sessionId = session.userId
 
-  const supplier = await productsRepository.getSupplierId(sessionId)
-  const stockProducts = await productsRepository.getStockListById(sessionId)
-  console.log("🚀 ~ stockProducts:", stockProducts.length)
+  if (!userId) return null
 
-  if (!supplier)
-    return (
-      <main className="container flex h-screen flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
-        <h1 className=" mb-8 text-center">
-          Осталось внести данные компании поставщика
-        </h1>
-        <div className="mb-8 ">
-          <ButtonWrapper routeUrl={"/profile"}>
-            <Button size="lg">Указать данные компании</Button>
-          </ButtonWrapper>
-        </div>
-      </main>
-    )
+  // const supplier = await productsRepository.getSupplierId(sessionId)
+  // const stockProducts = await productsRepository.getStockListById(sessionId)
+  // console.log("🚀 ~ stockProducts:", stockProducts.length)
 
-  const currentTariff = await tariffRepository.getSupplierTariffById(
-    supplier.tariffId,
-  )
-  console.log("🚀 ~ currentTariff:", currentTariff)
+  // if (!supplier)
+  //   return (
+  //     <main className="container flex h-screen flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
+  //       <h1 className=" mb-8 text-center">
+  //         Осталось внести данные компании поставщика
+  //       </h1>
+  //       <div className="mb-8 ">
+  //         <ButtonWrapper routeUrl={"/profile"}>
+  //           <Button size="lg">Указать данные компании</Button>
+  //         </ButtonWrapper>
+  //       </div>
+  //     </main>
+  //   )
+
+  // const currentTariff = await tariffRepository.getSupplierTariffById(
+  //   supplier.tariffId,
+  // )
+  // console.log("🚀 ~ currentTariff:", currentTariff)
 
   return (
     <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-16">

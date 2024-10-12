@@ -1,5 +1,5 @@
 import { dbClient } from "@/shared/lib/db"
-import { PasswordResetToken, VerificationToken } from "../_domain/types"
+import { PasswordResetToken, VerificationToken } from "../types/types"
 
 class TokenRepository {
   /**
@@ -157,10 +157,9 @@ class TokenRepository {
     }
   }
 
-  
   // TwoFactorConfirmation
 
-  async createTwoFactorConfirmationByUserId(userId:string) {
+  async createTwoFactorConfirmationByUserId(userId: string) {
     await dbClient.twoFactorConfirmation.create({
       data: {
         userId: userId,
@@ -171,8 +170,8 @@ class TokenRepository {
   async deleteTwoFactorConfirmation(id: string) {
     await dbClient.twoFactorConfirmation.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     })
   }
 
@@ -187,7 +186,6 @@ class TokenRepository {
       return null
     }
   }
-  
 }
 
 export const tokenRepository = new TokenRepository()

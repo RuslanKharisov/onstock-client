@@ -13,15 +13,18 @@ import { Button } from "@/shared/ui/button"
 import Link from "next/link"
 import { useSignOut } from "@/features/auth/use-sign-out"
 import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile"
-import { LoginButton } from "@/features/auth/login-button"
+import { LoginButton } from "@/features/login-user/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
-import { SessionEntity } from "@/entities/user/_domain/types"
-import { useAppSession } from "@/entities/user/_vm/use-current-user-session"
+import { useSession } from "next-auth/react"
 
-export function UserProfile({ serverSession }: { serverSession: SessionEntity | null }) {
+export function UserProfile() {
+  const { data: session, status } = useSession()
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
 
-  if (!serverSession) {
+  const user = session
+  console.log("🚀 ~ UserProfile ~ user:", user)
+
+  if (!session?.user) {
     return (
       <LoginButton>
         <Button variant={"outline"}>
@@ -30,9 +33,6 @@ export function UserProfile({ serverSession }: { serverSession: SessionEntity | 
       </LoginButton>
     )
   }
-
-  const clientSession = useAppSession()
-  const user = clientSession.data?.user
 
   return (
     <DropdownMenu>

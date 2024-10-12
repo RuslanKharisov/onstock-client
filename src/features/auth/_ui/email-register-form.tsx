@@ -1,11 +1,11 @@
-"use client"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { RegisterSchema } from "@/entities/user/_domain/schemas"
-import { Button } from "@/shared/ui/button"
-import { Input } from "@/shared/ui/input"
-import { Spinner } from "@/shared/ui/spinner"
+'use client';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { RegisterSchema } from '@/entities/user/_domain/schemas';
+import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { Spinner } from '@/shared/ui/spinner';
 import {
   Form,
   FormControl,
@@ -13,42 +13,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/ui/form"
-import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
-import { useState, useTransition } from "react"
-import { useRegisterUser } from "@/features/user/registration/useRegister"
+} from '@/shared/ui/form';
+import { FormEroor } from '@/shared/ui/form-error';
+import { FormSuccess } from '@/shared/ui/form-success';
+import { useState, useTransition } from 'react';
+import { useRegisterUser } from '@/features/user/_auth-hooks/useRegister';
 
 export function EmailRegisterForm() {
-  const [error, setError] = useState<string | undefined>("")
-  const [success, setSuccess] = useState<string | undefined>("")
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+    resolver: zodResolver(RegisterSchema ),
     defaultValues: {
-      email: "",
-      password: "",
-      name: "",
+      email: '',
+      password: '',
+      name: '',
     },
-  })
+  });
 
-    const { mutate, isPending } = useRegisterUser()
+  const { mutate, isPending } = useRegisterUser();
 
-    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-      setError("")
-      setSuccess("")
-  
-      mutate(values, {
-        onSuccess: (data) => {
-          console.log("🚀 ~ onSubmit ~ data:", data)
-          
-          setSuccess(data)
-        },
-        onError: (error: any) => {
-          setError(error || "Произошла ошибка")
-        }
-      })
-    }
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError('');
+    setSuccess('');
+
+    mutate(values, {
+      onSuccess: (data) => {
+        setSuccess(data);
+      },
+      onError: (error: any) => {
+        setError(error || 'Произошла ошибка');
+      },
+    });
+  };
 
   return (
     <Form {...form}>
@@ -122,5 +120,5 @@ export function EmailRegisterForm() {
         </div>
       </form>
     </Form>
-  )
+  );
 }
