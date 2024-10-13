@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import { ProfileSchema } from "../_domain/schemas";
-import { profileRepository } from "../_repositories/profile";
-import { userRepository } from "../_repositories/user";
+// import { profileRepository } from "../_repositories/profile";
+// import { userRepository } from "../_repositories/user";
 import { getAppSessionServer } from "../session.server";
 
 export const updateProfileData = async (
@@ -16,18 +16,20 @@ export const updateProfileData = async (
       return { error: "Unauthorized" }
     }
   
-    const dbUser = await userRepository.getUserById(user.id)
+    // const dbUser = await userRepository.getUserById(user.id)
   
-    if (!dbUser) {
-      return { error: "Unauthorised" }
-    }
+    // if (!dbUser) {
+    //   return { error: "Unauthorised" }
+    // }
   
-    if (user.isOAuth) {
-      values.email = undefined
-      values.password = undefined
-    }
+    // if (user.isOAuth) {
+    //   values.email = undefined
+    //   values.password = undefined
+    // }
   
-    await profileRepository.updateUser(dbUser.id, values)
-    return { success: "Данные обновлены" }
+    // await profileRepository.updateUser(dbUser.id, values)
+    // return { success: "Данные обновлены" }
+
+    
 
 }

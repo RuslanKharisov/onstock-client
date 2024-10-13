@@ -6,28 +6,27 @@ import {
 } from "@/shared/lib/routes"
 import { NextRequest, NextResponse } from "next/server"
 import { jwtVerify } from "jose";
+import { auth } from "@/entities/user/auth";
 
 export async function middleware(req: NextRequest) {
   const { nextUrl } = req
-
-  // Извлекаем sessionToken из куки
-  const sessionToken = req.cookies.get("sessionToken")?.value
+  const session = await auth()
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
   const isPublicRoutes = publicRoutes.includes(nextUrl.pathname)
   const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
-  // Проверка сессии: запрос к вашему API
   let isLoggedIn = false
-  let userId: string | null = null;
   
-  if (sessionToken) {
-    try {
-      const { payload } = await jwtVerify(sessionToken, new TextEncoder().encode(process.env.JWT_SECRET));
-      userId = (payload as { sub: string }).sub;
+  if (session) {
+    const currentTime = new Date().getTime();
+    const sessionExpiryTime = new Date(session.expires).getTime();
+    
+    if (currentTime < sessionExpiryTime) {
       isLoggedIn = true;
-    } catch (error) {
-      console.error("Ошибка верификации токена:", error);
+    } else  {
+      isLoggedIn = false;
+      console.error("Статус: session expired");
     }
   }
 

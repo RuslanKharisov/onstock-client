@@ -1,16 +1,16 @@
-import { dbClient } from "@/shared/lib/db"
-import { UserId } from "../types/types"
+// import { dbClient } from "@/shared/lib/db"
+// import { UserId } from "../types/types"
 
-class AccountRepository {
-  async getAcount(userId: UserId) {
-    try {
-      return dbClient.account.findFirst({
-        where: { userId },
-      })
-    } catch (error) {
-      return null
-    }
-  }
-}
+// class AccountRepository {
+//   async getAcount(userId: UserId) {
+//     try {
+//       return dbClient.account.findFirst({
+//         where: { userId },
+//       })
+//     } catch (error) {
+//       return null
+//     }
+//   }
+// }
 
-export const accountRepository = new AccountRepository()
+// export const accountRepository = new AccountRepository()

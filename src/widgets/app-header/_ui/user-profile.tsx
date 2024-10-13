@@ -18,9 +18,8 @@ import { EnterIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 
 export function UserProfile() {
-  const { data: session, status } = useSession()
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
-
+  const { data: session, status } = useSession()
   const user = session
   console.log("🚀 ~ UserProfile ~ user:", user)
 

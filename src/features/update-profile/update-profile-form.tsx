@@ -1,6 +1,5 @@
 "use client"
 
-import { useAppSession } from "@/entities/user/_vm/use-current-user-session"
 import { ProfileSchema } from "@/entities/user/_domain/schemas"
 import { useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -29,8 +28,8 @@ const UpdateProfileForm = () => {
   const [success, setSuccess] = useState<string | undefined>()
   const [isPending, startTransition] = useTransition()
   const { update } = useSession()
-  const clientSession = useAppSession()
-  const user = clientSession.data?.user
+  const { data: session, status } = useSession()
+  const user = session?.user
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),

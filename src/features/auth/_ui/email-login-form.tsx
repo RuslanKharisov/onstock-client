@@ -16,9 +16,10 @@ import {
 } from "@/shared/ui/form"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
-import { login } from "../_actions/login"
 import { useState, useTransition } from "react"
 import Link from "next/link"
+import { getSession, signIn } from "next-auth/react"
+import { DEFAULT_LOGIN_REDIRECT } from "@/shared/lib/routes"
 
 export function EmailLoginForm() {
   const [showToFactor, setShowTwoFactor] = useState(false)
@@ -32,29 +33,39 @@ export function EmailLoginForm() {
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    console.log("🚀 ~ onSubmit ~ values:", values)
     setError("")
     setSuccess("")
 
-    startTransition(() => {
-      login(values)
-        .then((data) => {
-          if (data?.error) {
-            form.reset()
-            setError(data.error)
-          }
-          if (data?.success) {
-            form.reset()
-            setError(data.error)
-          }
-          // if (data?.twoFactor) {
-          //   setShowTwoFactor(true)
-          // }
-        })
-        .catch(() => setError("Что-то пошло не так"))
-    })
+    startTransition(async () => {
+      console.log("startTransition")
+      try {
+        const result = await signIn("credentials", {
+          redirect: false, // Отключаем автоматический редирект 
+          email: values.email,
+          password: values.password,
+        });
+
+        if (result?.error) {
+          setError(result.error);
+          form.reset();
+        } else {
+          setSuccess("Вход выполнен!");
+          form.reset();
+
+          // Явно обновляем сессию после успешного входа 
+          await getSession();
+
+          // Выполняем редирект вручную, если необходимо 
+          window.location.href = DEFAULT_LOGIN_REDIRECT;
+        }
+      } catch (error) {
+        setError("Что-то пошло не так");
+      }
+    });
   }
 
   return (

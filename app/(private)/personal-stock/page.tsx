@@ -2,14 +2,15 @@
 import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
 import { tariffRepository } from "@/entities/tariff/_repositories/tariff.repository"
 import { getAppSessionServer } from "@/entities/user/session.server"
-import { productsRepository } from "@/features/products-list/products.repository"
+// import { productsRepository } from "@/features/products-list/products.repository"
 import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
-import { getSessionFromToken } from "@/features/user/_session/session"
+// import { getSessionFromToken } from "@/features/user/_session/session"
 import { ButtonWrapper } from "@/shared/lib/button-wrapper"
 import { useUserStore } from "@/shared/store/userStore"
 import { Button } from "@/shared/ui/button"
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useEffect } from "react"
 
@@ -18,12 +19,18 @@ export default function PersonalStock({
 }: {
   params: { id: string }
 }) {
-  const { userId, email } = useUserStore();
-  console.log("🚀 ~ userId:", userId)
+  const { data: session, status } = useSession()
+
 
   // const sessionId = session.userId
 
-  if (!userId) return null
+  const develop = true
+
+  if (develop) return (
+    <main className="flex flex-col justify-center items-center ">
+      <h1>Идет настройка подключения к API</h1>
+    </main>
+  )
 
   // const supplier = await productsRepository.getSupplierId(sessionId)
   // const stockProducts = await productsRepository.getStockListById(sessionId)
