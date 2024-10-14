@@ -20,8 +20,8 @@ import { useSession } from "next-auth/react"
 export function UserProfile() {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
   const { data: session, status } = useSession()
-  const user = session
-  console.log("🚀 ~ UserProfile ~ user:", user)
+  const user = session?.user
+  console.log("🚀 ~ UserProfile ~ Session:", session)
 
   if (!session?.user) {
     return (
@@ -54,9 +54,9 @@ export function UserProfile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/profile">
+            <Link href={`/profile/${user?.id}`}>
               <User className="mr-2 h-4 w-4" />
-              <span>Профиль</span>
+              <span>Личный кабинет</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem

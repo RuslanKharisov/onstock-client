@@ -1,5 +1,4 @@
 "use client"
-import { Role } from "@/entities/user/types/types"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 

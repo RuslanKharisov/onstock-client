@@ -21,7 +21,8 @@ import {
   FormMessage,
 } from "@/shared/ui/form"
 import { ProfileAvatar } from "@/entities/user/profile"
-import { updateProfileData } from "@/entities/user/_use-cases/update-profile"
+import { updateUser } from "@/shared/api/user"
+
 
 const UpdateProfileForm = () => {
   const [error, setError] = useState<string | undefined>()
@@ -36,14 +37,14 @@ const UpdateProfileForm = () => {
     defaultValues: {
       name: user?.name || undefined,
       email: user?.email || undefined,
-      password: undefined,
-      newPassword: undefined,
+      // password: undefined,
+      // newPassword: undefined,
     },
   })
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
-      updateProfileData(values)
+      updateUser(user?.id, user?.backendTokens.accessToken, values)
         .then((data) => {
           if (data?.error) {
             setError(data.error)
@@ -57,97 +58,99 @@ const UpdateProfileForm = () => {
     })
   }
   return (
-      <Card className="w-[315px]">
-        <CardHeader className=" items-center gap-3">
-        <h2 className="text-center text-lg font-bold">Форма редактирования профиля</h2>
-          <ProfileAvatar profile={user} />
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="mb-5 grid gap-3">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Имя</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="Имя"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Почта</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="email"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Текущий пароль</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="password"
-                          placeholder="********"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="newPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Новый пароль</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="password"
-                          placeholder="********"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormEroor message={error} />
-                <FormSuccess message={success} />
-              </div>
-              <Button type="submit" disabled={isPending}>
-                {isPending && <Spinner className="mr-2 h-4 w-full " />}
-                Обновить
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+    <Card className="w-[315px]">
+      <CardHeader className=" items-center gap-3">
+        <h2 className="text-center text-lg font-bold">
+          Форма редактирования профиля
+        </h2>
+        <ProfileAvatar profile={user} />
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="mb-5 grid gap-3">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Имя</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Имя"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Почта</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="email"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Текущий пароль</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="********"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Новый пароль</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="********"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+              <FormEroor message={error} />
+              <FormSuccess message={success} />
+            </div>
+            <Button type="submit" disabled={isPending}>
+              {isPending && <Spinner className="mr-2 h-4 w-full " />}
+              Обновить
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   )
 }
 

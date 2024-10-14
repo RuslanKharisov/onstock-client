@@ -1,5 +1,5 @@
 import { ToggleTheme } from "@/features/theme/toggle-theme"
-import { Logo } from "./_ui/logo"
+import { Logo } from "../../shared/ui/logo"
 import { MainNav } from "./_ui/main-nav"
 import { Button } from "@/shared/ui/button"
 import {

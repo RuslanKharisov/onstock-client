@@ -1,8 +1,10 @@
-import NextAuth, { type DefaultSession } from "next-auth"
+import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
-import { loginUserAPI, refreshTokenApi } from "@/shared/api/auth"
+import { loginUserAPI, refreshToken } from "@/shared/api/auth"
+import jwt from "jsonwebtoken"
+import { jwtVerify } from "jose"
 
 export const {
   handlers: { GET, POST },
@@ -28,9 +30,8 @@ export const {
 
           try {
             const res = await loginUserAPI(validatedFields.data)
-            // console.log("🚀 ~ authorize ~ response from api:", res)
             if (res.status === 401) {
-              return null // неавторизованный пользователь
+              return null 
             }
             return {
               ...res.user,
@@ -56,26 +57,41 @@ export const {
     },
 
     async jwt({ token, user }) {
-      // const { backendTokens } = user
       if (user) {
-        token.name = user.name;
-        token.backendTokens = user.backendTokens;
-        return token
-      }       
-      // const accessToken = backendTokens.refreshToken
-      // Проверяем время жизни токена
-      // if (new Date().getTime() < token.backendTokens.expiresIn) {
-        // const refreshRes = await refreshTokenApi(accessToken)
-        //  console.log("🚀 ~ jwt ~ refreshRes:", refreshRes)
-      //     return token;
-      // }
-      // console.log("if no user token", token)
+        token.name = user.name
+        token.backendTokens = user.backendTokens
+      }
 
-       return token
+      if (token.backendTokens && token.backendTokens.accessToken) {
+        try {
+          const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
+          const { payload } = await jwtVerify(
+            token.backendTokens.accessToken,
+            secret,
+          )
+          console.log("Token is valid:", payload)
+          return token
+        } catch (error) {
+          console.error("Invalid token:", error)
+        }
+        try {
+          const refreshedToken = await refreshToken(token)
+          if (refreshedToken) {
+            console.log("Token refreshed:", refreshedToken)
+            return refreshedToken
+          } else {
+            console.error("Failed to refresh token")
+            return token
+          }
+        } catch (refreshError) {
+          console.error("Error refreshing token:", refreshError)
+          return token
+        }
+      }
 
+      return token
     },
   },
   session: { strategy: "jwt" },
-  secret: process.env.AUTH_SECRET
+  secret: process.env.AUTH_SECRET,
 })
-
