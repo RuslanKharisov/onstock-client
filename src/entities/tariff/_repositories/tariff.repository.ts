@@ -1,14 +1,14 @@
-import { dbClient } from "@/shared/lib/db"
+// import { dbClient } from "@/shared/lib/db"
 
-class TariffRepository {
+// class TariffRepository {
 
-  async getSupplierTariffById(tariffId: number){
-    return await dbClient.tariff.findUnique({
-      where: {
-        id: tariffId
-      }
-    })
-  }
-}
+//   async getSupplierTariffById(tariffId: number){
+//     return await dbClient.tariff.findUnique({
+//       where: {
+//         id: tariffId
+//       }
+//     })
+//   }
+// }
 
-export const tariffRepository = new TariffRepository()
+// export const tariffRepository = new TariffRepository()

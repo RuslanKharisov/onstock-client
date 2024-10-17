@@ -14,8 +14,7 @@ export const ProfileAvatar = ({
   if (!profile) {
     return null
   }
-  
-  console.log("🚀 ~ profile:", profile)
+
   return (
     <Avatar className={cn(className)}>
       <AvatarImage src={profile.image ?? ""} className="object-cover" />

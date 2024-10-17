@@ -1,8 +1,7 @@
 "use client"
 
 import { SupplierSchema } from "@/entities/supplier/_domain/schemas"
-import { updateSupplierData } from "@/entities/supplier/_use-cases/update-supplier"
-import { ButtonWrapper } from "@/shared/lib/button-wrapper"
+import { createSupplier, updateSupplier } from "@/shared/api/supplier"
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import {
@@ -18,24 +17,26 @@ import { FormSuccess } from "@/shared/ui/form-success"
 import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Heading3, SquareArrowOutUpRight } from "lucide-react"
+import { SquareArrowOutUpRight } from "lucide-react"
+import { Session } from "next-auth"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useEffect, useState, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-const UpdateSupplier = ({
+const UpdateSupplierForm = ({
   supplier,
   revalidatePagePath,
+  session,
 }: {
   supplier: Supplier | null,
   revalidatePagePath: string
+  session: Session
 }) => {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
   const [isPending, startTransition] = useTransition()
-
+  
   const form = useForm<z.infer<typeof SupplierSchema>>({
     resolver: zodResolver(SupplierSchema),
     defaultValues: {
@@ -44,7 +45,7 @@ const UpdateSupplier = ({
       siteUrl: supplier?.siteUrl || "",
     },
   })
-
+  
   useEffect(() => {
     // Обновление defaultValues при изменении supplier
     form.reset({
@@ -53,21 +54,23 @@ const UpdateSupplier = ({
       siteUrl: supplier?.siteUrl || "",
     })
   }, [supplier, success])
-
-  const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
-    startTransition(() => {
-      updateSupplierData(values, revalidatePagePath)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error)
-          }
-          if (data.success) {
-            setSuccess(data.success)
-          }
-        })
-        .catch(() => setError("Что-то пошло не так"))
-    })
-  }
+  
+  const onSubmit = async (values: z.infer<typeof SupplierSchema>) => {
+    startTransition(async () => {
+      
+        let data;
+        if (supplier) {
+          data = await updateSupplier(session.user.id, session.backendTokens.accessToken, values, revalidatePagePath);
+          console.log("🚀 ~ startTransition ~ data:", data)
+        } else {
+          data = await createSupplier(session.user.id, session.backendTokens.accessToken, values, revalidatePagePath);
+        }
+        
+        if (data) {
+          setSuccess("Успешно");
+        }
+    });
+  };
 
   return (
     <>
@@ -163,4 +166,4 @@ const UpdateSupplier = ({
   )
 }
 
-export default UpdateSupplier
+export default UpdateSupplierForm
