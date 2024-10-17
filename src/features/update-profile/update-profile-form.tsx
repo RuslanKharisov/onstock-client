@@ -22,29 +22,34 @@ import {
 } from "@/shared/ui/form"
 import { ProfileAvatar } from "@/entities/user/profile"
 import { updateUser } from "@/shared/api/user"
+import { UserEntity } from "@/entities/user/types/types"
+import { Session } from "next-auth"
 
+interface UpdateProfileFormProps {
+  existingUser: UserEntity;
+  session: Session;
+}
 
-const UpdateProfileForm = () => {
+const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, session } ) => {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
   const [isPending, startTransition] = useTransition()
   const { update } = useSession()
-  const { data: session, status } = useSession()
-  const user = session?.user
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      name: user?.name || undefined,
-      email: user?.email || undefined,
+      name: existingUser?.name || undefined,
+      email: existingUser?.email || undefined,
       // password: undefined,
       // newPassword: undefined,
     },
   })
 
+
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
-    startTransition(() => {
-      updateUser(user?.id, user?.backendTokens.accessToken, values)
+    startTransition(async () => {
+      await updateUser(existingUser?.id, session.backendTokens.accessToken, values)
         .then((data) => {
           if (data?.error) {
             setError(data.error)
@@ -63,7 +68,7 @@ const UpdateProfileForm = () => {
         <h2 className="text-center text-lg font-bold">
           Форма редактирования профиля
         </h2>
-        <ProfileAvatar profile={user} />
+        <ProfileAvatar profile={existingUser} />
       </CardHeader>
       <CardContent>
         <Form {...form}>

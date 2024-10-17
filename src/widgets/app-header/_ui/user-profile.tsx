@@ -21,7 +21,6 @@ export function UserProfile() {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
   const { data: session, status } = useSession()
   const user = session?.user
-  console.log("🚀 ~ UserProfile ~ Session:", session)
 
   if (!session?.user) {
     return (

@@ -36,12 +36,10 @@ export function EmailLoginForm() {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log("🚀 ~ onSubmit ~ values:", values)
     setError("")
     setSuccess("")
 
     startTransition(async () => {
-      console.log("startTransition")
       try {
         const result = await signIn("credentials", {
           redirect: false, // Отключаем автоматический редирект 

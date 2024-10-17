@@ -5,7 +5,6 @@ import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card"
 import { Input } from "@/shared/ui/input"
 import { Label } from "@/shared/ui/label"
-import { Product } from "@prisma/client"
 import React, { useState } from "react"
 import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
@@ -50,13 +49,11 @@ export function UpdateFromFile({ supplier }: { supplier: getSupplier }) {
         const result = await createProductAction(data, revalidatePagePath);
   
         if (result?.error) {
-          console.log(result.error);
           setError(result.error);
           return; 
         }
   
         if (result.success) {
-          console.log(result.success);
           setSuccess(result.success);
         }
       } catch (error) {

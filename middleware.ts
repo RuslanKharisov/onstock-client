@@ -5,7 +5,6 @@ import {
   apiAuthPrefix,
 } from "@/shared/lib/routes"
 import { NextRequest, NextResponse } from "next/server"
-import { jwtVerify } from "jose";
 import { auth } from "@/entities/user/auth";
 import { verifyToken } from "@/shared/lib/auth-ulils";
 
@@ -23,7 +22,6 @@ export async function middleware(req: NextRequest) {
     const currentTime = new Date().getTime();
     const sessionExpiryTime = new Date(session.expires).getTime();
     
-    // if (currentTime < sessionExpiryTime) {
     if (await verifyToken(session.backendTokens.accessToken)){
       isLoggedIn = true;
     } else  {

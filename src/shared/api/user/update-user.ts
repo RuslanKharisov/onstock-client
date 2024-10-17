@@ -6,11 +6,11 @@ import { z } from "zod";
 
 export async function updateUser (
   id: string | undefined,
-  accessToken: string | undefined,
+  accessToken: string,
   values: z.infer<typeof ProfileSchema>
 ) {
   try {
-    const res = await axios.patch(`${process.env.API_URL}/user/${id}`, values, {
+    const res = await axios.patch(`http://localhost:5000/user`, values, {
       headers: {
         authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'

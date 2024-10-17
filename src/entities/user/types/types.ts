@@ -13,16 +13,16 @@ export type CreateUserCommand = {
   password?: string
 }
 
-// export type UserEntity = {
-//   id: string
-//   name?: string | null
-//   email: string
-//   image?: string | null
-//   role: Role
-//   emailVerified?: Date | null
-//   password?: string | null
-//   isTwoFactorEnabled: boolean
-// }
+export type UserEntity = {
+  id: string
+  name?: string | null
+  email: string
+  image?: string | null
+  role: string
+  emailVerified?: Date | null
+  password?: string | null
+  isTwoFactorEnabled: boolean
+}
 
 // export type SessionEntity = {
 //   user?: {

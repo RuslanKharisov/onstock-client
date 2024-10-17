@@ -69,7 +69,6 @@ export const {
             token.backendTokens.accessToken,
             secret,
           )
-          console.log("Token is valid:", payload)
           return token
         } catch (error) {
           console.error("Invalid token:", error)
@@ -77,7 +76,6 @@ export const {
         try {
           const refreshedToken = await refreshToken(token)
           if (refreshedToken) {
-            console.log("Token refreshed:", refreshedToken)
             return refreshedToken
           } else {
             console.error("Failed to refresh token")
