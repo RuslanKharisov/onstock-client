@@ -1,12 +1,13 @@
 import { UserEntity } from '@/entities/user/types/types';
 import axios from 'axios';
+import api from '../api';
 
-export async function getSupplierById(
+export async function getSupplier(
   id: string ,
   accessToken: string
 ): Promise<Supplier> {
   try {
-    const res = await axios.get(`http://localhost:5000/supplier/${id}`, {
+    const res = await api.get(`/supplier/${id}`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'

@@ -1,8 +1,8 @@
-import { getSupplier } from "@/entities/supplier/_use-cases/get-supplier"
+// import { getSupplier } from "@/entities/supplier/_use-cases/get-supplier"
 import { auth } from "@/entities/user/auth"
 import UpdateProfileForm from "@/features/update-profile/update-profile-form"
 import UpdateSupplierForm from "@/features/update-supplier/update-supplier-form"
-import { getSupplierById } from "@/shared/api/supplier"
+import { getSupplier } from "@/shared/api/supplier"
 import { getUserById } from "@/shared/api/user/get-user-by-id"
 import { Separator } from "@/shared/ui/separator"
 import { Bill } from "@/widgets/bill/index"
@@ -20,7 +20,7 @@ export default async function ProfilePage(props: Props) {
   const userId = session.user.id
   const accessToken = session.backendTokens.accessToken
 
-  const supplier = await getSupplierById(userId, accessToken)
+  const supplier = await getSupplier(userId, accessToken)
 
   
   const existingUser = await getUserById(userId, accessToken)

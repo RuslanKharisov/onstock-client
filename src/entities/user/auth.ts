@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
-import { loginUserAPI, refreshToken } from "@/shared/api/auth"
+import { loginUserAPI, refreshTokenApi } from "@/shared/api/auth"
 import jwt from "jsonwebtoken"
 import { jwtVerify } from "jose"
 
@@ -74,7 +74,7 @@ export const {
           console.error("Invalid token:", error)
         }
         try {
-          const refreshedToken = await refreshToken(token)
+          const refreshedToken = await refreshTokenApi(token)
           if (refreshedToken) {
             return refreshedToken
           } else {

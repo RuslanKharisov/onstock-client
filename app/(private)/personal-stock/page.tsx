@@ -2,7 +2,7 @@ import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
 import { tariffRepository } from "@/entities/tariff/_repositories/tariff.repository"
 import { auth } from "@/entities/user/auth"
 import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
-import { getSupplierById } from "@/shared/api/supplier"
+import { getSupplier } from "@/shared/api/supplier"
 import { ButtonWrapper } from "@/shared/lib/button-wrapper"
 import { useUserStore } from "@/shared/store/userStore"
 import { Button } from "@/shared/ui/button"
@@ -17,16 +17,16 @@ export default async function PersonalStock({
 }) {
   const session = await auth()
   if (!session) return null
-  const stockProducts:Stock[] = [];
+  const stockProducts: Stock[] = []
 
   const userId = session.user.id
-  const accessToken = session.backendTokens.accessToken  
-  const supplier = await getSupplierById(userId, accessToken)
+  const accessToken = session.backendTokens.accessToken
+  const supplier = await getSupplier(userId, accessToken)
 
-  console.log("🚀 ~ stockProducts:", stockProducts.length)
+  console.log("🚀 ~PersonalStock supplier:", supplier)
   if (!supplier)
     return (
-  <main className="container flex h-screen flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
+      <main className="container flex h-screen flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
         <h1 className=" mb-8 text-center">
           Осталось внести данные компании поставщика
         </h1>
@@ -38,9 +38,7 @@ export default async function PersonalStock({
       </main>
     )
 
-
-    
-    // const stockProducts = await productsRepository.getStockListById(sessionId)
+  // const stockProducts = await productsRepository.getStockListById(sessionId)
   // const currentTariff = await tariffRepository.getSupplierTariffById(
   //   supplier.tariffId,
   // )
@@ -48,17 +46,31 @@ export default async function PersonalStock({
 
   return (
     <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-16">
-      <div className="text-center mb-8">
+      <div className="mb-8 text-center">
         <h1 className="   ">Склад: {supplier?.name} </h1>
         <p className=" font-semibold">
           {" "}
           Текущий тариф:{" "}
-          {/* <span className="font-normal">{currentTariff?.name}</span> <span> <Button size="sm" variant="link"><Link className="uppercase text-secondary font-bold" href="/profile">Изменить</Link></Button>  </span> {" "} */}
+          <span className="font-normal">
+            {supplier.supplierTariff.name}
+          </span>{" "}
+          <span>
+            <Button size="sm" variant="link">
+              <Link
+                className="font-bold uppercase text-secondary"
+                href={`/profile/${userId}`}
+              >
+                Изменить
+              </Link>
+            </Button>{" "}
+          </span>{" "}
         </p>
         <p className=" font-semibold">
           {" "}
           Максимальное количество по текущему тарифу:{" "}
-          {/* <span className="font-normal">{currentTariff?.maxProducts}</span>{" "} */}
+          <span className="font-normal">
+            {supplier.supplierTariff.maxProducts}
+          </span>{" "}
         </p>
         <p className=" font-semibold">
           {" "}
