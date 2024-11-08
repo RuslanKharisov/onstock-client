@@ -17,7 +17,7 @@ export async function refreshTokenApi(token:JWT) {
         backendTokens: res.data,
       }  
   } catch (error) {
-    console.error("~ error:", error)
+    console.error("refreshTokenApi error:", error.code)
     throw error
   }
 };

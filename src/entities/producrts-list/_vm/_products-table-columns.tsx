@@ -47,7 +47,7 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="icon" variant="link">
-                  <a target="blank" href={`https://${stock.siteUrl}`}>
+                  <a target="blank" href={`${stock.siteUrl}`}>
                     <Earth />
                   </a>
                 </Button>

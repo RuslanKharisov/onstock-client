@@ -8,18 +8,19 @@ import { Label } from "@/shared/ui/label"
 import React, { useState } from "react"
 import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
+import { Session } from "next-auth"
+import { addOrUpdateProduct } from "@/shared/api/product"
 
 export interface ProductsStock {
   Name: string
   Index: number
 }
 
-export function UpdateFromFile({ supplier }: { supplier: getSupplier }) {
+export function UpdateFromFile({ supplier, session, revalidatePagePath }: { supplier: getSupplier; session: Session; revalidatePagePath: string; }) {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
   
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
-  let revalidatePagePath = "/personal-stock/"
 
   function handleFileUpload(e: any) {
     const reader = new FileReader()
@@ -39,14 +40,15 @@ export function UpdateFromFile({ supplier }: { supplier: getSupplier }) {
     for (const product of stockData) {
       const data = {
         sku: product.sku,
-        name: product.name,
-        description: product.description,
+        name: product.name || "",
+        description: product.description || "",
         quantity: product.quantity,
         supplierId: supplier.id,
       };
   
       try {
-        const result = await createProductAction(data, revalidatePagePath);
+        const result = await addOrUpdateProduct(session.backendTokens.accessToken, data, revalidatePagePath);
+        // const result = await createProductAction(data, revalidatePagePath);
   
         if (result?.error) {
           setError(result.error);

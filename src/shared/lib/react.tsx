@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Context,
     createContext,
@@ -88,3 +90,34 @@ import {
       [],
     );
   }
+
+  export const useIsMobile = () => {
+    // Инициализируем состояние с использованием useState
+    const [isMobile, setIsMobile] = useState(() => {
+      // Проверяем, доступен ли объект window
+      if (typeof window !== 'undefined') {
+        return window.innerWidth < 768;
+      }
+      return false; // или любое другое значение по умолчанию
+    });
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+      };
+  
+      // Добавляем обработчик события только если window доступен
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', handleResize);
+      }
+  
+      // Очистка события при размонтировании компонента 
+      return () => {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', handleResize);
+        }
+      };
+    }, []);
+  
+    return isMobile;
+  };

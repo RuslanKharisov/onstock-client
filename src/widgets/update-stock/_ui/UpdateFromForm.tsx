@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
     Form,
@@ -13,30 +13,28 @@ import { Textarea } from "@/shared/ui/textarea";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/ui/utils";
 import { createProductAction } from "@/features/products-list/actions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
+import { addOrUpdateProduct } from "@/shared/api/product";
+import { Session } from "next-auth";
+import { createProductFormSchema } from "@/entities/stock/_domain/schemas";
 
-const createProductFormSchema = z.object({
-    sku: z.string(),
-    name: z.string(),
-    description: z.string(),
-    quantity: z.string(),
-    supplierId: z.number(),
-});
 
 export function UpdateFromForm({
     supplier,
+    session,
     revalidatePagePath,
 }: {
     supplier: getSupplier;
+    session: Session;
     revalidatePagePath: string;
 }) {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
-    const [isCreateTransiton, startCreateTransition] = useTransition();
+    const [isCreateTransiton, startTransition] = useTransition();
 
     const form = useForm({
         resolver: zodResolver(createProductFormSchema),
@@ -45,13 +43,14 @@ export function UpdateFromForm({
             name: "",
             description: "",
             quantity: "",
-            supplierId: supplier.id,
         },
     });
 
-    const onSubmit = (data: any) => {
+    const onSubmit = (values: addOrUpdateProductCommand) => {
+      const data = {...values, supplierId: supplier.id,}
+      
       startTransition(() => {
-         createProductAction(data, revalidatePagePath)
+        addOrUpdateProduct(session.backendTokens.accessToken, data, revalidatePagePath)
          .then((data) => {
           if (data?.error) {
             setError(data.error)
@@ -76,20 +75,7 @@ export function UpdateFromForm({
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-2"
                     >
-                        <FormField
-                            control={form.control}
-                            name="supplierId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="supplierImput" >Поставщик: {supplier.name} </FormLabel>
-                                    <FormControl>
-                                        <Input id="supplierImput" className=" hidden" placeholder="555" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
+                      <FormField
                             control={form.control}
                             name="sku"
                             render={({ field }) => (

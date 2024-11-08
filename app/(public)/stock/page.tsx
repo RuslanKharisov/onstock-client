@@ -1,15 +1,15 @@
 import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns"
+import { getAllStocks } from "@/shared/api/stock"
 // import { productsRepository } from "@/features/products-list/products.repository"
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
 
 export default async function Stock() {
-  // const stockProducts = await productsRepository.getStockList()
-  const stockProducts = null
-
+  const stockProducts = await getAllStocks()
+  
   if (!stockProducts) {
     return (
-      <main className="flex flex-col justify-center items-center ">
-        <h1>Продукты не загружены</h1>
+      <main className="container flex flex-col justify-center items-center ">
+        <h1>Работы на сервере !!!</h1>
       </main>
     )
   }

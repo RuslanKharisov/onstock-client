@@ -52,6 +52,7 @@ export const {
   callbacks: {
     async session({ session, token }) {
       session.user.id = token.sub as string
+      session.user.image = token.picture
       session.backendTokens = token.backendTokens
       return session
     },
@@ -59,6 +60,7 @@ export const {
     async jwt({ token, user }) {
       if (user) {
         token.name = user.name
+        token.picture = user.picture
         token.backendTokens = user.backendTokens
       }
 
@@ -71,7 +73,7 @@ export const {
           )
           return token
         } catch (error) {
-          console.error("Invalid token:", error)
+          console.error("AUTH.ts:Invalid token:")
         }
         try {
           const refreshedToken = await refreshTokenApi(token)
@@ -82,7 +84,7 @@ export const {
             return token
           }
         } catch (refreshError) {
-          console.error("Error refreshing token:", refreshError)
+          console.error("AUTH.ts: Error refreshing token")
           return token
         }
       }

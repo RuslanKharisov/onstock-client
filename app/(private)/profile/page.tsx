@@ -5,7 +5,7 @@ import UpdateSupplierForm from "@/features/update-supplier/update-supplier-form"
 import { getSupplier } from "@/shared/api/supplier"
 import { getUserById } from "@/shared/api/user/get-user-by-id"
 import { Separator } from "@/shared/ui/separator"
-import { Bill } from "@/widgets/bill/index"
+
 
 type Props = {
   params: {
@@ -13,7 +13,7 @@ type Props = {
   };
 };
 
-export default async function ProfilePage(props: Props) {
+export default async function ProfilePage() {
   const session = await auth()
   if (!session) return null
 
@@ -24,25 +24,22 @@ export default async function ProfilePage(props: Props) {
 
   
   const existingUser = await getUserById(userId, accessToken)
+  if (!existingUser) return (
+    <h1 className="container  text-center py-52">Работы на сервере !!!</h1>
+  ) 
 
   return (
-    <main className="container">
-      <div className="py-8 text-center">
-        <h1 className="mb-5">Личный кабинет</h1>
-        <p className="text-lg text-muted-foreground">
+    <main className="container ">
+      <div className="py-5 text-center">
+        <h1 className="">
           На этой странице вы можете обновить свои данные и данные компании.
-        </p>
+        </h1>
       </div>
       <Separator />
-      <div className="flex flex-col justify-center gap-5 py-5 md:flex-row">
-        <div>
+      <div className="flex flex-col justify-center items-center lg:items-start gap-5 py-10 md:flex-row">
         <UpdateSupplierForm session={session} supplier={supplier} revalidatePagePath="/profile"/>
-        </div>
-        <div>
-          {existingUser && <UpdateProfileForm session={session} existingUser={existingUser}/>}
-        </div>
+        <UpdateProfileForm session={session} existingUser={existingUser}/>
       </div>
-      <Bill/>
     </main>
   )
 }

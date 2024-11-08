@@ -1,13 +1,14 @@
 import { ActionButtons } from "@/shared/ui/action-buttons";
-import { revalidatePath } from "next/cache";
-import { deleteStockElementItemAction } from "../lib/delete-stock-element";
+import { deleteStockElement } from "@/shared/api/stock";
+import { useSession } from "next-auth/react";
 
 const Actions = ({ id }: { id: string }) => {
+  const {data, status} =  useSession()
 
-  const revalidatePagePath = "/"
+  if(!data) return null
 
   const onDelete = () => {
-    deleteStockElementItemAction(id, revalidatePagePath)
+    deleteStockElement(id, data.backendTokens.accessToken)
   };
 
   return (

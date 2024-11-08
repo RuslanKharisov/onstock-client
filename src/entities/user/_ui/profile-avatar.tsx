@@ -1,14 +1,15 @@
 "use client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { User } from "lucide-react"
-import { UserEntity } from "../types/types"
 import { cn } from "@/shared/ui/utils"
+import { Session } from "next-auth"
+import { Profile } from "../types/types"
 
 export const ProfileAvatar = ({
   profile,
   className,
 }: {
-  profile?: UserEntity
+  profile?: Profile
   className?: string
 }) => {
   if (!profile) {

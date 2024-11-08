@@ -53,7 +53,7 @@ export function UserProfile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={`/profile/${user?.id}`}>
+            <Link href={`/profile`}>
               <User className="mr-2 h-4 w-4" />
               <span>Личный кабинет</span>
             </Link>

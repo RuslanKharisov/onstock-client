@@ -8,7 +8,7 @@ declare module "next-auth" {
       id: string;
       name?: string | null | undefined;
       email: string;
-      image: string | null;
+      image?: string | null;
       role: string;
       emailVerified?: Date | null;
     } & DefaultSession["user"];
@@ -19,6 +19,8 @@ declare module "next-auth" {
   }
 
   interface User {
+    picture: string | null | undefined;
+    role: string;
     backendTokens: {
       accessToken: string;
       refreshToken: string;

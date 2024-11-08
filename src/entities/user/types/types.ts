@@ -45,13 +45,13 @@ export type UserEntity = {
 
 // Projetions
 
-// export type Profile = {
-//   id?: string
-//   name?: string
-//   email?: string
-//   image?: string | null
-//   role?: Role
-// }
+export type Profile = {
+  id?: string
+  name?: string
+  email?: string
+  image?: string | null
+  role?: string
+}
 
 export type VerificationToken = {
   id: string

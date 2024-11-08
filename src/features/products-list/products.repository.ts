@@ -21,6 +21,7 @@
 //     }
 //   }
 
+/* перенесена  */
 //   async getProductsList() {
 //     // const connection = await dbClient.$connect();
 //     try {
@@ -33,6 +34,7 @@
 //     }
 //   }
 
+/* перенесена  */
 //   async getStockList() {
 //     // const connection = await dbClient.$connect();
 //     try {
@@ -50,6 +52,7 @@
 //     }
 //   }
 
+/*  перенесена  */
 //   async getStockListById(id: string) {
 //     // поиск поставщика по id
 //     const supplier = await dbClient.supplier.findUnique({
@@ -79,7 +82,7 @@
 //   }
 
  
-
+/*  перенесена  */
 //   addOrUpdateProduct = async (command: addOrUpdateProductCommand) => {
 //     console.log("🚀 ~ ProductsRepository ~ addOrUpdateProduct= ~ command:", command)
 //     try {
@@ -176,6 +179,8 @@
 //     }
 //   }
 
+/*  перенесена  */
+
 //   deleteStockElement = async (stockId: string): Promise<void> => {
 //     try {
 //       await dbClient.stock.delete({
@@ -187,6 +192,8 @@
 //       await dbClient.$disconnect()
 //     }
 //   }
+
+/*  перенесена  */
 
 //   deleteProductElement = async (
 //     command: DeleteProductListElementCommand,

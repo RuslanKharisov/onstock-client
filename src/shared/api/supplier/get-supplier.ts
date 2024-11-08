@@ -1,4 +1,3 @@
-import { UserEntity } from '@/entities/user/types/types';
 import axios from 'axios';
 import api from '../api';
 
@@ -19,9 +18,10 @@ export async function getSupplier(
       const { status, data } = error.response;
       if (status === 401 && data.message === 'Unauthorized') {
         console.warn('Unauthorized access. Returning null user.');
+        return null;
       }
     }
-    console.error("Unexpected error:", error);
-    throw error;
+    console.error("getSupplier Unexpected error:", error.code);
+    return null;
   }
 }

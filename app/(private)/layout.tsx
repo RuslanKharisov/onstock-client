@@ -1,5 +1,6 @@
-import { Footer } from "@/widgets/app-footer"
+import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar"
 import { AppHeader } from "@/widgets/app-header/app-header"
+import { AppSidebar } from "@/widgets/app-sidebar.tsx"
 
 export default async function Layout({
   children,
@@ -7,10 +8,12 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <AppHeader variant="private" />
-      {children}
-      <Footer />
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <div className="w-full">
+        <SidebarTrigger/>
+        {children}
+      </div>
+    </SidebarProvider>
   )
 }

@@ -13,28 +13,6 @@ export function MainNav({ role }: { role: Role | undefined }) {
       >
         Онлайн склад
       </Link>
-
-      {/* <Link
-        className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href="/news"
-      >
-        Новости
-      </Link> */}
-
-      <Link
-        className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href={`/prising`}
-      >
-        Тарифы
-      </Link>
-
-      <Link
-        className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href={`/personal-stock`}
-      >
-        Мой склад
-      </Link>
-
       {role === "ADMIN" && (
         <Link
           className="text-foreground/60 transition-colors hover:text-foreground/80"

@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function getUserById(
   id: string,
   accessToken: string
-): Promise<UserEntity> {
+): Promise<UserEntity | null> {
   try {
     const res = await axios.get(`http://localhost:5000/user/${id}`, {
       headers: {
@@ -20,8 +20,8 @@ export async function getUserById(
         console.warn('Unauthorized access. Returning null user.');
       }
     }
-    console.error("Unexpected error:", error);
-    throw error;
+    // console.error("*********Unexpected error:", error.code);
+    return null
   }
 }
 
