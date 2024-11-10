@@ -1,5 +1,6 @@
 "use client"
 
+import { Stock } from "@/entities/stock/_domain/types"
 import { Button } from "@/shared/ui/button"
 
 import {

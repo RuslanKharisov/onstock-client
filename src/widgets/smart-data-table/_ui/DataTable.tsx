@@ -12,31 +12,47 @@ import {
     getFilteredRowModel,
     useReactTable,
     getPaginationRowModel,
+    OnChangeFn,
 } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
-import React from "react"
+import React, { useState } from "react"
 import { DataTablePagination } from "./DataTablePagination"
+import { PaginationState } from "../model/types"
+import { Skeleton } from "@/shared/ui/skeleton"
+import { Spinner } from "@/shared/ui/spinner"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    loading: boolean
+    onPaginationChange?: OnChangeFn<PaginationState> 
+    pagination:PaginationState
+    rowCount:number
+    manualPagination?: boolean
 }
+
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    loading,
+    onPaginationChange,
+    pagination,
+    rowCount,
+    manualPagination: manualPagination
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const table = useReactTable({
         columns,
         data,
+        pageCount: manualPagination ? Math.ceil(rowCount / pagination.pageSize) : undefined,
+        manualPagination: manualPagination,
+        // manualFiltering: true,
+        onPaginationChange,
+        state : { pagination }, 
         getCoreRowModel: getCoreRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        state: {
-            columnFilters,
-        },
     })
 
     return (
@@ -61,7 +77,7 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm border-2"
                 />
             </div>
-            <DataTablePagination table={table}/>
+            <DataTablePagination table={table} />
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -98,11 +114,11 @@ export function DataTable<TData, TValue>({
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center text-2xl font-bold -">
-                                   Ничего не найдено!
+                                <TableCell colSpan={columns.length} className="text-center h-24 text-2xl font-bold -">
+                                   {loading? <div className="flex justify-center"><Spinner/></div>  : "Ничего не найдено!" }
                                 </TableCell>
                             </TableRow>
-                        )}
+                         )}
                     </TableBody>
                 </Table>
             </div>

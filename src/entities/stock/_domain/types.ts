@@ -1,4 +1,4 @@
-type Stock = {
+export type Stock = {
   id: string
   sku: string
   name?: string
@@ -9,7 +9,7 @@ type Stock = {
   siteUrl: string | null
 }
 
-type StockListElementWithRelations = {
+export type StockListElementWithRelations = {
   id: string
   supplierId: number
   productId: string
@@ -23,12 +23,22 @@ type StockListElementWithRelations = {
   supplier: getSupplier
 }
 
-type DeleteStockElementCommand = {
+// Тип для ответа с пагинацией
+export type PaginatedStockList = {
+  data: StockListElementWithRelations[];
+  totalCount: number;
+  limit: number;
+  skip: number;
+  currentPage: number;
+  totalPages: number;
+}
+
+export type DeleteStockElementCommand = {
   id: string
 }
 
 // заготовка для склада
-type CreateStockElementCommand = {
+export type CreateStockElementCommand = {
   quantity: number
   supplierId: number // для connect к id поставщика
   productId: string // для coonnect к id продукта, если он уже есть в базе
@@ -40,4 +50,5 @@ type getSupplier = {
   email: string
   siteUrl: string | null
   userId: string
+  tariffId: number
 }
