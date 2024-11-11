@@ -1,7 +1,5 @@
 "use client"
 
-import { Button } from "@/shared/ui/button"
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/shared/ui/dropdown-menu"
 import { Input } from "@/shared/ui/input"
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from "@/shared/ui/table"
 import {
@@ -11,15 +9,19 @@ import {
     getCoreRowModel,
     getFilteredRowModel,
     useReactTable,
-    getPaginationRowModel,
     OnChangeFn,
+    RowData,
 } from "@tanstack/react-table"
-import { ChevronDown } from "lucide-react"
-import React, { useState } from "react"
+import React from "react"
 import { DataTablePagination } from "./DataTablePagination"
 import { PaginationState } from "../model/types"
-import { Skeleton } from "@/shared/ui/skeleton"
 import { Spinner } from "@/shared/ui/spinner"
+
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData extends RowData> {
+    deleteData: (id: string) => void;
+  }
+}
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -29,6 +31,7 @@ interface DataTableProps<TData, TValue> {
     pagination:PaginationState
     rowCount:number
     manualPagination?: boolean
+    handleDelete: (id: string) => void;
 }
 
 
@@ -39,7 +42,8 @@ export function DataTable<TData, TValue>({
     onPaginationChange,
     pagination,
     rowCount,
-    manualPagination: manualPagination
+    manualPagination: manualPagination,
+    handleDelete
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const table = useReactTable({
@@ -53,6 +57,11 @@ export function DataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        meta: {
+          deleteData: (id: string) => {
+            handleDelete(id)
+          }
+        },
     })
 
     return (

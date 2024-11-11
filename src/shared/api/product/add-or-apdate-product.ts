@@ -6,9 +6,8 @@ import axios from "axios";
 export async function addOrUpdateProduct (
   accessToken: string,
   data: addOrUpdateProductCommand,
-  revalidatePagePath: string,
+  // revalidatePagePath: string,
   ) {
-  console.log("🚀 ~ data:", data)
   try {
     const res = await axios.post(`http://localhost:5000/product-management`, data, {
       headers: {
@@ -16,7 +15,7 @@ export async function addOrUpdateProduct (
         'Content-Type': 'application/json'
       }
     });
-    revalidatePath(revalidatePagePath)
+    // revalidatePath(revalidatePagePath)
     return res.data
   } catch (error) {
     throw error

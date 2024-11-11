@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { PaginationState } from "./types";
 
 export const usePagination = () => {
   const [page, setPage] = useState(1);
@@ -8,7 +7,6 @@ export const usePagination = () => {
     pageSize : 5 , 
     pageIndex : 0 , 
   });
-
 
   return {
     skip: (page - 1) * perPage,

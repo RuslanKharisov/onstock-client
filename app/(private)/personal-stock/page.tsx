@@ -1,18 +1,10 @@
-import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
 import { auth } from "@/entities/user/auth"
-import UpdateSupplier from "@/features/update-supplier/update-supplier-form"
-import { getStockById } from "@/shared/api/stock"
 import { getSupplier } from "@/shared/api/supplier"
 import { ButtonWrapper } from "@/shared/lib/button-wrapper"
-import { useUserStore } from "@/shared/store/userStore"
 import { Button } from "@/shared/ui/button"
-import { usePagination } from "@/widgets/smart-data-table"
-import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
 import { StockList } from "@/widgets/stock"
 import { SupplierInfo } from "@/widgets/supplier-info"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
-import { useQuery } from "@tanstack/react-query"
-import Link from "next/link"
 
 async function PersonalStock({ params }: { params: { id: string } }) {
   const session = await auth()
@@ -46,20 +38,11 @@ async function PersonalStock({ params }: { params: { id: string } }) {
         <ApdateStock
           supplier={supplier}
           session={session}
-          revalidatePagePath="/personal-stock/"
+          revalidatePagePath="/personal-stock"
         />
       )}
 
       <StockList userId={userId} accessToken={accessToken}/>
-      
-
-
-      {/* <section className="">
-      {stockProducts && <SmartDataTable
-          stockList={stockProducts}
-          columns={StockTableColumns}
-        />}
-      </section> */}
     </main>
   )
 }

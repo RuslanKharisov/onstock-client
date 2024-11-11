@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 export async function deleteStockElement(
   id: string ,
   accessToken: string,
-): Promise<StockListElementWithRelations[]> {
+) {
   try {
     const res = await axios.delete(`http://localhost:5000/stock/${id}`, {
       headers: {
@@ -14,7 +14,6 @@ export async function deleteStockElement(
       }
     });
     revalidatePath("/")
-      return  res.data
   } catch (error) {
     throw error;
   }

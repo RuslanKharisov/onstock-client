@@ -1,6 +1,9 @@
 import { apiClient } from "@/shared/api/base"
 import { StockQuery } from "../query/stock.query"
 import { PaginatedStockListDto } from "../dto/stock-with-pagination.dto"
+import { useMutation } from "@tanstack/react-query"
+import { deleteStockElement } from "@/shared/api/stock"
+import { queryClient } from "@/shared/api/query-client"
 
 
 export const getStocks = async (page: number, perPage: number, sortBy?: string): Promise<PaginatedStockListDto > => {
@@ -13,3 +16,5 @@ export const getStock = async (userId: string, accessToken: string, page: number
   const body = { page, perPage }
   return await apiClient.post<PaginatedStockListDto>(`/stock/${userId}`, body, accessToken)
 }
+
+

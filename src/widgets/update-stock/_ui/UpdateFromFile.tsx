@@ -10,17 +10,35 @@ import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
 import { Session } from "next-auth"
 import { addOrUpdateProduct } from "@/shared/api/product"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export interface ProductsStock {
   Name: string
   Index: number
 }
 
-export function UpdateFromFile({ supplier, session, revalidatePagePath }: { supplier: getSupplier; session: Session; revalidatePagePath: string; }) {
+export function UpdateFromFile({
+  supplier,
+  session,
+  revalidatePagePath,
+}: {
+  supplier: Supplier
+  session: Session
+  revalidatePagePath: string
+}) {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
-  
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
+
+  const queryClient = useQueryClient()
+
+  const addMutation = useMutation({
+    mutationFn: (data: addOrUpdateProductCommand) =>
+      addOrUpdateProduct(session.backendTokens.accessToken, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["stock"] })
+    },
+  })
 
   function handleFileUpload(e: any) {
     const reader = new FileReader()
@@ -43,26 +61,9 @@ export function UpdateFromFile({ supplier, session, revalidatePagePath }: { supp
         name: product.name || "",
         description: product.description || "",
         quantity: product.quantity,
-        supplierId: supplier.id,
-      };
-  
-      try {
-        const result = await addOrUpdateProduct(session.backendTokens.accessToken, data, revalidatePagePath);
-        // const result = await createProductAction(data, revalidatePagePath);
-  
-        if (result?.error) {
-          setError(result.error);
-          return; 
-        }
-  
-        if (result.success) {
-          setSuccess(result.success);
-        }
-      } catch (error) {
-        console.error("Unexpected error:", error);
-        setError("An unexpected error occurred: " + (error as Error).message);
-        return;
+        supplierId: supplier?.id,
       }
+      addMutation.mutate(data)
     }
   }
 
@@ -86,8 +87,16 @@ export function UpdateFromFile({ supplier, session, revalidatePagePath }: { supp
         </Button>
       </CardContent>
       <CardContent>
-        { success && <p className="text-center bg-green-300 text-xs rounded-lg px-3 py-3 mb-2 ">{success}</p> }
-        { error && <p className="text-center bg-red-200 text-xs rounded-lg px-3 py-3 ">{error}</p> }
+        {success && (
+          <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
+            {success}
+          </p>
+        )}
+        {error && (
+          <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
+            {error}
+          </p>
+        )}
       </CardContent>
     </Card>
   )
