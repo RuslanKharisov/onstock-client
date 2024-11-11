@@ -7,5 +7,9 @@ export const getStocks = async (page: number, perPage: number, sortBy?: string):
   const query: StockQuery = { page, perPage }
   if (sortBy) query.sortBy = sortBy;
   return await apiClient.get<PaginatedStockListDto>('/stock', query)
-  
+}
+
+export const getStock = async (userId: string, accessToken: string, page: number, perPage: number,): Promise<PaginatedStockListDto> => {
+  const body = { page, perPage }
+  return await apiClient.post<PaginatedStockListDto>(`/stock/${userId}`, body, accessToken)
 }

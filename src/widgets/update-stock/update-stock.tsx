@@ -9,7 +9,7 @@ export function ApdateStock({
   session,
   revalidatePagePath,
 }: {
-  supplier: getSupplier
+  supplier: Supplier
   session: Session
   revalidatePagePath: string
 

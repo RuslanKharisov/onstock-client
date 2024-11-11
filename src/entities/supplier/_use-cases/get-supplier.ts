@@ -1,7 +1,8 @@
-"use server"
+"use server";
 
-import { supplierRepository } from "../_repositories/supplier.repository"
+import { apiClient } from "@/shared/api/base";
 
-export const getSupplier = (userId:string) => {
-  return supplierRepository.getSupplierByUserId(userId)
-}
+export const getSupplier = async (userId: string, accessToken: string): Promise<Supplier> => {
+  const query = { userId };
+  return await apiClient.post<Supplier>(`/supplier/${userId}`, query, accessToken);
+};

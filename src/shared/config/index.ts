@@ -22,4 +22,4 @@
 
 // export const privateConfig = privateConfigSchema.parse(process.env);
 
-export const API_URL = 'http://localhost:5000/'
+export const API_URL = 'http://localhost:5000'

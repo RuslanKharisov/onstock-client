@@ -1,4 +1,5 @@
 export const convertToStockArray = (stockList: StockListElementWithRelations[]): Stock[] => {
+
   return stockList.map(stockItem => ({
     id: stockItem.id,
     sku: stockItem.product.sku,

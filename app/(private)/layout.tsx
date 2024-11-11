@@ -1,5 +1,4 @@
 import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar"
-import { AppHeader } from "@/widgets/app-header/app-header"
 import { AppSidebar } from "@/widgets/app-sidebar.tsx"
 
 export default async function Layout({

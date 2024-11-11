@@ -1,27 +1,38 @@
-
+"use client"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array";
 import { DataTable } from "./_ui/DataTable";
-import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns";
-import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, OnChangeFn } from "@tanstack/react-table";
+import { PaginationState } from "./model/types";
+import { Stock, StockListElementWithRelations } from "@/entities/stock/_domain/types";
+import { usePagination, useSorting } from ".";
+
 
 export function SmartDataTable({
   stockList,
   columns,
-  variant,
+  loading,
+  rowCount
 }: {
   stockList: StockListElementWithRelations[];
   columns: ColumnDef<Stock>[]
-  variant: "auth" | "private" | "public"
+  loading: boolean
+  onPaginationChange?: OnChangeFn<PaginationState>
+  pagination:PaginationState
+  rowCount:number
 }) {
-  const isProfile = variant === "private";
 
+
+  /** Конвертаци многоуровнего объекта в однослойный для передачи в компонент DataTable */
   const stockArray: Stock[] = convertToStockArray(stockList);
 
   return (
     <DataTable
-    // columns={isProfile ? StockTableColumns : ProductsTableColumns}
     columns={columns}
-    data={stockArray}/>
+    data={stockArray}
+    loading={loading}
+    onPaginationChange={onPaginationChange}
+    pagination={pagination}
+    rowCount={rowCount}
+    />
   )
 }

@@ -6,7 +6,10 @@ import { getSupplier } from "@/shared/api/supplier"
 import { ButtonWrapper } from "@/shared/lib/button-wrapper"
 import { useUserStore } from "@/shared/store/userStore"
 import { Button } from "@/shared/ui/button"
+import { usePagination } from "@/widgets/smart-data-table"
 import { SmartDataTable } from "@/widgets/smart-data-table/smart-data-table"
+import { StockList } from "@/widgets/stock"
+import { SupplierInfo } from "@/widgets/supplier-info"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
@@ -26,61 +29,37 @@ async function PersonalStock({ params }: { params: { id: string } }) {
           Осталось внести данные компании поставщика
         </h1>
         <div className="mb-8 ">
-          <ButtonWrapper routeUrl={`/profile/${userId}`}>
+          <ButtonWrapper routeUrl={`/profile`}>
             <Button size="lg">Указать данные компании</Button>
           </ButtonWrapper>
         </div>
       </main>
     )
 
-  const stockProducts = await getStockById(userId, accessToken)
+  // const stockProducts = await getStockById(userId, accessToken)
 
   return (
     <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-16">
-      <div className="mb-8">
-        <h1 className="">Склад: {supplier?.name} </h1>
-        <p className="text-sm font-semibold">
-          Текущий тариф:
-          <span className="ms-2">
-            {supplier.supplierTariff.name}
-          </span>
-          <span>
-            <Button size="sm" variant="link">
-              <Link
-                className="font-bold uppercase text-secondary"
-                href={`/profile`}
-              >
-                Изменить
-              </Link>
-            </Button>
-          </span>
-        </p>
-        <p className="text-sm font-semibold">
-          Максимальное количество по текущему тарифу:
-          <span className="ms-2">
-            {supplier.supplierTariff.maxProducts}
-          </span>
-        </p>
-        <p className="text-sm font-semibold">Позиций на складе:
-          <span className="ms-2">{stockProducts?.length}</span>
-        </p>
-      </div>
-      <section className="mb-8">
-        {supplier && (
-          <ApdateStock
-            supplier={supplier}
-            session={session}
-            revalidatePagePath="/personal-stock/"
-          />
-        )}
-      </section>
-      <section className="">
+      <SupplierInfo supplier={supplier}/>
+      
+      {supplier && (
+        <ApdateStock
+          supplier={supplier}
+          session={session}
+          revalidatePagePath="/personal-stock/"
+        />
+      )}
+
+      <StockList userId={userId} accessToken={accessToken}/>
+      
+
+
+      {/* <section className="">
       {stockProducts && <SmartDataTable
           stockList={stockProducts}
           columns={StockTableColumns}
-          variant="private"
         />}
-      </section>
+      </section> */}
     </main>
   )
 }
