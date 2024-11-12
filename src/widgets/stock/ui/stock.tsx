@@ -1,44 +1,61 @@
 "use client"
 
+import { personalStockQueries } from "@/entities/stock-personal.ts/api/personal-stock.queries";
 import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns";
-import { getStock } from "@/entities/stock/api/stock.queries";
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array";
-import { queryClient } from "@/shared/api/query-client";
-import { deleteStockElement } from "@/shared/api/stock";
 import { DataTable, usePagination } from "@/widgets/smart-data-table";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 
+/**
+ * Компонент для отображения списка продукции на складе пользователя.
+ *
+ * Этот компонент загружает данные о продукции на складе пользователя и отображает их в виде таблицы.
+ * Он также предоставляет возможность удаления продукции со склада.
+ *
+ * @param {Object} props - Свойства компонента.
+ * @param {string} props.userId - Идентификатор пользователя, чья продукция будет отображена.
+ * @param {string} props.accessToken - Токен доступа для аутентификации запросов к API.
+ * 
+ * @returns {JSX.Element} Компонент списка продукции на складе.
+ */
 function StockList({
   userId,
   accessToken
 }: {
-  userId:string
-  accessToken: string
-}) {
-  const [stocks, setStocks] = useState<any[]>([])
-  const [count, setCount] = useState(0)
+  userId: string;
+  accessToken: string;
+}): JSX.Element {
+  // Состояние для хранения списка продукции на складе
+  const [stocks, setStocks] = useState<any[]>([]);
+  
+  // Состояние для хранения общего количества продукции на складе
+  const [count, setCount] = useState(0);
+  
+  // Хук для управления пагинацией
+  const { onPaginationChange, pagination } = usePagination();
 
-  const { onPaginationChange, pagination } = usePagination()
+  // Запрос для получения списка продукции на складе пользователя
+  const {
+    data,
+    error,
+    isLoading,
+    isError,
+  } = useQuery(personalStockQueries.list(userId, accessToken, pagination.pageIndex + 1, pagination.pageSize));
 
-  const { isPending, error, data, refetch  } = useQuery({
-    queryKey: ['stock', userId, accessToken, pagination.pageIndex + 1, pagination.pageSize],
-    queryFn: () => getStock(userId, accessToken , pagination.pageIndex + 1, pagination.pageSize),
-    staleTime: 0,
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteStockElement(id, accessToken),
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:['stock', userId, accessToken]});
-    },
-  });
-
+  // Мутация для удаления продукции со склада
+  const deleteMutation = personalStockQueries.remove(accessToken);
+  
+  /**
+   * Обработчик удаления продукции по идентификатору.
+   *
+   * @param {string} id - Идентификатор продукции, которую нужно удалить со склада.
+   */
   const handleDelete = async (id: string) => {
     deleteMutation.mutate(id);
-    refetch();
   }
 
+  // Эффект для обновления состояния продукции на складе при получении новых данных
   useEffect(() => {
     if (data) {
       setStocks(data.data); 
@@ -46,20 +63,21 @@ function StockList({
     }
   }, [data]);
 
+  // Преобразование продукции на складе в нужный формат для отображения в таблице
   const stockArray = useMemo(() => convertToStockArray(stocks), [stocks]);
 
   return (
     <DataTable
         columns={StockTableColumns}
         data={stockArray}
-        loading={isPending}
+        loading={isLoading}
         onPaginationChange={onPaginationChange}
         pagination={pagination}
         rowCount={count}
-        manualPagination = {true}
-        handleDelete = {handleDelete}
+        manualPagination={true}
+        handleDelete={handleDelete}
       />
   );
 }
 
-export {StockList}
+export { StockList };

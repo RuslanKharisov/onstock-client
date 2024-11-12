@@ -38,17 +38,6 @@ export class ApiClient {
     return this.handleResponse<TResult>(response);
   }
 
-  // public async post<TResult = unknown, TData = Record<string, unknown>>(endpoint: string, body: TData): Promise<TResult> {
-  //   const response = await fetch(`${this.baseUrl}${endpoint}`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(body),
-  //   });
-
-  //   return this.handleResponse<TResult>(response);
-  // }
 
   public async post<TResult = unknown, TData = Record<string, unknown>>(endpoint: string, body: TData, accessToken?: string): Promise<TResult> {
     const headers: HeadersInit = {
@@ -68,6 +57,25 @@ export class ApiClient {
   
     return this.handleResponse<TResult>(response);
   }
+
+  public async delete<TResult = unknown>(endpoint: string, accessToken?: string): Promise<TResult> {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+  
+    // Если accessToken передан, добавляем заголовок Authorization
+    if (accessToken) {
+      headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+  
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: 'DELETE',
+      headers,
+    });
+  
+    return this.handleResponse<TResult>(response);
+  }
+  
   
 
 }

@@ -13,7 +13,7 @@ export async function deleteStockElement(
         'Content-Type': 'application/json'
       }
     });
-    revalidatePath("/")
+    // revalidatePath("/")
   } catch (error) {
     throw error;
   }

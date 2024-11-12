@@ -1,0 +1,1 @@
+export type {TPersonalPaginatedStockDto} from "./personal-paginated-stock.dto"
