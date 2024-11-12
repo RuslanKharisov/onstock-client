@@ -1,60 +1,60 @@
-import { keepPreviousData, queryOptions, useMutation } from "@tanstack/react-query"
+import { keepPreviousData, queryOptions, useMutation } from "@tanstack/react-query";
 import { getPersonalStock } from "./get-personal-stock";
 import { deletePersonalStockElement } from "./del-personal-stock-element";
 import { queryClient } from "@/shared/api/query-client";
 
-/** Фабрики запросов */
-
+/** 
+ * Фабрика запросов для работы с персональными запасами.
+ * 
+ * Этот объект содержит методы для получения списка персональных запасов,
+ * а также для удаления отдельных элементов из списка.
+ */
 export const personalStockQueries = {
+  /**
+   * Получение ключа для всех запросов персональных запасов.
+   *
+   * @returns {Array<string>} Массив с ключом "personalStock".
+   */
   all: () => ["personalStock"],
 
+  /**
+   * Получение ключа для запроса списка персональных запасов.
+   *
+   * @returns {Array<string>} Массив с ключами для запроса списка.
+   */
   lists: () => [...personalStockQueries.all(), "list"],
-  list: (userId: string, accessToken:string, page: number, limit: number) =>
+
+  /**
+   * Создание запроса для получения списка персональных запасов.
+   *
+   * @param {string} userId - Идентификатор пользователя, чьи запасы нужно получить.
+   * @param {string} accessToken - Токен доступа для аутентификации запросов к API.
+   * @param {number} page - Номер страницы для пагинации.
+   * @param {number} limit - Количество элементов на странице.
+   * @returns {Object} Объект с настройками запроса.
+   */
+  list: (userId: string, accessToken: string, page: number, limit: number) =>
     queryOptions({
       queryKey: [...personalStockQueries.lists(), page, limit],
       queryFn: () => getPersonalStock(userId, accessToken, page, limit),
       placeholderData: keepPreviousData,
     }),
 
-
-
-  // details: () => [...personalStockQueries.all(), "detail"],
-  // detail: (query?: StockDetailQuery) =>
-  //   queryOptions({
-  //     queryKey: [...personalStockQueries.details(), query?.id],
-  //     queryFn: () => getDetailPersonalStock({ id: query?.id }),
-  //     staleTime: 5000,
-  //   }),
-
-    // Метод для создания поста
-  // create: () =>
-  //   queryOptions({
-  //     queryKey: [...stockQueries.all(), "create"],
-  //     mutationFn: (newPersonalStock) => createPersonalStock(newStock),
-  //     onSuccess: () => {
-  //       // Здесь можно добавить логику для обновления кэша после создания поста
-  //     },
-  //   }),
-
-  // Метод для обновления
-  // update: () =>
-  //   queryOptions({
-  //     queryKey: [...stockQueries.all(), "update"],
-  //     mutationFn: (updatedPersonalStock) => updatePersonalStock(updatedStock),
-  //     onSuccess: () => {
-  //       // Здесь можно добавить логику для обновления кэша после обновления поста
-  //     },
-  //   }),
-
-  // Метод для удаления
+  /**
+   * Создание мутации для удаления элемента из персональных запасов.
+   *
+   * @param {string} accessToken - Токен доступа для аутентификации запроса на удаление.
+   * @returns {Object} Объект с настройками мутации.
+   */
   remove: (accessToken: string) =>
     useMutation({
-      // queryKey: [...personalStockQueries.all(), "remove"],
       mutationFn: (stockId: string) => deletePersonalStockElement(stockId, accessToken),
       onSuccess: () => {
-        queryClient.invalidateQueries({queryKey:['personalStock']});
+        // Инвалидация кэша запросов для обновления данных после удаления элемента.
+        queryClient.invalidateQueries({ queryKey: ['personalStock'] });
       },
     }),
 };
+
 
 
