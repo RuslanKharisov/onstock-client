@@ -31,7 +31,7 @@ interface DataTableProps<TData, TValue> {
     pagination:PaginationState
     rowCount:number
     manualPagination?: boolean
-    handleDelete: (id: string) => void;
+    handleDelete?: (id: string) => void;
 }
 
 

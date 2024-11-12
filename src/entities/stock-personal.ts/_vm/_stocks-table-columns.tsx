@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Stock } from "../_domain/types"
+import { Stock } from "../../stock/_domain/types"
 import { ActionButtons } from "@/shared/ui/action-buttons"
 
 const ActionColumn: Partial<ColumnDef<Stock>> = {

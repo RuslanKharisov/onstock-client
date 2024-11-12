@@ -1,27 +1,33 @@
-import { apiClient } from "@/shared/api/base"
-import { StockQuery } from "./query/stock.query"
-import { PaginatedStockListDto } from "../dto/stock-with-pagination.dto"
 import { keepPreviousData, queryOptions } from "@tanstack/react-query"
+import { getStocks } from "./get-stocks"
 
-
-export const getStocks = async (page: number, perPage: number, sortBy?: string): Promise<PaginatedStockListDto > => {
-  const query: StockQuery = { page, perPage }
-  if (sortBy) query.sortBy = sortBy;
-  return await apiClient.get<PaginatedStockListDto>('/stock', query)
-}
-
-export const getPersonalStock = async (userId: string, accessToken: string, page: number, perPage: number,): Promise<PaginatedStockListDto> => {
-  const body = { page, perPage }
-  return await apiClient.post<PaginatedStockListDto>(`/stock/${userId}`, body, accessToken)
-}
-// 
-
-/** Фабрики запросов */
-
+/**
+ * Фабрика запросов для работы с запасами.
+ *
+ * Этот объект содержит методы для получения списка запасов.
+ */
 export const stockQueries = {
+  /**
+   * Получение ключа для всех запросов запасов.
+   *
+   * @returns {Array<string>} Массив с ключом "posts".
+   */
   all: () => ["posts"],
 
+  /**
+   * Получение ключа для запроса списка запасов.
+   *
+   * @returns {Array<string>} Массив с ключами для запроса списка.
+   */
   lists: () => [...stockQueries.all(), "list"],
+
+  /**
+   * Создание запроса для получения списка запасов.
+   *
+   * @param {number} page - Номер страницы для пагинации.
+   * @param {number} limit - Количество элементов на странице.
+   * @returns {Object} Объект с настройками запроса, включая ключ и функцию получения данных.
+   */
   list: (page: number, limit: number) =>
     queryOptions({
       queryKey: [...stockQueries.lists(), page, limit],
@@ -29,13 +35,12 @@ export const stockQueries = {
       placeholderData: keepPreviousData,
     }),
 
-  details: () => [...stockQueries.all(), "detail"],
-  detail: (query?: PostDetailQuery) =>
-    queryOptions({
-      queryKey: [...stockQueries.details(), query?.id],
-      queryFn: () => getDetailStock({ id: query?.id }),
-      staleTime: 5000,
-    }),
-};
-
-
+  // Примечание: Закомментированные функция получения одного элемента.
+  // details: () => [...stockQueries.all(), "detail"],
+  // detail: (query?: PostDetailQuery) =>
+  //   queryOptions({
+  //     queryKey: [...stockQueries.details(), query?.id],
+  //     queryFn: () => getDetailStock({ id: query?.id }),
+  //     staleTime: 5000,
+  //   }),
+}

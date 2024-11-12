@@ -1,7 +1,7 @@
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
 import { DataTable } from "./_ui/DataTable"
-import { StockTableColumns } from "@/entities/stock/_vm/_stocks-table-columns"
-import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns"
+import { StockTableColumns } from "@/entities/stock-personal.ts/_vm/_stocks-table-columns"
+import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-columns"
 import { ColumnDef } from "@tanstack/react-table"
 import { UserEntity } from "@/entities/user/types/types"
 

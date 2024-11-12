@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { ProductsTableColumns } from "@/entities/producrts-list/_vm/_products-table-columns"
-import { getStocks } from "@/entities/stock/api/stock.queries"
+import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-columns"
+import { stockQueries } from "@/entities/stock/api/stock.queries"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query"
 import {
   DataTable,
   usePagination,
@@ -18,21 +18,19 @@ export default function StockPage() {
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
   const { sortBy, onSortingChange } = useSorting()
-  
-  // Получение данных с сервера
-  const { isPending, error, data } = useQuery({
-    queryKey: ['stocks', pagination.pageIndex + 1, pagination.pageSize, sortBy],
-    queryFn: () => getStocks(pagination.pageIndex + 1, pagination.pageSize, sortBy),
-  });
+
+  const { data, error, isLoading, isError } = useQuery(
+    stockQueries.list(pagination.pageIndex + 1, pagination.pageSize),
+  )
 
   useEffect(() => {
     if (data) {
-      setStocks(data.data); 
-      setCount(data.meta.total);
+      setStocks(data.data)
+      setCount(data.meta.total)
     }
-  }, [data]);
+  }, [data])
 
-  const stockArray = useMemo(() => convertToStockArray(stocks), [stocks]);
+  const stockArray = useMemo(() => convertToStockArray(stocks), [stocks])
 
   return (
     <main className="container py-8">
@@ -41,11 +39,11 @@ export default function StockPage() {
       <DataTable
         columns={ProductsTableColumns}
         data={stockArray}
-        loading={isPending}
+        loading={isLoading}
         onPaginationChange={onPaginationChange}
         pagination={pagination}
         rowCount={count}
-        manualPagination = {true}
+        manualPagination={true}
       />
     </main>
   )

@@ -23,6 +23,15 @@ export type StockListElementWithRelations = {
   supplier: getSupplier
 }
 
+type getSupplier = {
+  id: number
+  name: string
+  email: string
+  siteUrl: string | null
+  userId: string
+  tariffId: number
+}
+
 // Тип для ответа с пагинацией
 export type PaginatedStockList = {
   data: StockListElementWithRelations[];
@@ -33,9 +42,6 @@ export type PaginatedStockList = {
   totalPages: number;
 }
 
-export type DeleteStockElementCommand = {
-  id: string
-}
 
 // заготовка для склада
 export type CreateStockElementCommand = {
@@ -44,11 +50,3 @@ export type CreateStockElementCommand = {
   productId: string // для coonnect к id продукта, если он уже есть в базе
 }
 
-type getSupplier = {
-  id: number
-  name: string
-  email: string
-  siteUrl: string | null
-  userId: string
-  tariffId: number
-}

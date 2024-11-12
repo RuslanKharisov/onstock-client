@@ -27,7 +27,7 @@ export class ApiClient {
         url.searchParams.append(key, value.toString());
       });
     }
-
+    
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
