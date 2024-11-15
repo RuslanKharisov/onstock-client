@@ -1,7 +1,7 @@
-import { API_URL } from "@/shared/config";
+import { API_URL } from "@/shared/config"
 
 export class ApiClient {
-  private baseUrl: string;
+  private baseUrl: string
 
   constructor(url: string) {
     this.baseUrl = url
@@ -9,75 +9,79 @@ export class ApiClient {
 
   async handleResponse<TResult>(response: Response): Promise<TResult> {
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`)
     }
 
     try {
-      return await response.json();
+      return await response.json()
     } catch (error) {
-      throw new Error('Error parsing JSON response');
+      throw new Error("Error parsing JSON response")
     }
   }
 
-  public async get<TResult = unknown>(endpoint: string, queryParams?: Record<string, string | number>): Promise<TResult> {
-    const url = new URL(endpoint, this.baseUrl);
+  public async get<TResult = unknown>(
+    endpoint: string,
+    queryParams?: Record<string, string | number>,
+  ): Promise<TResult> {
+    const url = new URL(endpoint, this.baseUrl)
 
     if (queryParams) {
       Object.entries(queryParams).forEach(([key, value]) => {
-        url.searchParams.append(key, value.toString());
-      });
+        url.searchParams.append(key, value.toString())
+      })
     }
-    
-    const response = await fetch(url.toString(), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
 
-    return this.handleResponse<TResult>(response);
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    return this.handleResponse<TResult>(response)
   }
 
-
-  public async post<TResult = unknown, TData = Record<string, unknown>>(endpoint: string, body: TData, accessToken?: string): Promise<TResult> {
+  public async post<TResult = unknown, TData = Record<string, unknown>>(
+    endpoint: string,
+    body: TData,
+    accessToken?: string,
+  ): Promise<TResult> {
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
-  
-    // Если accessToken передан, добавляем заголовок Authorization
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
+      "Content-Type": "application/json",
     }
-  
+
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`
+    }
+
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'POST',
+      method: "POST",
       headers,
       body: JSON.stringify(body),
-    });
-  
-    return this.handleResponse<TResult>(response);
+    })
+
+    return this.handleResponse<TResult>(response)
   }
 
-  public async delete<TResult = unknown>(endpoint: string, accessToken?: string): Promise<TResult> {
+  public async delete<TResult = unknown>(
+    endpoint: string,
+    accessToken?: string,
+  ): Promise<TResult> {
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
-  
-    // Если accessToken передан, добавляем заголовок Authorization
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
+      "Content-Type": "application/json",
     }
-  
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'DELETE',
-      headers,
-    });
-  
-    return this.handleResponse<TResult>(response);
-  }
-  
-  
 
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`
+    }
+
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: "DELETE",
+      headers,
+    })
+
+    return this.handleResponse<TResult>(response)
+  }
 }
 
-export const apiClient = new ApiClient(API_URL);
+export const apiClient = new ApiClient(API_URL)

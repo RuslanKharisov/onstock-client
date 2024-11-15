@@ -1,10 +1,16 @@
-import NextAuth from "next-auth"
+import NextAuth, { BackendTokens } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
-import { loginUserAPI, refreshTokenApi } from "@/shared/api/auth"
+import {
+  loginUserAPI,
+  refreshTokenApi,
+  registerUserAPI,
+} from "@/shared/api/auth"
 import jwt from "jsonwebtoken"
 import { jwtVerify } from "jose"
+import { getUserByEmail } from "@/shared/api/user/get-user-by-email"
+import { createUserAPI } from "@/shared/api/user/create-user"
 
 export const {
   handlers: { GET, POST },
@@ -31,7 +37,7 @@ export const {
           try {
             const res = await loginUserAPI(validatedFields.data)
             if (res.status === 401) {
-              return null 
+              return null
             }
             return {
               ...res.user,
@@ -50,45 +56,60 @@ export const {
     signIn: "/auth/login",
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      if (!account) return false
+
+      const res = await createUserAPI({
+        name: user.name as string,
+        email: user.email as string,
+        password: "",
+        provider: account.provider,
+        providerAccountId: account.providerAccountId,
+        type: account.type,
+        image: user.image,
+      })
+
+      if (res.user) {
+        user.backendTokens = res.backendTokens
+        user.id = res.user.id
+        return true
+      } else {
+        return false
+      }
+    },
     async session({ session, token }) {
       session.user.id = token.sub as string
-      session.user.image = token.picture
-      session.backendTokens = token.backendTokens
+      session.user.name = token.name as string
+      session.user.email = token.email as string
+      session.backendTokens = token.backendTokens as BackendTokens
+      session.provider = token.provider as string
       return session
     },
 
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.name = user.name
-        token.picture = user.picture
+        token.email = user.email
+        token.provider = account?.provider
         token.backendTokens = user.backendTokens
       }
 
-      if (token.backendTokens && token.backendTokens.accessToken) {
+      // Валидация токенов с backendTokens для Credentials
+      if (token.backendTokens?.accessToken) {
         try {
           const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
-          const { payload } = await jwtVerify(
-            token.backendTokens.accessToken,
-            secret,
-          )
-          return token
-        } catch (error) {
-          console.error("AUTH.ts:Invalid token:")
-        }
-        try {
-          const refreshedToken = await refreshTokenApi(token)
-          if (refreshedToken) {
-            return refreshedToken
-          } else {
-            console.error("Failed to refresh token")
-            return token
+          await jwtVerify(token.backendTokens.accessToken, secret)
+        } catch {
+          // В случае ошибки валидации попытка обновления
+          try {
+            const refreshedToken = await refreshTokenApi(token)
+            if (refreshedToken)
+              token.backendTokens = refreshedToken.backendTokens
+          } catch (refreshError) {
+            console.error("Ошибка при обновлении токена:", refreshError)
           }
-        } catch (refreshError) {
-          console.error("AUTH.ts: Error refreshing token")
-          return token
         }
       }
-
       return token
     },
   },

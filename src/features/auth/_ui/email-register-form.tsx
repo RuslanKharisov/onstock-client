@@ -29,6 +29,7 @@ export function EmailRegisterForm() {
       email: '',
       password: '',
       name: '',
+      type: 'credential',
     },
   });
 

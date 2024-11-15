@@ -43,6 +43,7 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "Укажите имя",
   }),
+  type: z.string()
 })
 
 export const ResetSchema = z.object({

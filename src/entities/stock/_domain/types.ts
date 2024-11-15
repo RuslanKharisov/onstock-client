@@ -1,3 +1,5 @@
+import { ColumnFiltersState, SortingState } from "@tanstack/react-table"
+
 export type Stock = {
   id: string
   sku: string
@@ -50,3 +52,9 @@ export type CreateStockElementCommand = {
   productId: string // для coonnect к id продукта, если он уже есть в базе
 }
 
+
+export interface stockQueryDto {
+  page: number
+  pageSize: number
+  filters?: ColumnFiltersState
+}

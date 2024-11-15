@@ -19,7 +19,8 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
   {
     accessorKey: "sku",
     header: "Артикул",
-    cell: ({ row }) => <i>{row.getValue("sku")}</i>,
+    // cell: ({ row }) => <i>{row.getValue("sku")}</i>,
+    cell: info => info.getValue(),
   },
   {
     accessorKey: "description",

@@ -7,5 +7,6 @@ export const providers:IProviders[] = [
       type: "oauth",
       signinUrl: "http://localhost:3000/api/auth/signin/yandex",
       callbackUrl: "http://localhost:3000/api/auth/callback/yandex",
+      redirectTo: ""
     },
 ]

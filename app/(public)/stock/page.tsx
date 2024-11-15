@@ -10,6 +10,7 @@ import {
   usePagination,
   useSorting,
 } from "@/widgets/smart-data-table"
+import { ColumnFiltersState } from "@tanstack/react-table"
 
 export default function StockPage() {
   const [stocks, setStocks] = useState<any[]>([])
@@ -17,20 +18,30 @@ export default function StockPage() {
 
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
-  const { sortBy, onSortingChange } = useSorting()
-
+  const [filters, setFilters] = useState<ColumnFiltersState>([])
   const { data, error, isLoading, isError } = useQuery(
-    stockQueries.list(pagination.pageIndex + 1, pagination.pageSize),
+    stockQueries.list({
+      page: pagination.pageIndex + 1,
+      pageSize: pagination.pageSize,
+      filters,
+    }),
   )
-
+  
+  console.log("🚀 ~ StockPage ~ filters:", filters)
   useEffect(() => {
     if (data) {
       setStocks(data.data)
       setCount(data.meta.total)
     }
   }, [data])
-
+    
+  const handleFilterChange = (newFilters: ColumnFiltersState) => {
+    setFilters(newFilters)
+    onPaginationChange({ pageIndex: 0, pageSize: pagination.pageSize }) // сброс пагинации при фильтрации
+  }
+  
   const stockArray = useMemo(() => convertToStockArray(stocks), [stocks])
+  const handleDelete = () => null
 
   return (
     <main className="container py-8">
@@ -40,10 +51,12 @@ export default function StockPage() {
         columns={ProductsTableColumns}
         data={stockArray}
         loading={isLoading}
-        onPaginationChange={onPaginationChange}
-        pagination={pagination}
         rowCount={count}
+        handleDelete={handleDelete}
         manualPagination={true}
+        pagination={pagination}
+        onPaginationChange={onPaginationChange}
+        onFilteringChange={handleFilterChange}
       />
     </main>
   )
