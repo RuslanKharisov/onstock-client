@@ -11,6 +11,7 @@ import DownloadExcelSample from "./DownloadExcelSample"
 import { Session } from "next-auth"
 import { addOrUpdateProduct } from "@/shared/api/product"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { TStatus } from "@/shared/api/product/TStatus"
 
 export interface ProductsStock {
   Name: string
@@ -35,10 +36,19 @@ export function UpdateFromFile({
   const addMutation = useMutation({
     mutationFn: (data: addOrUpdateProductCommand) =>
       addOrUpdateProduct(session.backendTokens.accessToken, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["stock"] })
+    onSuccess: (data:TStatus) => {
+      if(data.success) {
+        setError(undefined)
+        setSuccess(data.success)
+      } else {
+        setSuccess(undefined)
+        setError(data.error)
+      }
+      queryClient.invalidateQueries({ queryKey: ["personalStock"] })
     },
   })
+
+
 
   function handleFileUpload(e: any) {
     const reader = new FileReader()

@@ -19,6 +19,7 @@ import { addOrUpdateProduct } from "@/shared/api/product";
 import { Session } from "next-auth";
 import { createProductFormSchema } from "@/entities/stock/_domain/schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TStatus } from "@/shared/api/product/TStatus";
 
 
 export function UpdateFromForm({
@@ -39,8 +40,15 @@ export function UpdateFromForm({
   const addMutation = useMutation({
     mutationFn: (data: addOrUpdateProductCommand) =>
       addOrUpdateProduct(session.backendTokens.accessToken, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["stock"] })
+    onSuccess: (data:TStatus) => {
+      if(data.success) {
+        setError(undefined)
+        setSuccess(data.success)
+      } else {
+        setSuccess(undefined)
+        setError(data.error)
+      } 
+      queryClient.invalidateQueries({ queryKey: ["personalStock"] })
     },
   })
 
