@@ -13,13 +13,10 @@ import { stockQueryDto } from "../_domain/types";
 export const getStocks = async (
   data: stockQueryDto
 ): Promise<PaginatedStockListDto> => {
-  console.log("🚀 ~ data:", data)
-
   const query: Record<string, string | number> = {
     ...data,
-    filters: JSON.stringify(data.filters || []), // Преобразуем массив в строку
+    filters: JSON.stringify(data.filters || []), // Преобразование массива в строку
   }
-
   return await apiClient.get<PaginatedStockListDto>('/stock', query)
 }
 

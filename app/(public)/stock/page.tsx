@@ -18,16 +18,16 @@ export default function StockPage() {
 
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
+  console.log("🚀 ~ StockPage ~ pagination:", pagination)
   const [filters, setFilters] = useState<ColumnFiltersState>([])
   const { data, error, isLoading, isError } = useQuery(
     stockQueries.list({
       page: pagination.pageIndex + 1,
-      pageSize: pagination.pageSize,
+      perPage: pagination.pageSize,
       filters,
     }),
   )
   
-  console.log("🚀 ~ StockPage ~ filters:", filters)
   useEffect(() => {
     if (data) {
       setStocks(data.data)
