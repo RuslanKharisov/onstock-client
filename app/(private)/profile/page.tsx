@@ -1,4 +1,3 @@
-// import { getSupplier } from "@/entities/supplier/_use-cases/get-supplier"
 import { auth } from "@/entities/user/auth"
 import UpdateProfileForm from "@/features/update-profile/update-profile-form"
 import UpdateSupplierForm from "@/features/update-supplier/update-supplier-form"
@@ -36,9 +35,9 @@ export default async function ProfilePage() {
         </h1>
       </div>
       <Separator />
-      <div className="flex flex-col justify-center items-center lg:items-start gap-5 py-10 md:flex-row">
-        <UpdateSupplierForm session={session} supplier={supplier} revalidatePagePath="/profile"/>
+      <div className="flex flex-col justify-center items-center gap-5 py-10">
         <UpdateProfileForm session={session} existingUser={existingUser}/>
+        <UpdateSupplierForm session={session} supplier={supplier} revalidatePagePath="/profile"/>
       </div>
     </main>
   )

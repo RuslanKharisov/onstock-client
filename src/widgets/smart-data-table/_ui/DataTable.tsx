@@ -89,7 +89,8 @@ export function DataTable<TData, TValue>({
       <div className="my-5 flex flex-col items-center justify-center gap-5 py-4 lg:flex-row">
         <Button
           onClick={() => applyFilter()}
-          className="rounded"
+          className="rounded self-start sm:self-auto
+          "
           title="Применить фильтр"
         >
           <Search size={16} />
