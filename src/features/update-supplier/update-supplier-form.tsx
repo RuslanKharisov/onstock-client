@@ -34,7 +34,7 @@ const UpdateSupplierForm = ({
   session: Session
 }) => {
   const [error, setError] = useState<string | undefined>()
-  const [success, setSuccess] = useState<string | undefined>()
+  const [success, setSuccess] = useState(false)
   const [isPending, startTransition] = useTransition()
   
   const form = useForm<z.infer<typeof SupplierSchema>>({
@@ -61,20 +61,19 @@ const UpdateSupplierForm = ({
         let data;
         if (supplier) {
           data = await updateSupplier(session.user.id, session.backendTokens.accessToken, values, revalidatePagePath);
-          console.log("🚀 ~ startTransition ~ data:", data)
         } else {
           data = await createSupplier(session.user.id, session.backendTokens.accessToken, values, revalidatePagePath);
         }
         
         if (data) {
-          setSuccess("Успешно");
+          setSuccess(true);
         }
     });
   };
 
   return (
     <>
-      <Card className="w-[315px]">
+      <Card className="w-[315px] md:w-2/3">
         <CardHeader>
           {!supplier ? (
             <h3 className="text-center text-lg font-bold text-destructive">
@@ -87,7 +86,7 @@ const UpdateSupplierForm = ({
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="mb-5 grid gap-3">
+              <div className="mb-5 grid md:grid-cols-3 gap-3">
                 <FormField
                   control={form.control}
                   name="name"
@@ -142,24 +141,27 @@ const UpdateSupplierForm = ({
                   )}
                 />
                 <FormEroor message={error} />
-                <FormSuccess message={success} />
+                <FormSuccess message={success? "Успешно": ""} />
               </div>
               <Button type="submit" disabled={isPending} className="mb-5">
                 {isPending && <Spinner className="mr-2 h-4 w-full " />}
-                Отправить
+                Подтвердить
               </Button>
             </form>
           </Form>
-          <div hidden={!supplier}>
+          {
+          success &&
             <Link
               className="flex items-center text-primary/60 transition-colors hover:text-primary"
               href="/personal-stock"
+              
             >
               {" "}
               <SquareArrowOutUpRight className="mr-2" />
               <span>Редактировать склад</span>
             </Link>
-          </div>
+          
+          }
         </CardContent>
       </Card>
     </>

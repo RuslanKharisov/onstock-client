@@ -63,17 +63,17 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
     })
   }
   return (
-    <Card className="w-[315px]">
+    <Card className="w-[315px] md:w-2/3 ">
       <CardHeader className=" items-center gap-3">
         <h2 className="text-center text-lg font-bold">
-          Форма редактирования профиля
+          Редактировать профиль
         </h2>
-        <ProfileAvatar profile={existingUser} />
+        <ProfileAvatar profile={existingUser} className="h-20 w-20" />
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="mb-5 grid gap-3">
+            <div className="mb-5 grid md:grid-cols-2 gap-3">
               <FormField
                 control={form.control}
                 name="name"
@@ -150,7 +150,7 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
             </div>
             <Button type="submit" disabled={isPending}>
               {isPending && <Spinner className="mr-2 h-4 w-full " />}
-              Обновить
+              Подтвердить
             </Button>
           </form>
         </Form>
