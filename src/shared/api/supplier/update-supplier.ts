@@ -1,7 +1,5 @@
 import { ProfileSchema } from "@/entities/user/_domain/schemas";
 import axios from "axios";
-import { access } from "fs";
-import { Session, User } from "next-auth";
 import { z } from "zod";
 
 

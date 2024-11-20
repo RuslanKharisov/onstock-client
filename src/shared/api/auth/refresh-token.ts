@@ -13,7 +13,6 @@ export async function refreshTokenApi(token:JWT) {
         'Content-Type': 'application/json'
       }
     });
-    console.log("🚀 ~ refreshTokenApi ~ res:", res)
       return {
         ...token,
         backendTokens: res.data,
