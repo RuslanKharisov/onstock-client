@@ -1,6 +1,18 @@
 import { LogoIcon } from "@/shared/ui/logo-icon"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table"
+import { TBillItem } from "app/(private)/prising/page"
 
-const Bill = () => {
+
+
+const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
+  console.log("🚀 ~ Bill ~ billDitails:", billDetails)
+  const {name} = billDetails
+
+  // Проверяем, есть ли данные
+  if (!billDetails || !billDetails.name) return null;
+
+  const total = billDetails.quantity ? billDetails.quantity * billDetails.price : 0;
+
   return (
     <div className="py-10">
       <div className="flex justify-center p-5">
@@ -66,44 +78,28 @@ const Bill = () => {
         В ответ на Ваш запрос ООО «АСК» готово осуществить поставку изделий
         согласно спецификации:
       </div>
-      <table className="mb-10 w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th className="px-6 py-3">№ п.п</th>
-            <th className="px-6 py-3">Наименование</th>
-            <th className="px-6 py-3">Описание</th>
-            <th className="px-6 py-3">Количество, шт</th>
-            <th className="px-6 py-3">Цена за единицу, руб.</th>
-            <th className="px-6 py-3">Сумма, руб.</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
-            <td className="px-6 py-4">1</td>
-            <td className="px-6 py-4">Apple MacBook Pro 17"</td>
-            <td className="px-6 py-4">Laptop</td>
-            <td className="px-6 py-4">10</td>
-            <td className="px-6 py-4">1900</td>
-            <td className="px-6 py-4">19000</td>
-          </tr>
-          <tr className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
-            <td className="px-6 py-4">1</td>
-            <td className="px-6 py-4">Apple MacBook Pro 17"</td>
-            <td className="px-6 py-4">Laptop</td>
-            <td className="px-6 py-4">10</td>
-            <td className="px-6 py-4">1900</td>
-            <td className="px-6 py-4">19000</td>
-          </tr>
-          <tr className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
-            <td className="px-6 py-4">1</td>
-            <td className="px-6 py-4">Apple MacBook Pro 17"</td>
-            <td className="px-6 py-4">Laptop</td>
-            <td className="px-6 py-4">10</td>
-            <td className="px-6 py-4">1900</td>
-            <td className="px-6 py-4">19000</td>
-          </tr>
-        </tbody>
-      </table>
+      <Table className="mb-10 w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+        <TableHeader className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <TableRow>
+            <TableHead className="px-6 py-3">№ п.п</TableHead>
+            <TableHead className="px-6 py-3">Наименование</TableHead>
+            <TableHead className="px-6 py-3">Описание</TableHead>
+            <TableHead className="px-6 py-3">Количество, шт</TableHead>
+            <TableHead className="px-6 py-3">Цена за единицу, руб.</TableHead>
+            <TableHead className="px-6 py-3">Сумма, руб.</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+            <TableCell className="px-6 py-4">1</TableCell>
+            <TableCell className="px-6 py-4 text-sm">{name}</TableCell>
+            <TableCell className="px-6 py-4">{billDetails.description}</TableCell>
+            <TableCell className="px-6 py-4">{billDetails.quantity}</TableCell>
+            <TableCell className="px-6 py-4">{billDetails.price}</TableCell>
+            <TableCell className="px-6 py-4">{total}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <div className="">
         <ul className="mb-5">
           <li>
