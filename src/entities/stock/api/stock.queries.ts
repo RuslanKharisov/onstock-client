@@ -4,7 +4,7 @@ import { stockQueryDto } from "../_domain/types"
 
 export const stockQueries = {
 
-  all: () => ["posts"],
+  all: () => ["stocks"],
   lists: () => [...stockQueries.all(), "list"],
   list: (data:stockQueryDto) =>
     queryOptions({

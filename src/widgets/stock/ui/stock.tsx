@@ -6,6 +6,7 @@ import { personalStockQueries } from "@/entities/stock-personal.ts/api/personal-
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
 import { useQuery } from "@tanstack/react-query"
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
+import { ColumnFiltersState } from "@tanstack/react-table"
 
 /**
  * Компонент для отображения списка продукции на складе пользователя.
@@ -34,6 +35,7 @@ function StockList({
 
   // Хук для управления пагинацией
   const { onPaginationChange, pagination } = usePagination()
+  const [filters, setFilters] = useState<ColumnFiltersState>([])
 
   // Запрос для получения списка продукции на складе пользователя
   const { data, error, isLoading, isError } = useQuery(
@@ -42,6 +44,7 @@ function StockList({
       accessToken,
       pagination.pageIndex + 1,
       pagination.pageSize,
+      filters
     ),
   )
 
@@ -65,6 +68,11 @@ function StockList({
     }
   }, [data])
 
+  const handleFilterChange = (newFilters: ColumnFiltersState) => {
+    setFilters(newFilters)
+    onPaginationChange({ pageIndex: 0, pageSize: pagination.pageSize }) // сброс пагинации при фильтрации
+  }
+
   // Преобразование продукции на складе в нужный формат для отображения в таблице
   const stockArray = useMemo(() => convertToStockArray(stocks), [stocks])
 
@@ -78,6 +86,7 @@ function StockList({
       rowCount={count}
       manualPagination={true}
       handleDelete={handleDelete}
+      onFilteringChange={handleFilterChange}
     />
   )
 }
