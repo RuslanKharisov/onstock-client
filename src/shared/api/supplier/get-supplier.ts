@@ -6,7 +6,7 @@ export async function getSupplier(
   accessToken: string
 ): Promise<Supplier> {
   try {
-    const res = await api.get(`/supplier/${id}`, {
+    const res = await api.post(`/supplier/${id}`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function getSupplier(
         return null;
       }
     }
-    console.error("getSupplier Unexpected error:", error.code);
+    console.error("getSupplier Unexpected error");
     return null;
   }
 }
