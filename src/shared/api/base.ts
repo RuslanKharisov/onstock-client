@@ -82,6 +82,29 @@ export class ApiClient {
 
     return this.handleResponse<TResult>(response)
   }
+
+
+  public async patch<TResult = unknown, TData = Record<string, unknown>>(
+    endpoint: string,
+    body: TData,
+    accessToken?: string,
+  ): Promise<TResult> {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    return this.handleResponse<TResult>(response);
+  }
 }
 
 export const apiClient = new ApiClient(API_URL)

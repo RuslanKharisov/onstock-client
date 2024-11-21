@@ -1,17 +1,18 @@
 import { LogoIcon } from "@/shared/ui/logo-icon"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table"
-import { TBillItem } from "app/(private)/prising/page"
+import { TBillItem, TTariff } from "app/(private)/prising/page"
 
 
 
-const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
-  console.log("🚀 ~ Bill ~ billDitails:", billDetails)
+const Bill = ({ billDetails }: { billDetails: TTariff }) => {
+  if(!billDetails) return null
+
   const {name} = billDetails
 
   // Проверяем, есть ли данные
   if (!billDetails || !billDetails.name) return null;
 
-  const total = billDetails.quantity ? billDetails.quantity * billDetails.price : 0;
+  const total = billDetails.pricePerUnit ? billDetails.maxProducts * billDetails.pricePerUnit : 0;
 
   return (
     <div className="py-10">
@@ -72,7 +73,7 @@ const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
         <div className="client">ООО «КИРОС»</div>
       </div>
       <div className="mb-5 flex justify-center">
-        <b>Коммерческое предложение</b>
+        <b>Счет договор</b>
       </div>
       <div className="mb-5">
         В ответ на Ваш запрос ООО «АСК» готово осуществить поставку изделий
@@ -82,9 +83,8 @@ const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
         <TableHeader className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <TableRow>
             <TableHead className="px-6 py-3">№ п.п</TableHead>
-            <TableHead className="px-6 py-3">Наименование</TableHead>
-            <TableHead className="px-6 py-3">Описание</TableHead>
-            <TableHead className="px-6 py-3">Количество, шт</TableHead>
+            <TableHead className="px-6 py-3">Тариф</TableHead>
+            <TableHead className="px-6 py-3">Лимит униклальных таваров</TableHead>
             <TableHead className="px-6 py-3">Цена за единицу, руб.</TableHead>
             <TableHead className="px-6 py-3">Сумма, руб.</TableHead>
           </TableRow>
@@ -93,9 +93,8 @@ const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
           <TableRow className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
             <TableCell className="px-6 py-4">1</TableCell>
             <TableCell className="px-6 py-4 text-sm">{name}</TableCell>
-            <TableCell className="px-6 py-4">{billDetails.description}</TableCell>
-            <TableCell className="px-6 py-4">{billDetails.quantity}</TableCell>
-            <TableCell className="px-6 py-4">{billDetails.price}</TableCell>
+            <TableCell className="px-6 py-4"> {billDetails.maxProducts}</TableCell>
+            <TableCell className="px-6 py-4">{billDetails.pricePerUnit}</TableCell>
             <TableCell className="px-6 py-4">{total}</TableCell>
           </TableRow>
         </TableBody>
@@ -109,28 +108,9 @@ const Bill = ({ billDetails }: { billDetails: TBillItem }) => {
           </li>
           <li>
             <p className="font-semibold">
-              Доставка: <span className="font-light">Включена.</span>{" "}
-            </p>
-          </li>
-          <li>
-            <p className="font-semibold">
-              Срок поставки:{" "}
+              Срок действия:{" "}
               <span className="font-light">
-                14 календарных дней после оплаты, без учета логистики.
-              </span>{" "}
-            </p>
-          </li>
-          <li>
-            <p className="font-semibold">
-              Срок действия КП:{" "}
-              <span className="font-light">До 19.09.2024.</span>{" "}
-            </p>
-          </li>
-          <li>
-            <p className="font-semibold">
-              Контактное лицо:{" "}
-              <span className="font-light">
-                Иван Иванов, тел.: +7 (123) 456 78 91.
+                1 месяц с даты поступления денежных средств.
               </span>{" "}
             </p>
           </li>

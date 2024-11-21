@@ -46,6 +46,20 @@ export const RegisterSchema = z.object({
   type: z.string()
 })
 
+export const TariffSchema = z.object({
+  tariff: z.string().min(1,{
+    message: "Выберите тариф",
+  }),
+  name: z.string().min(1,{
+    message: "Выберите тариф",
+  }),
+  maxProducts: z.string().min(1,{
+    message: "Выберите тариф",
+  }),
+  pricePerUnit: z.string().min(1,{
+    message: "Выберите тариф",
+  }),
+})
 export const ResetSchema = z.object({
   email: z.string().email({
     message: "Укажите почту",
