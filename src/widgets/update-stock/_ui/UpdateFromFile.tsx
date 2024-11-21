@@ -21,11 +21,9 @@ export interface ProductsStock {
 export function UpdateFromFile({
   supplier,
   session,
-  revalidatePagePath,
 }: {
   supplier: Supplier
   session: Session
-  revalidatePagePath: string
 }) {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
