@@ -6,12 +6,6 @@ import { getUserById } from "@/shared/api/user/get-user-by-id"
 import { Separator } from "@/shared/ui/separator"
 
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
 export default async function ProfilePage() {
   const session = await auth()
   if (!session) return null
@@ -37,7 +31,10 @@ export default async function ProfilePage() {
       <Separator />
       <div className="flex flex-col justify-center items-center gap-5 py-10">
         <UpdateProfileForm session={session} existingUser={existingUser}/>
-        <UpdateSupplierForm session={session} supplier={supplier} revalidatePagePath="/profile"/>
+        <UpdateSupplierForm 
+        userId={userId} 
+        accessToken={accessToken}
+      />
       </div>
     </main>
   )

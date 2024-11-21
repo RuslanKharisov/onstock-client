@@ -63,7 +63,7 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
     })
   }
   return (
-    <Card className="w-[315px] md:w-2/3 ">
+    <Card className="w-full ">
       <CardHeader className=" items-center gap-3">
         <h2 className="text-center text-lg font-bold">
           Редактировать профиль

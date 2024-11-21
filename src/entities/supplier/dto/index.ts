@@ -1,0 +1,1 @@
+export type { ChangeSupplierDto } from "./change-supplier.dto"
