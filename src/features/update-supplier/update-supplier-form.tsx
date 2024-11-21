@@ -106,7 +106,7 @@ const UpdateSupplierForm = ({
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="mb-5 grid gap-3 md:grid-cols-3">
+              <div className="mb-5 grid gap-3 lg:grid-cols-3">
                 <FormField
                   control={form.control}
                   name="name"
@@ -161,7 +161,7 @@ const UpdateSupplierForm = ({
                   )}
                 />
                 <FormEroor message={formError} />
-                <FormSuccess message={success ? "Успешно" : ""} />
+                <FormSuccess message={isCreateSuccess || isUpdateSuccess ? "Успешно" : ""} />
               </div>
               <Button
                 type="submit"
@@ -176,14 +176,14 @@ const UpdateSupplierForm = ({
               </Button>
             </form>
           </Form>
-          {success && (
+          {isCreateSuccess || isUpdateSuccess && (
             <Link
-              className="flex items-center text-primary/60 transition-colors hover:text-primary"
+              className="flex items-center text-destructive transition-colors hover:text-primary"
               href="/personal-stock"
             >
               {" "}
               <SquareArrowOutUpRight className="mr-2" />
-              <span>Редактировать склад</span>
+              <span className="my-5">Редактировать склад</span>
             </Link>
           )}
         </CardContent>
