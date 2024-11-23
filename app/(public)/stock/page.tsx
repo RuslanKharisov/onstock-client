@@ -14,11 +14,11 @@ import { ColumnFiltersState } from "@tanstack/react-table"
 
 export default function StockPage() {
   const [stocks, setStocks] = useState<any[]>([])
+  console.log("🚀 ~ StockPage ~ stocks:", stocks)
   const [count, setCount] = useState(0)
 
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
-  console.log("🚀 ~ StockPage ~ pagination:", pagination)
   const [filters, setFilters] = useState<ColumnFiltersState>([])
   const { data, error, isLoading, isError } = useQuery(
     stockQueries.list({
@@ -44,8 +44,8 @@ export default function StockPage() {
   const handleDelete = () => null
 
   return (
-    <main className="container py-8">
-      <h1 className="text-center">Промышленный склад России онлайн</h1>
+    <main className="container py-1 px-3">
+      {/* <h1 className="text-center">Промышленный склад России онлайн</h1> */}
 
       <DataTable
         columns={ProductsTableColumns}

@@ -24,7 +24,6 @@ export class ApiClient {
     queryParams?: Record<string, string | number>,
   ): Promise<TResult> {
     const url = new URL(endpoint, this.baseUrl)
-
     if (queryParams) {
       Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value.toString())

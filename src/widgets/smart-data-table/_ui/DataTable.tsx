@@ -86,39 +86,58 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="mx-auto w-full">
-      <div className="my-5 flex flex-col items-center justify-center gap-5 py-4 lg:flex-row">
-        <Button
-          onClick={() => applyFilter()}
-          className="rounded self-start sm:self-auto
-          "
-          title="Применить фильтр"
-        >
-          <Search size={16} />
-        </Button>
-        <Input
-          name="sku"
-          placeholder="Искать по артикулу ..."
-          value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("sku")?.setFilterValue(event.target.value)
-          }
-          onKeyDown={(e) => {
-            if (e.key === "Enter"){applyFilter()}}}
-          className="max-w-sm border-2"
-        />
-        <Input
-          name="description"
-          placeholder="Искать в описании ..."
-          value={
-            (table.getColumn("description")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("description")?.setFilterValue(event.target.value)
-          }
-          onKeyDown={(e) => {
-            if (e.key === "Enter"){applyFilter()}}}
-          className="max-w-sm border-2"
-        />
+      <div className="my-5 flex flex-col items-center justify-center gap-5 py-4 sm:flex-row">
+        <div className="relative w-full">
+          <Input
+            className="z-20 block w-full rounded-lg border border-s-2 border-gray-300 bg-gray-50  p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+            name="sku"
+            placeholder="Искать по артикулу ..."
+            value={(table.getColumn("sku")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("sku")?.setFilterValue(event.target.value)
+            }
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                applyFilter()
+              }
+            }}
+          />
+          <Button
+            className="absolute end-0 top-0 h-full rounded-e-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => applyFilter()}
+            variant="ghost"
+            title="Применить фильтр"
+          >
+            <Search size={16} />
+          </Button>
+        </div>
+
+        <div className="relative w-full">
+          <Input
+            className="z-20 block w-full rounded-lg border border-s-2 border-gray-300 bg-gray-50  p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
+            name="description"
+            placeholder="Искать в описании ..."
+            value={
+              (table.getColumn("description")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("description")?.setFilterValue(event.target.value)
+            }
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                applyFilter()
+              }
+            }}
+          />
+          <Button
+            className="absolute end-0 top-0 h-full rounded-e-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => applyFilter()}
+            variant="ghost"
+            title="Применить фильтр"
+          >
+            <Search size={16} />
+          </Button>
+        </div>
       </div>
       <DataTablePagination table={table} />
       <div className="rounded-md border">

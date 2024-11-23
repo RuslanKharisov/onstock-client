@@ -19,23 +19,38 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
   {
     accessorKey: "sku",
     header: "Артикул",
-    // cell: ({ row }) => <i>{row.getValue("sku")}</i>,
-    cell: info => info.getValue(),
+    cell: ({ row, column }) => (
+      <div data-title={column.columnDef.header as string}>
+      <i>{row.getValue("sku")}</i>
+    </div>
+    ),
   },
   {
     accessorKey: "description",
-    cell: ({ row }) => <i>{row.getValue("description")}</i>,
-    header: () => "Описание",
+    header: "Описание",
+    cell: ({ row, column }) => (
+      <div data-title={column.columnDef.header as string}>
+        <i>{row.getValue("description")}</i>
+      </div>
+    ),
   },
   {
     accessorKey: "quantity",
-    cell: ({ row }) => <i>{row.getValue("quantity")}</i>,
-    header: () => "Количество",
+    header: "Количество",
+    cell: ({ row, column }) => (
+      <div data-title={column.columnDef.header as string}>
+        <i>{row.getValue("quantity")}</i>
+      </div>
+    ),
   },
   {
     accessorKey: "supplier",
-    cell: ({ row }) => <i>{row.getValue("supplier")}</i>,
-    header: () => "Поставщик",
+    header: "Поставщик",
+    cell: ({ row, column }) => (
+      <div data-title={column.columnDef.header as string}>
+        <i>{row.getValue("supplier")}</i>
+      </div>
+    ),
   },
   {
     header: () => "Ссылки",

@@ -17,7 +17,7 @@ async function PersonalStock({ params }: { params: { id: string } }) {
   const accessToken = session.backendTokens.accessToken
 
   return (
-    <main className="container mx-auto px-4 py-8 lg:px-6 lg:py-16">
+    <main className="container mx-auto px-4 py-1 lg:px-6">
 
       <ApdateStock
         accessToken={accessToken}
