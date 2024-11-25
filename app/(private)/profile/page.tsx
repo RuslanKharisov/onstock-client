@@ -23,13 +23,7 @@ export default async function ProfilePage() {
 
   return (
     <main className="container ">
-      <div className="py-5 text-center">
-        <h1 className="">
-          На этой странице вы можете обновить свои данные и данные компании.
-        </h1>
-      </div>
-      <Separator />
-      <div className="flex flex-col justify-center items-center gap-5 py-10">
+      <div className="flex flex-col justify-center items-center gap-5 py-3">
         <UpdateProfileForm session={session} existingUser={existingUser}/>
         <UpdateSupplierForm 
         userId={userId} 

@@ -165,8 +165,9 @@ const UpdateSupplierForm = ({
               </div>
               <Button
                 type="submit"
+                size="sm"
                 disabled={isCreateLoading || isUpdateLoading}
-                className="w-[120px]"
+                className="w-[120px] "
               >
                 {isCreateLoading
                   ? "Создание..."

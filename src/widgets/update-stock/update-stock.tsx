@@ -40,7 +40,7 @@ export function ApdateStock({
     )
 
   return (
-    <section className="flex flex-wrap items-start gap-5 justify-between">
+    <section className="flex flex-wrap items-start gap-5 justify-center">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="sm">Добавить товар на склад</Button>

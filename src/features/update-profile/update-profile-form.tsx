@@ -68,7 +68,6 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
         <h2 className="text-center text-lg font-bold">
           Редактировать профиль
         </h2>
-        <ProfileAvatar profile={existingUser} className="h-20 w-20" />
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -148,7 +147,7 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
               <FormEroor message={error} />
               <FormSuccess message={success} />
             </div>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" size="sm" disabled={isPending}>
               {isPending && <Spinner className="mr-2 h-4 w-full " />}
               Подтвердить
             </Button>

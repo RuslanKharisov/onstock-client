@@ -1,6 +1,8 @@
+import { ToggleTheme } from "@/features/theme/toggle-theme";
 import { SidebarHeader, SidebarContent, SidebarGroup, SidebarFooter, Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel, SidebarGroupContent } from "@/shared/ui/sidebar";
 import { Store, Home, Inbox, Search, Settings, User, Database } from "lucide-react"
 import Link from 'next/link'
+import { UserProfile } from "../app-header/_ui/user-profile";
 
 const items = [
   {
@@ -28,8 +30,12 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader className="flex items-center justify-center h-14 font-semibold">
-        Личный кабинет
+      <SidebarHeader className=" font-semibold my-3">
+        <h1 className="text-center">Личный кабинет</h1>
+        <div className="flex items-center justify-center space-x-3 ">
+          <ToggleTheme />
+          <UserProfile/>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

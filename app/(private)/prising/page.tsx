@@ -86,15 +86,8 @@ const Prising = () => {
 
   return (
     <main className="container">
-      <div className="py-5 text-center">
-        <h1 className="">
-          На этой странице вы можете обновить свои данные и данные компании.
-        </h1>
-      </div>
       <Separator />
-      <div className="flex flex-col items-center justify-center py-10">
-        {/* <PrisingCards CaseList={casesData} /> */}
-
+      <div className="flex flex-col items-center justify-center py-5">
         <Card className="w-full">
           <CardHeader>
             <h2 className="text-center text-lg font-bold">Выберите тариф</h2>
@@ -129,17 +122,17 @@ const Prising = () => {
                 ></FormField>
                 <FormEroor message={error} />
                 <FormSuccess message={success} />
-                <Button type="submit" className="mt-4">
-                  Применить тариф
+                <Button size="sm" type="submit" className="mt-4">
+                  Рассчитать стоимость
                 </Button>
               </form>
             </Form>
           </CardContent>
         </Card>
       </div>
-      <div className="mx-auto w-2/3 py-10">
+      {/* <div className="mx-auto w-2/3 "> */}
         <Bill billDetails={selectedTariff} />
-      </div>
+      {/* </div> */}
     </main>
   )
 }

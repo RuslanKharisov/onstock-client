@@ -10,7 +10,7 @@ export default async function Layout({
     <SidebarProvider>
       <AppSidebar />
       <div className="w-full">
-        <SidebarTrigger/>
+        <SidebarTrigger className=" absolute top-2"/>
         {children}
       </div>
     </SidebarProvider>

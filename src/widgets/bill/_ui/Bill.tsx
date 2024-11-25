@@ -15,14 +15,12 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
   const total = billDetails.pricePerUnit ? billDetails.maxProducts * billDetails.pricePerUnit : 0;
 
   return (
-    <div className="py-10">
-      <div className="flex justify-center p-5">
-        <div className="flex flex-col justify-center">
-          <div className="flex justify-center">
-            <h1>
-              <span className="inline-block font-bold">
-                <LogoIcon className="mr-3 h-6 w-6" />
-              </span>
+    <div className="py-8">
+      <div className="flex justify-center">
+        <div className="flex flex-col justify-center w-full mb-3">
+          <div className="flex justify-center items-center mb-3">
+          <LogoIcon className="mr-3 h-6 w-6" />
+            <h1 className="m-0">
               Общество с ограниченной ответственностью "АСК"
             </h1>
           </div>
