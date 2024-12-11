@@ -1,25 +1,32 @@
 import { LogoIcon } from "@/shared/ui/logo-icon"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/shared/ui/table"
 import { TBillItem, TTariff } from "app/(private)/prising/page"
 
-
-
 const Bill = ({ billDetails }: { billDetails: TTariff }) => {
-  if(!billDetails) return null
+  if (!billDetails) return null
 
-  const {name} = billDetails
+  const { name } = billDetails
 
   // Проверяем, есть ли данные
-  if (!billDetails || !billDetails.name) return null;
+  if (!billDetails || !billDetails.name) return null
 
-  const total = billDetails.pricePerUnit ? billDetails.maxProducts * billDetails.pricePerUnit : 0;
+  const total = billDetails.pricePerUnit
+    ? billDetails.maxProducts * billDetails.pricePerUnit
+    : 0
 
   return (
     <div className="py-8">
       <div className="flex justify-center">
-        <div className="flex flex-col justify-center w-full mb-3">
-          <div className="flex justify-center items-center mb-3">
-          <LogoIcon className="mr-3 h-6 w-6" />
+        <div className="mb-3 flex w-full flex-col justify-center">
+          <div className="mb-3 flex items-center justify-center">
+            <LogoIcon className="mr-3 h-6 w-6" />
             <h1 className="m-0">
               Общество с ограниченной ответственностью "АСК"
             </h1>
@@ -38,12 +45,12 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
             <li className="font-semibold">
               ОГРН: <span className="font-light">1660273292.</span>{" "}
             </li>
-          </ul>          
+          </ul>
           <div className="font-semibold">
-          Email: <span className="font-light">info@asktat.ru</span> 
+            Email: <span className="font-light">info@asktat.ru</span>
           </div>
           <div className="font-semibold">
-            Сайт: <span className="font-light">https://asktat.ru/</span> 
+            Сайт: <span className="font-light">https://asktat.ru/</span>
           </div>
         </div>
       </div>
@@ -82,7 +89,9 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
           <TableRow>
             <TableHead className="px-6 py-3">№ п.п</TableHead>
             <TableHead className="px-6 py-3">Тариф</TableHead>
-            <TableHead className="px-6 py-3">Лимит униклальных таваров</TableHead>
+            <TableHead className="px-6 py-3">
+              Лимит униклальных таваров
+            </TableHead>
             <TableHead className="px-6 py-3">Цена за единицу, руб.</TableHead>
             <TableHead className="px-6 py-3">Сумма, руб.</TableHead>
           </TableRow>
@@ -91,8 +100,13 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
           <TableRow className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
             <TableCell className="px-6 py-4">1</TableCell>
             <TableCell className="px-6 py-4 text-sm">{name}</TableCell>
-            <TableCell className="px-6 py-4"> {billDetails.maxProducts}</TableCell>
-            <TableCell className="px-6 py-4">{billDetails.pricePerUnit}</TableCell>
+            <TableCell className="px-6 py-4">
+              {" "}
+              {billDetails.maxProducts}
+            </TableCell>
+            <TableCell className="px-6 py-4">
+              {billDetails.pricePerUnit}
+            </TableCell>
             <TableCell className="px-6 py-4">{total}</TableCell>
           </TableRow>
         </TableBody>

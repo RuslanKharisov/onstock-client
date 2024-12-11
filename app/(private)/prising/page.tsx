@@ -2,8 +2,6 @@
 
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
-import { casesData } from "@/widgets/prising-cards/_model/mock-data"
-import { PrisingCards } from "@/widgets/prising-cards/prising-cards"
 import {
   Select,
   SelectTrigger,
@@ -13,7 +11,7 @@ import {
 } from "@/shared/ui/select"
 import { useState } from "react"
 import { Separator } from "@/shared/ui/separator"
-import { Bill } from "@/widgets/bill"
+import { LightBill } from "@/widgets/bill"
 import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem } from "@/shared/ui/form"
 import { FormEroor } from "@/shared/ui/form-error"
@@ -131,7 +129,7 @@ const Prising = () => {
         </Card>
       </div>
       {/* <div className="mx-auto w-2/3 "> */}
-        <Bill billDetails={selectedTariff} />
+        <LightBill billDetails={selectedTariff} />
       {/* </div> */}
     </main>
   )
