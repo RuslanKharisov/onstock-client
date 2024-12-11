@@ -18,6 +18,7 @@ import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { TariffSchema } from "@/entities/user/_domain/schemas"
 import { z } from "zod"
+import { RequestByMail } from "@/widgets/offer-request"
 
 export type TTariff = {
   id: number
@@ -55,30 +56,31 @@ export const billDetails: TBillItem = {
 }
 
 const Prising = () => {
-  const [selectedTariff, setSelectedTariff] = useState<TTariff | undefined>(undefined)
+  const [selectedTariff, setSelectedTariff] = useState<TTariff | undefined>(
+    undefined,
+  )
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
-  
+
   // const handleTariffChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   //   setSelectedTariff(parseInt(event.target.value))
   // }
   console.log("🚀 ~ Prising ~ selectedTariff:", selectedTariff)
 
-  const form = useForm({
-  })
+  const form = useForm({})
 
   const onSubmit = (values) => {
-    console.log("🚀 ~ onSubmit ~ data:", (values))
-    const {stringifiedTariff} = values 
+    console.log("🚀 ~ onSubmit ~ data:", values)
+    const { stringifiedTariff } = values
     if (stringifiedTariff) {
       const tariff = JSON.parse(stringifiedTariff)
-      console.log("🚀 ~ onSubmit ~ tariffId:", tariff )
+      console.log("🚀 ~ onSubmit ~ tariffId:", tariff)
       setSelectedTariff(tariff)
-    //   updateSupplierTariff(selectedTariff) // Вызываем функцию обновления тарифа
-    //     .then(() => {
-    //       setSuccess("Тариф обновлен, ожидается оплата.");
-    //     })
-    //     .catch(() => setError("Ошибка при обновлении тарифа"));
+      //   updateSupplierTariff(selectedTariff) // Вызываем функцию обновления тарифа
+      //     .then(() => {
+      //       setSuccess("Тариф обновлен, ожидается оплата.");
+      //     })
+      //     .catch(() => setError("Ошибка при обновлении тарифа"));
     }
   }
 
@@ -98,7 +100,10 @@ const Prising = () => {
                   name="stringifiedTariff"
                   render={({ field }) => (
                     <FormItem>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Выбрать тариф из списка" />
                         </SelectTrigger>
@@ -128,9 +133,8 @@ const Prising = () => {
           </CardContent>
         </Card>
       </div>
-      {/* <div className="mx-auto w-2/3 "> */}
-        <LightBill billDetails={selectedTariff} />
-      {/* </div> */}
+        <RequestByMail />
+      <LightBill billDetails={selectedTariff} />
     </main>
   )
 }

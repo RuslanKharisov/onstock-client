@@ -7,7 +7,7 @@ import { UserProfile } from "../app-header/_ui/user-profile";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/stock",
     icon: Home,
   },
   {
