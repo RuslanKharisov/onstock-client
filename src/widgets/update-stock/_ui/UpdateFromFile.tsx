@@ -34,8 +34,8 @@ export function UpdateFromFile({
   const addMutation = useMutation({
     mutationFn: (data: addOrUpdateProductCommand) =>
       addOrUpdateProduct(session.backendTokens.accessToken, data),
-    onSuccess: (data:TStatus) => {
-      if(data.success) {
+    onSuccess: (data: TStatus) => {
+      if (data.success) {
         setError(undefined)
         setSuccess(data.success)
       } else {
@@ -46,19 +46,48 @@ export function UpdateFromFile({
     },
   })
 
-
-
   function handleFileUpload(e: any) {
+    const file = e.target.files[0]
+
+    if (
+      !file ||
+      file.type !==
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ) {
+      setError("Пожалуйста, загрузите файл формата .xlsx")
+      return
+    }
+
     const reader = new FileReader()
-    reader.readAsBinaryString(e.target.files[0])
+    reader.readAsArrayBuffer(file)
+
     reader.onload = (e) => {
       const data = e.target?.result
-      const workbook = XLSX.read(data, { type: "binary" })
-      const sheetName = workbook.SheetNames[1]
-      const sheet = workbook.Sheets[sheetName]
-      const parsedData: addOrUpdateProductCommand[] =
-        XLSX.utils.sheet_to_json(sheet)
-      setStockData(parsedData)
+      try {
+        const workbook = XLSX.read(data, { type: "binary" })
+
+        // Проверяем, есть ли нужный лист в файле
+        const sheetName = workbook.SheetNames[1] // Убедитесь, что нужный лист по индексу
+        if (!sheetName) {
+          setError("Лист с данными не найден в файле.")
+          return
+        }
+
+        const sheet = workbook.Sheets[sheetName]
+        const parsedData: addOrUpdateProductCommand[] =
+          XLSX.utils.sheet_to_json(sheet)
+
+        // Проверяем, есть ли данные в файле
+        if (parsedData.length === 0) {
+          setError("Файл не содержит данных.")
+          return
+        }
+
+        setStockData(parsedData)
+        setError(undefined) // Очистка ошибки, если данные корректные
+      } catch (err) {
+        setError("Ошибка при чтении файла.")
+      }
     }
   }
 
