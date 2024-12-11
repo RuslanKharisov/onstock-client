@@ -34,8 +34,6 @@ const UpdateSupplierForm = ({
   accessToken: string
 }) => {
   const [formError, setFormError] = useState<string | undefined>()
-  const [success, setSuccess] = useState(false)
-  const [isPending, startTransition] = useTransition()
 
   // Мутация для создания поставщика
   const createMutation = supplierQueries.create(userId, accessToken)
@@ -45,6 +43,7 @@ const UpdateSupplierForm = ({
     isError: isCreateError,
     error: createError,
   } = createMutation
+  console.log("🚀 ~ isCreateSuccess:", isCreateSuccess)
 
   // Мутация для обновления поставщика
   const updateMutation = supplierQueries.update(userId, accessToken)
@@ -54,8 +53,8 @@ const UpdateSupplierForm = ({
     isError: isUpdateError,
     error: updateError,
   } = updateMutation
+  console.log("🚀 ~ isUpdateSuccess:", isUpdateSuccess)
 
-  // Получение данных поставщика
   const {
     data: supplier,
     error: supplierError,
@@ -73,13 +72,12 @@ const UpdateSupplierForm = ({
   })
 
   useEffect(() => {
-    // Обновление defaultValues при изменении supplier
-    form.reset({
-      name: supplier?.name || "",
-      email: supplier?.email || "",
-      siteUrl: supplier?.siteUrl || "",
-    })
-  }, [supplier, success])
+      form.reset({
+        name: supplier?.name || "",
+        email: supplier?.email || "",
+        siteUrl: supplier?.siteUrl || "",
+      }) 
+  }, [supplier])
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
     if (supplier) {
@@ -117,10 +115,10 @@ const UpdateSupplierForm = ({
                         <Input
                           {...field}
                           placeholder="Укажите вашу фирму "
-                          disabled={isPending}
+                          disabled={isCreateLoading || isUpdateLoading}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -135,10 +133,10 @@ const UpdateSupplierForm = ({
                           {...field}
                           type="email"
                           placeholder="Куда отправлять заявки?"
-                          disabled={isPending}
+                          disabled={isCreateLoading || isUpdateLoading}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -153,15 +151,17 @@ const UpdateSupplierForm = ({
                           {...field}
                           type="text"
                           placeholder="https:// ...."
-                          disabled={isPending}
+                          disabled={isCreateLoading || isUpdateLoading}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
                 <FormEroor message={formError} />
-                <FormSuccess message={isCreateSuccess || isUpdateSuccess ? "Успешно" : ""} />
+                <FormSuccess
+                  message={isCreateSuccess || isUpdateSuccess ? "Успешно" : ""}
+                />
               </div>
               <Button
                 type="submit"
@@ -177,15 +177,17 @@ const UpdateSupplierForm = ({
               </Button>
             </form>
           </Form>
-          {isCreateSuccess || isUpdateSuccess && (
+          {isCreateSuccess || isUpdateSuccess ? (
             <Link
-              className="flex items-center text-destructive transition-colors hover:text-primary"
+              className="w-fit flex items-center text-destructive transition-colors hover:text-primary"
               href="/personal-stock"
             >
               {" "}
               <SquareArrowOutUpRight className="mr-2" />
               <span className="my-5">Редактировать склад</span>
             </Link>
+          ) : (
+            ""
           )}
         </CardContent>
       </Card>

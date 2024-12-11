@@ -28,9 +28,12 @@ export function ApdateStock({
     if (!data)
     return (
       <main className="container flex flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
-        <h1 className=" mb-8 text-center">
+        <h1 className="mb-8 text-center text-destructive">
           Осталось внести данные компании поставщика
         </h1>
+        <h2 className=" mb-8 text-center">
+          После регистрации компании появится возможность загрузить складские запасы.
+        </h2>
         <div className="mb-8 ">
           <ButtonWrapper routeUrl={`/profile`}>
             <Button size="lg">Указать данные компании</Button>
