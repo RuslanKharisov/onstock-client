@@ -14,10 +14,6 @@ import { Separator } from "@/shared/ui/separator"
 import { LightBill } from "@/widgets/bill"
 import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem } from "@/shared/ui/form"
-import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
-import { TariffSchema } from "@/entities/user/_domain/schemas"
-import { z } from "zod"
 import { RequestByMail } from "@/widgets/offer-request"
 
 export type TTariff = {
@@ -25,6 +21,10 @@ export type TTariff = {
   name: string
   maxProducts: number
   pricePerUnit: number
+}
+
+interface FormData {
+  tarifId: string
 }
 
 const tariffs: TTariff[] = [
@@ -47,40 +47,26 @@ export type TBillItem = {
   price: number
 }
 
-export const billDetails: TBillItem = {
-  id: 2,
-  name: "TARIFF_100",
-  description: "Лимит максимольного количества униклальных таваров",
-  quantity: 1,
-  price: 10.0,
-}
-
 const Prising = () => {
   const [selectedTariff, setSelectedTariff] = useState<TTariff | undefined>(
     undefined,
   )
-  const [error, setError] = useState<string | undefined>()
-  const [success, setSuccess] = useState<string | undefined>()
 
-  // const handleTariffChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSelectedTariff(parseInt(event.target.value))
-  // }
-  console.log("🚀 ~ Prising ~ selectedTariff:", selectedTariff)
+  const form = useForm<FormData>()
 
-  const form = useForm({})
+  function findById<T extends { id: number | string }>(
+    array: T[],
+    id: number | string,
+  ): T | undefined {
+    return array.find((el) => String(el.id) === String(id))
+  }
 
-  const onSubmit = (values) => {
-    console.log("🚀 ~ onSubmit ~ data:", values)
-    const { stringifiedTariff } = values
-    if (stringifiedTariff) {
-      const tariff = JSON.parse(stringifiedTariff)
-      console.log("🚀 ~ onSubmit ~ tariffId:", tariff)
-      setSelectedTariff(tariff)
-      //   updateSupplierTariff(selectedTariff) // Вызываем функцию обновления тарифа
-      //     .then(() => {
-      //       setSuccess("Тариф обновлен, ожидается оплата.");
-      //     })
-      //     .catch(() => setError("Ошибка при обновлении тарифа"));
+  const onSubmit = (data: FormData) => {
+    const { tarifId } = data
+    const selectedTariff = findById(tariffs, tarifId)
+
+    if (selectedTariff) {
+      setSelectedTariff(selectedTariff)
     }
   }
 
@@ -97,7 +83,7 @@ const Prising = () => {
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField
                   control={form.control}
-                  name="stringifiedTariff"
+                  name="tarifId"
                   render={({ field }) => (
                     <FormItem>
                       <Select
@@ -108,10 +94,10 @@ const Prising = () => {
                           <SelectValue placeholder="Выбрать тариф из списка" />
                         </SelectTrigger>
                         <SelectContent>
-                          {tariffs.map((tariff) => (
+                          {tariffs?.map((tariff) => (
                             <SelectItem
                               key={tariff.id}
-                              value={JSON.stringify(tariff)}
+                              value={tariff.id.toString()}
                               className="text-xs sm:text-sm"
                             >
                               {tariff.name} — {tariff.maxProducts} продуктов,
@@ -123,8 +109,6 @@ const Prising = () => {
                     </FormItem>
                   )}
                 ></FormField>
-                <FormEroor message={error} />
-                <FormSuccess message={success} />
                 <Button size="sm" type="submit" className="mt-4">
                   Рассчитать стоимость
                 </Button>
@@ -133,7 +117,7 @@ const Prising = () => {
           </CardContent>
         </Card>
       </div>
-        <RequestByMail />
+      <RequestByMail />
       <LightBill billDetails={selectedTariff} />
     </main>
   )

@@ -1,13 +1,12 @@
 "use client"
 
-import { newVerification } from "@/features/auth/_actions/email-verificatuon"
 import { useEmaulUserVerify } from "@/features/user/_auth-hooks"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { Spinner } from "@/shared/ui/spinner"
 import FormWrapper from "@/widgets/form-wraper/form-wrapper"
 import { useSearchParams } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function NewVerificationPage() {
   const [error, setError] = useState<string | undefined>()

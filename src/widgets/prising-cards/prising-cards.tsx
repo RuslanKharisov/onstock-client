@@ -7,11 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/ui/card"
-import { cn } from "@/shared/ui/utils"
-import { BellRing, Check, RussianRuble } from "lucide-react"
+import { Check, RussianRuble } from "lucide-react"
 import { PriceCase } from "./_model/types"
-import { useMemo } from "react"
-import { Item } from "@radix-ui/react-dropdown-menu"
 
 export const PrisingCards = ({ CaseList }: { CaseList: PriceCase[] }) => {
   return (

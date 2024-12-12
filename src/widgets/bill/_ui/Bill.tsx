@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/ui/table"
-import { TBillItem, TTariff } from "app/(private)/prising/page"
+import { TTariff } from "app/(private)/prising/page"
 
 const Bill = ({ billDetails }: { billDetails: TTariff }) => {
   if (!billDetails) return null
@@ -28,29 +28,29 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
           <div className="mb-3 flex items-center justify-center">
             <LogoIcon className="mr-3 h-6 w-6" />
             <h1 className="m-0">
-              Общество с ограниченной ответственностью "АСК"
+              Общество с ограниченной ответственностью &quot;Название&quot;
             </h1>
           </div>
-          <div>420087, Казань, ул. Скрябина, д. 8, литера Д офис 3.07</div>
+          <div>Адрес</div>
           <ul className="flex">
             <li className="font-semibold">
-              ИНН: <span className="font-light">1660273292.</span>{" "}
+              ИНН: <span className="font-light">инн</span>{" "}
             </li>
             <li className="font-semibold">
-              КПП: <span className="font-light">1660273292.</span>{" "}
+              КПП: <span className="font-light">кпп</span>{" "}
             </li>
             <li className="font-semibold">
-              ОКПО: <span className="font-light">1660273292.</span>{" "}
+              ОКПО: <span className="font-light">окпо</span>{" "}
             </li>
             <li className="font-semibold">
-              ОГРН: <span className="font-light">1660273292.</span>{" "}
+              ОГРН: <span className="font-light">огрн</span>{" "}
             </li>
           </ul>
           <div className="font-semibold">
-            Email: <span className="font-light">info@asktat.ru</span>
+            Email: <span className="font-light">емайл</span>
           </div>
           <div className="font-semibold">
-            Сайт: <span className="font-light">https://asktat.ru/</span>
+            Сайт: <span className="font-light">урл сайта</span>
           </div>
         </div>
       </div>
@@ -75,13 +75,13 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
             <b>Кому:</b>
           </i>
         </div>
-        <div className="client">ООО «КИРОС»</div>
+        <div className="client">ООО «фирма»</div>
       </div>
       <div className="mb-5 flex justify-center">
         <b>Счет договор</b>
       </div>
       <div className="mb-5">
-        В ответ на Ваш запрос ООО «АСК» готово осуществить поставку изделий
+        В ответ на Ваш запрос ООО «фирма» готово осуществить поставку изделий
         согласно спецификации:
       </div>
       <Table className="mb-10 w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
@@ -136,7 +136,7 @@ const Bill = ({ billDetails }: { billDetails: TTariff }) => {
           <div className="client margin-left-1 ">ООО «Покупатель»</div>
           <div className="margin-left-015">- Покупатель</div>
         </div>
-        <div className="">ООО «АСК» - Поставщик</div>
+        <div className="">ООО «Фирма» - Поставщик</div>
       </div>
     </div>
   )

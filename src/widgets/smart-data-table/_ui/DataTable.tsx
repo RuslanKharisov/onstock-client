@@ -17,9 +17,8 @@ import {
   useReactTable,
   OnChangeFn,
   RowData,
-  Updater,
 } from "@tanstack/react-table"
-import React, { useEffect } from "react"
+import React from "react"
 import { DataTablePagination } from "./DataTablePagination"
 import { PaginationState } from "../model/pagination-state"
 import { Spinner } from "@/shared/ui/spinner"

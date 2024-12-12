@@ -1,15 +1,8 @@
-import { supplierQueries } from "@/entities/supplier/api/supplier.queries"
 import { auth } from "@/entities/user/auth"
-import { getSupplier } from "@/shared/api/supplier"
-import { ButtonWrapper } from "@/shared/lib/button-wrapper"
-import { Button } from "@/shared/ui/button"
 import { StockList } from "@/widgets/stock"
-import { SupplierInfo } from "@/widgets/supplier-info"
 import { ApdateStock } from "@/widgets/update-stock/update-stock"
-import { useQuery } from "@tanstack/react-query"
-import { useSession } from "next-auth/react"
 
-async function PersonalStock({ params }: { params: { id: string } }) {
+async function PersonalStock() {
   const session = await auth()
   if (!session) return null
 

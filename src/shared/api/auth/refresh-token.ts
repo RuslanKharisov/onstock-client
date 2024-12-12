@@ -1,8 +1,5 @@
-import { LoginSchema } from '@/entities/user/_domain/schemas';
 import axios from 'axios';
-import { z } from 'zod';
 import { JWT } from "next-auth/jwt";
-import { Session } from 'next-auth';
 
 
 export async function refreshTokenApi(token:JWT) {
@@ -21,4 +18,4 @@ export async function refreshTokenApi(token:JWT) {
     console.error("refreshTokenApi error:")
     throw error
   }
-};
+}

@@ -1,9 +1,7 @@
 "use client"
 
 import { SupplierSchema } from "@/entities/supplier/_domain/schemas"
-import { supplierQueries } from "@/entities/supplier/api/supplier.queries"
-import { queryClient } from "@/shared/api/query-client"
-import { createSupplier, updateSupplier } from "@/shared/api/supplier"
+import { useCreateSupplier, useGetSupplier, useUpdateSupplier } from "@/entities/supplier/api/supplier.queries"
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import {
@@ -17,12 +15,10 @@ import {
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { Input } from "@/shared/ui/input"
-import { Spinner } from "@/shared/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery } from "@tanstack/react-query"
 import { SquareArrowOutUpRight } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState, useTransition } from "react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -33,34 +29,22 @@ const UpdateSupplierForm = ({
   userId: string
   accessToken: string
 }) => {
-  const [formError, setFormError] = useState<string | undefined>()
 
-  // Мутация для создания поставщика
-  const createMutation = supplierQueries.create(userId, accessToken)
   const {
+    mutate: createSupplier,
     isPending: isCreateLoading,
     isSuccess: isCreateSuccess,
     isError: isCreateError,
-    error: createError,
-  } = createMutation
-  console.log("🚀 ~ isCreateSuccess:", isCreateSuccess)
+  } = useCreateSupplier();
 
-  // Мутация для обновления поставщика
-  const updateMutation = supplierQueries.update(userId, accessToken)
   const {
+    mutate: updateSupplier,
     isPending: isUpdateLoading,
     isSuccess: isUpdateSuccess,
-    isError: isUpdateError,
-    error: updateError,
-  } = updateMutation
-  console.log("🚀 ~ isUpdateSuccess:", isUpdateSuccess)
+    isError: isUpdateError
+  } = useUpdateSupplier();
 
-  const {
-    data: supplier,
-    error: supplierError,
-    isLoading: isSupplierLoading,
-    isError: isSupplierError,
-  } = useQuery(supplierQueries.detail(userId, accessToken))
+  const {data: supplier} = useGetSupplier(userId, accessToken)
 
   const form = useForm<z.infer<typeof SupplierSchema>>({
     resolver: zodResolver(SupplierSchema),
@@ -81,11 +65,9 @@ const UpdateSupplierForm = ({
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
     if (supplier) {
-      // Если это обновление
-      updateMutation.mutate({ userId, accessToken, values })
+      updateSupplier({ userId, accessToken, values })
     } else {
-      // Если это создание
-      createMutation.mutate({ userId, accessToken, values })
+      createSupplier({ userId, accessToken, values })
     }
   }
 
@@ -158,7 +140,7 @@ const UpdateSupplierForm = ({
                     </FormItem>
                   )}
                 />
-                <FormEroor message={formError} />
+                <FormEroor message={isCreateError || isUpdateError ? "Что то пошло не так": ""} />
                 <FormSuccess
                   message={isCreateSuccess || isUpdateSuccess ? "Успешно" : ""}
                 />

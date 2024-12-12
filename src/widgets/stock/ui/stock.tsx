@@ -2,24 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { StockTableColumns } from "@/entities/stock-personal.ts/_vm/_stocks-table-columns"
-import { personalStockQueries } from "@/entities/stock-personal.ts/api/personal-stock.queries"
+import { useGetPersonalStock, useRemovePersonalStockElement } from "@/entities/stock-personal.ts/api/personal-stock.queries"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
-import { useQuery } from "@tanstack/react-query"
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { ColumnFiltersState } from "@tanstack/react-table"
 
-/**
- * Компонент для отображения списка продукции на складе пользователя.
- *
- * Этот компонент загружает данные о продукции на складе пользователя и отображает их в виде таблицы.
- * Он также предоставляет возможность удаления продукции со склада.
- *
- * @param {Object} props - Свойства компонента.
- * @param {string} props.userId - Идентификатор пользователя, чья продукция будет отображена.
- * @param {string} props.accessToken - Токен доступа для аутентификации запросов к API.
- *
- * @returns {JSX.Element} Компонент списка продукции на складе.
- */
 function StockList({
   userId,
   accessToken,
@@ -37,36 +24,30 @@ function StockList({
   const { onPaginationChange, pagination } = usePagination()
   const [filters, setFilters] = useState<ColumnFiltersState>([])
 
-  // Запрос для получения списка продукции на складе пользователя
-  const { data, error, isLoading, isError } = useQuery(
-    personalStockQueries.list(
-      userId,
-      accessToken,
-      pagination.pageIndex + 1,
-      pagination.pageSize,
-      filters
-    ),
+  const {data: personalStock, isLoading} = useGetPersonalStock(
+    userId, 
+    accessToken, 
+    pagination.pageIndex + 1, 
+    pagination.pageSize, 
+    filters
   )
 
   // Мутация для удаления продукции со склада
-  const deleteMutation = personalStockQueries.remove(accessToken)
+  const {
+    mutate: removeStockElement,
+  } = useRemovePersonalStockElement(accessToken);
 
-  /**
-   * Обработчик удаления продукции по идентификатору.
-   *
-   * @param {string} id - Идентификатор продукции, которую нужно удалить со склада.
-   */
   const handleDelete = async (id: string) => {
-    deleteMutation.mutate(id)
+    removeStockElement(id)
   }
 
   // Эффект для обновления состояния продукции на складе при получении новых данных
   useEffect(() => {
-    if (data) {
-      setStocks(data.data)
-      setCount(data.meta.total)
+    if (personalStock) {
+      setStocks(personalStock.data)
+      setCount(personalStock.meta.total)
     }
-  }, [data])
+  }, [personalStock])
 
   const handleFilterChange = (newFilters: ColumnFiltersState) => {
     setFilters(newFilters)

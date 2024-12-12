@@ -1,12 +1,7 @@
 "use client"
 
 import { UserEntity } from "@/entities/user/types/types"
-import { Actions } from "@/features/stock/ui/Actions"
-import { TableCell } from "@/shared/ui/table"
 import { ColumnDef } from "@tanstack/react-table"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export const UsersTableColumns: ColumnDef<UserEntity>[] = [
   {
@@ -40,15 +35,4 @@ export const UsersTableColumns: ColumnDef<UserEntity>[] = [
       return <i> {new Date(row.getValue("emailVerified")).toDateString()} </i>
     },
   },
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ({ row }) => {
-  //     const stock = row.original
-
-  //     return (
-  //       <Actions id={stock.id} />
-  //     )
-  //   },
-  // },
 ]

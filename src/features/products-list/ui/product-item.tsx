@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardFooter,
   CardContent,
 } from "@/shared/ui/card";

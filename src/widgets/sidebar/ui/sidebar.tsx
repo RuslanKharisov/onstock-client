@@ -1,7 +1,5 @@
 import React from "react";
-import Link from "next/link";
 import SidebarItem from "./sidebar-item";
-import { usePathname } from "next/navigation";
 import useLocalStorage from "@/shared/lib/use-local-storage";
 import ClickOutside from "@/shared/lib/click-outside";
 import { menuGroups } from "../model/menu-groups";
@@ -13,7 +11,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const pathname = usePathname();
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
 
   return (
@@ -26,16 +23,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <Logo />
-          {/* <Link href="/">
-            <Image
-              width={176}
-              height={32}
-              src={"/images/logo/logo.svg"}
-              alt="Logo"
-              priority
-            />
-          </Link> */}
-
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             aria-controls="sidebar"

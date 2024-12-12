@@ -18,7 +18,7 @@ export function ApdateStock({
   session: Session
 }) {
 
-  const {data, error, isLoading, isError} = useQuery(
+  const {data} = useQuery(
     supplierQueries.detail(
       userId,
       accessToken,

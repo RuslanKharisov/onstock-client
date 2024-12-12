@@ -5,11 +5,8 @@ import { LoginSchema } from "./_domain/schemas"
 import {
   loginUserAPI,
   refreshTokenApi,
-  registerUserAPI,
 } from "@/shared/api/auth"
-import jwt from "jsonwebtoken"
 import { jwtVerify } from "jose"
-import { getUserByEmail } from "@/shared/api/user/get-user-by-email"
 import { createUserAPI } from "@/shared/api/user/create-user"
 
 export const {
@@ -28,11 +25,11 @@ export const {
         email: { label: "Email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials)
 
         if (validatedFields.success) {
-          const { email, password } = validatedFields.data
+          // const { email, password } = validatedFields.data
 
           try {
             const res = await loginUserAPI(validatedFields.data)
@@ -56,7 +53,7 @@ export const {
     signIn: "/auth/login",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       if (!account) return false
 
       const res = await createUserAPI({

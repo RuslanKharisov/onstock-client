@@ -9,5 +9,5 @@ export type StockListDto = {
     name: string
     description: string
   }
-  supplier: getSupplier
+  supplier: Supplier
 }

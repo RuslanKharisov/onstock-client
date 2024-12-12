@@ -1,20 +1,23 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint/eslint-plugin"],
-  "extends": [
-    "next",
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime"
-  ],
-
+  "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "prettier/prettier": 2,
-    // "@typescript-eslint/no-unused-vars": "error",
-    // "@typescript-eslint/no-explicit-any": "error",
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-uses-react": "off"   
-  }
+    "@typescript-eslint/no-explicit-any": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", 
+        {
+          "vars": "all",
+          "varsIgnorePattern": "^_",
+          "args": "after-used",
+          "argsIgnorePattern": "^_"
+        }
+        ]
+      }
+    }
+  ]
 }

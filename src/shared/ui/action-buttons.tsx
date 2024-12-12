@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu"
-import { Edit, MoreHorizontal, Trash } from "lucide-react"
+import { MoreHorizontal, Trash } from "lucide-react"
 import { Button } from "./button"
 
 const ActionButtons = ({

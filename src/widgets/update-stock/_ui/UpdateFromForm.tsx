@@ -12,7 +12,7 @@ import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { addOrUpdateProduct } from "@/shared/api/product";
@@ -31,7 +31,6 @@ export function UpdateFromForm({
 }) {
   const [error, setError] = useState<string | undefined>()
   const [success, setSuccess] = useState<string | undefined>()
-  const [isCreateTransiton, startTransition] = useTransition();
 
   const queryClient = useQueryClient()
 

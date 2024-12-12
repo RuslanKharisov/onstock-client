@@ -8,19 +8,17 @@ import { useQuery } from "@tanstack/react-query"
 import {
   DataTable,
   usePagination,
-  useSorting,
 } from "@/widgets/smart-data-table"
 import { ColumnFiltersState } from "@tanstack/react-table"
 
 export default function StockPage() {
   const [stocks, setStocks] = useState<any[]>([])
-  console.log("🚀 ~ StockPage ~ stocks:", stocks)
   const [count, setCount] = useState(0)
 
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
   const [filters, setFilters] = useState<ColumnFiltersState>([])
-  const { data, error, isLoading, isError } = useQuery(
+  const { data, isLoading } = useQuery(
     stockQueries.list({
       page: pagination.pageIndex + 1,
       perPage: pagination.pageSize,
@@ -37,7 +35,7 @@ export default function StockPage() {
     
   const handleFilterChange = (newFilters: ColumnFiltersState) => {
     setFilters(newFilters)
-    onPaginationChange({ pageIndex: 0, pageSize: pagination.pageSize }) // сброс пагинации при фильтрации
+    onPaginationChange({ pageIndex: 0, pageSize: pagination.pageSize })
   }
   
   const stockArray = useMemo(() => convertToStockArray(stocks), [stocks])
@@ -45,7 +43,6 @@ export default function StockPage() {
 
   return (
     <main className="container py-1 px-3">
-      {/* <h1 className="text-center">Промышленный склад России онлайн</h1> */}
 
       <DataTable
         columns={ProductsTableColumns}

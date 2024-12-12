@@ -21,8 +21,8 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
     header: "Артикул",
     cell: ({ row, column }) => (
       <div data-title={column.columnDef.header as string}>
-      <i>{row.getValue("sku")}</i>
-    </div>
+        <i>{row.getValue("sku")}</i>
+      </div>
     ),
   },
   {
@@ -58,13 +58,25 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const stock = row.original
+
+      // Получаем текущий URL страницы
+      const currentUrl = window.location.href
+
+      // Создаем UTM-параметры
+      const utmSource = "referral"
+      const utmMedium = "partner_site"
+      const utmCampaign = ""
+
+      // Формируем новую ссылку с UTM-параметрами
+      const utmLink = `${stock.siteUrl}?utm_source=${utmSource}&utm_medium=${utmMedium}&utm_campaign=${utmCampaign}&referrer=${encodeURIComponent(currentUrl)}`
+
       return (
         <span className="flex gap-1">
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="icon" variant="link">
-                  <a target="blank" href={`${stock.siteUrl}`}>
+                  <a target="blank" href={utmLink}>
                     <Earth />
                   </a>
                 </Button>

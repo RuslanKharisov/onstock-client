@@ -1,6 +1,6 @@
 import { ToggleTheme } from "@/features/theme/toggle-theme";
-import { SidebarHeader, SidebarContent, SidebarGroup, SidebarFooter, Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupLabel, SidebarGroupContent } from "@/shared/ui/sidebar";
-import { Store, Home, Inbox, Search, Settings, User, Database } from "lucide-react"
+import { SidebarHeader, SidebarContent, SidebarGroup, Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupContent } from "@/shared/ui/sidebar";
+import { Store, Home, User, Database } from "lucide-react"
 import Link from 'next/link'
 import { UserProfile } from "../app-header/_ui/user-profile";
 

@@ -9,7 +9,6 @@ import { Spinner } from "@/shared/ui/spinner"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { useState, useTransition } from "react"
-import { resetPassword } from "../_actions/reset-password"
 import {
   Form,
   FormControl,
@@ -18,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
+import { resetPasswordAPI } from "@/shared/api/auth"
 
 export function ResetForm() {
   const [error, setError] = useState<string | undefined>("")
@@ -36,7 +36,7 @@ export function ResetForm() {
     setSuccess("")
 
     startTransition(() => {
-      resetPassword(values).then((data) => {
+      resetPasswordAPI(values).then((data) => {
         setError(data?.error)
         setSuccess(data?.success)
       })
