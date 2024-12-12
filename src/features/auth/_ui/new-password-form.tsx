@@ -18,7 +18,6 @@ import {
 } from "@/shared/ui/form"
 import { useSearchParams } from "next/navigation"
 import { useUpdatePassword } from "../_api/auth.queries"
-import { error } from "console"
 
 export function NewPasswordForm() {
   const searchParams = useSearchParams()
