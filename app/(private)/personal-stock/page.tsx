@@ -15,7 +15,6 @@ async function PersonalStock() {
       <ApdateStock
         accessToken={accessToken}
         userId={userId}
-        session={session}
       />
 
       <StockList userId={userId} accessToken={accessToken} />

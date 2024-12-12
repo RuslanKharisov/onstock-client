@@ -1,3 +1,5 @@
+import { Stock, StockListElementWithRelations } from "@/entities/stock/_domain/types";
+
 export const convertToStockArray = (stockList: StockListElementWithRelations[]): Stock[] => {
 
   return stockList.map(stockItem => ({

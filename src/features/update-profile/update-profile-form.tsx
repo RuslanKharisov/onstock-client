@@ -20,7 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { ProfileAvatar } from "@/entities/user/profile"
 import { updateUser } from "@/shared/api/user"
 import { UserEntity } from "@/entities/user/types/types"
 import { Session } from "next-auth"

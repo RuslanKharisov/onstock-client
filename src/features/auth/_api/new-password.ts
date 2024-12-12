@@ -10,7 +10,6 @@ export const newPassword = async (
   data: NewPasswordDto,
   token: string,
 ): Promise<NewPasswordResponse> => {
-  console.log(data)
   const body = { ...data, token }
   return await apiClient.post(`/auth/new-password`, body)
 }

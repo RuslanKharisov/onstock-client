@@ -1,3 +1,4 @@
+import { Supplier } from "@/entities/supplier/_domain/types";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 

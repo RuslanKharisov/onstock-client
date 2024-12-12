@@ -1,5 +1,5 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-export const updatePasswordAPI = (data: NewPasswordData) => {
-  return axios.post('/api/auth/new-password', data);
-};
+// export const updatePasswordAPI = (data: NewPasswordData) => {
+//   return axios.post('/api/auth/new-password', data);
+// };

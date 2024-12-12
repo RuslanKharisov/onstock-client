@@ -1,5 +1,3 @@
-import { RegisterSchema } from '@/entities/user/_domain/schemas';
-import { z } from 'zod';
 import axios from 'axios';
 import { Session } from 'next-auth';
 

@@ -3,12 +3,10 @@ import { useRouter } from "next/navigation"
 
 interface ButtonProps {
   children: React.ReactNode
-  asChild?: boolean
 }
 
 export const GoToStockButton = ({
-  children,  
-  asChild
+  children
 }: ButtonProps) => {
   const router = useRouter()
   

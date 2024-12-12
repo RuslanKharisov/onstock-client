@@ -4,7 +4,7 @@ import { deletePersonalStockElement } from "./del-personal-stock-element"
 import { queryClient } from "@/shared/api/query-client"
 import { ColumnFiltersState } from "@tanstack/react-table"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
-import { addOrUpdateProduct } from "@/shared/api/product"
+import { AddOrUpdateStockItem } from "./add-or-update-stock-item"
 
 export const useGetPersonalStock = (
   userId: string,
@@ -33,7 +33,7 @@ export const useRemovePersonalStockElement = (accessToken: string) => {
 export const useAddOrUpdateProduct = () => {
   return useMutation({
     mutationFn: ({data, accessToken}:{data: addOrUpdateProductCommand, accessToken: string}) =>
-      addOrUpdateProduct(accessToken, data),
+      AddOrUpdateStockItem(accessToken, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["personalStock"] })
     },

@@ -1,5 +1,6 @@
 import { LoginForm } from "@/features/auth/login-form.server"
 import FormWrapper from "@/widgets/form-wraper/form-wrapper"
+import { Suspense } from "react"
 
 export default function LoginPage() {
   return (
@@ -9,7 +10,9 @@ export default function LoginPage() {
         backButtonLabel="Нет аккаунта? Заргистрироваться."
         backButtonHref="/auth/register"
       >
-        <LoginForm />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <LoginForm />
+        </Suspense>
       </FormWrapper>
     </div>
   )

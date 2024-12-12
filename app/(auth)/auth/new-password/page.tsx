@@ -1,5 +1,6 @@
 import { NewPasswordForm } from "@/features/auth/_ui/new-password-form"
 import FormWrapper from "@/widgets/form-wraper/form-wrapper"
+import { Suspense } from "react"
 
 const NewPasswordPage = () => {
   return (
@@ -9,7 +10,9 @@ const NewPasswordPage = () => {
         backButtonLabel="На станицу входа"
         backButtonHref="/auth/login"
       >
-        <NewPasswordForm />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <NewPasswordForm />
+        </Suspense>
       </FormWrapper>
     </div>
   )
