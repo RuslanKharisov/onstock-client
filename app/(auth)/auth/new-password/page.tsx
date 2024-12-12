@@ -1,8 +1,8 @@
-import { NewPasswordForm } from "@/features/auth/_ui/new-password-form";
-import FormWrapper from "@/widgets/form-wraper/form-wrapper";
+import { NewPasswordForm } from "@/features/auth/_ui/new-password-form"
+import FormWrapper from "@/widgets/form-wraper/form-wrapper"
 
 const NewPasswordPage = () => {
-  return ( 
+  return (
     <div className=" flex h-screen flex-col items-center justify-center">
       <FormWrapper
         headerLabel="Придумайте новый пароль."
@@ -12,7 +12,7 @@ const NewPasswordPage = () => {
         <NewPasswordForm />
       </FormWrapper>
     </div>
-   );
+  )
 }
- 
-export default NewPasswordPage;
+
+export default NewPasswordPage

@@ -1,21 +1,21 @@
-type ProductListElement = {
+export type ProductListElement = {
   id: string
   sku: string
   name: string
   description: string
 }
 
-type CreateProductListElementCommand = {
+export type CreateProductListElementCommand = {
   sku: string
   name: string
   description: string
 }
 
-type DeleteProductListElementCommand = {
+export type DeleteProductListElementCommand = {
   id: string
 }
 
-type addOrUpdateProductCommand = {
+export type addOrUpdateProductCommand = {
   sku: string
   name: string
   description: string

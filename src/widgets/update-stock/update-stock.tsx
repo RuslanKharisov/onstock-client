@@ -4,9 +4,8 @@ import { UpdateFromFile } from "./_ui/UpdateFromFile"
 import { UpdateFromForm } from "./_ui/UpdateFromForm"
 import { Button } from "@/shared/ui/button"
 import { Session } from "next-auth"
-import { supplierQueries } from "@/entities/supplier/api/supplier.queries"
-import { useQuery } from "@tanstack/react-query"
-import { ButtonWrapper } from "@/shared/lib/button-wrapper"
+import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
+import { useRouter } from "next/navigation"
 
 export function ApdateStock({
   userId,
@@ -17,13 +16,11 @@ export function ApdateStock({
   accessToken: string
   session: Session
 }) {
-
-  const {data} = useQuery(
-    supplierQueries.detail(
+  const router = useRouter()
+  const {data} = useGetSupplier(
       userId,
       accessToken,
     )
-  )
 
     if (!data)
     return (
@@ -35,9 +32,7 @@ export function ApdateStock({
           После регистрации компании появится возможность загрузить складские запасы.
         </h2>
         <div className="mb-8 ">
-          <ButtonWrapper routeUrl={`/profile`}>
-            <Button size="lg">Указать данные компании</Button>
-          </ButtonWrapper>
+            <Button onClick={() => router.push('/profile')} size="lg">Указать данные компании</Button>
         </div>
       </main>
     )
@@ -58,7 +53,7 @@ export function ApdateStock({
         {
           data && <UpdateFromForm
             supplier={data}
-            session={session}
+            accessToken={accessToken}
           />
 
         }
@@ -77,7 +72,7 @@ export function ApdateStock({
           </SheetDescription>
         </SheetHeader>
         {
-          data && <UpdateFromFile supplier={data} session={session}/>
+          data && <UpdateFromFile supplier={data} accessToken={accessToken}/>
         }
         </SheetContent>
       </Sheet>

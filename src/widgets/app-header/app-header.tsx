@@ -12,13 +12,7 @@ import { Menu } from "lucide-react"
 import { UserProfile } from "./_ui/user-profile"
 import { auth } from "@/entities/user/auth"
 
-export async function AppHeader({
-  variant,
-}: {
-  variant: "auth" | "private" | "public"
-}) {
-  const isProfile = variant !== "auth"
-
+export async function AppHeader() {
   const session = await auth()
   const user = session?.user
 

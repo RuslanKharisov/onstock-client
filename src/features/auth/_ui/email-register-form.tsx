@@ -16,7 +16,7 @@ import {
 } from '@/shared/ui/form';
 import { FormEroor } from '@/shared/ui/form-error';
 import { FormSuccess } from '@/shared/ui/form-success';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { useRegisterUser } from '@/features/user/_auth-hooks/useRegister';
 
 export function EmailRegisterForm() {

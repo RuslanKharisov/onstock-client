@@ -7,7 +7,7 @@ export default async function AuthLayout({
 }) {
   return (
     <>
-      <AppHeader variant="auth" />
+      <AppHeader />
       {children}
     </>
   );

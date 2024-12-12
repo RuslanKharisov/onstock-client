@@ -7,10 +7,9 @@ import { Label } from "@/shared/ui/label"
 import React, { useState } from "react"
 import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
-import { Session } from "next-auth"
-import { addOrUpdateProduct } from "@/shared/api/product"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { TStatus } from "@/shared/api/product/TStatus"
+import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal-stock.queries"
+import { Supplier } from "@/entities/supplier/_domain/types"
+import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
 
 export interface ProductsStock {
   Name: string
@@ -19,31 +18,21 @@ export interface ProductsStock {
 
 export function UpdateFromFile({
   supplier,
-  session,
+  accessToken,
 }: {
   supplier: Supplier
-  session: Session
+  accessToken: string
 }) {
   const [error, setError] = useState<string | undefined>()
-  const [success, setSuccess] = useState<string | undefined>()
+  // const [success, setSuccess] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
 
-  const queryClient = useQueryClient()
-
-  const addMutation = useMutation({
-    mutationFn: (data: addOrUpdateProductCommand) =>
-      addOrUpdateProduct(session.backendTokens.accessToken, data),
-    onSuccess: (data: TStatus) => {
-      if (data.success) {
-        setError(undefined)
-        setSuccess(data.success)
-      } else {
-        setSuccess(undefined)
-        setError(data.error)
-      }
-      queryClient.invalidateQueries({ queryKey: ["personalStock"] })
-    },
-  })
+  const {
+      mutate: addOrUpdateProduct,
+      isPending,
+      isSuccess,
+      isError,
+    } = useAddOrUpdateProduct()
 
   function handleFileUpload(e: any) {
     const file = e.target.files[0]
@@ -84,7 +73,7 @@ export function UpdateFromFile({
 
         setStockData(parsedData)
         setError(undefined) // Очистка ошибки, если данные корректные
-      } catch (err) {
+      } catch {
         setError("Ошибка при чтении файла.")
       }
     }
@@ -99,7 +88,7 @@ export function UpdateFromFile({
         quantity: product.quantity,
         supplierId: supplier?.id,
       }
-      addMutation.mutate(data)
+      addOrUpdateProduct({ data, accessToken })
     }
   }
 
@@ -118,21 +107,24 @@ export function UpdateFromFile({
           onChange={handleFileUpload}
           className=" duration-300 hover:bg-slate-300"
         />
-        <Button variant="default" onClick={handleClick}>
+        <Button variant="default" onClick={handleClick} disabled={isPending}>
           Добавить товары из файла
         </Button>
       </CardContent>
       <CardContent>
-        {success && (
+        {isSuccess && (
           <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
-            {success}
+            Успешно
           </p>
         )}
-        {error && (
+        {isError ? (
           <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
-            {error}
+            Что-то пошло не так. 
           </p>
-        )}
+        ) : error ? 
+         <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">{error}</p> 
+         : ""
+        }
       </CardContent>
     </Card>
   )

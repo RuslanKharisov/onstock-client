@@ -24,6 +24,12 @@ export function LoginButton({
     return <span>TODO: Modal component</span>
   }
 
+  if (asChild) {
+    return (
+      <>{children}</>
+    )
+  }
+
   return (
     <span onClick={onClick} className="coursor-pointer">
       {children}

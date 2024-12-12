@@ -1,8 +1,6 @@
 "use client"
 import { Button } from "@/shared/ui/button"
-import { Spinner } from "@/shared/ui/spinner"
 import { useOAuthSignIn } from "../_vm/use-oauth-sign-in"
-import { GitHubLogoIcon } from "@radix-ui/react-icons"
 import { IProviders } from "../models/types"
 
 export function ProviderButton({ provider }: { provider: IProviders }) {

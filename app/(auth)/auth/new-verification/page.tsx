@@ -29,7 +29,7 @@ export default function NewVerificationPage() {
         setSuccess(data.success);
         setError(data.error);
       },
-      onError: (error: any) => {
+      onError: () => {
         setError("Что-то пошло не так!");
       },
     });

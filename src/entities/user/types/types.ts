@@ -1,11 +1,4 @@
 export type UserId = string | undefined
-// export type Role = "ADMIN" | "SUPPLIER" | "USER"
-
-// export const ROLES: Record<Role, Role> = {
-//   ADMIN: "ADMIN",
-//   SUPPLIER: "SUPPLIER",
-//   USER: "USER",
-// }
 
 export type CreateUserCommand = {
   email: string

@@ -2,7 +2,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
 import { User } from "lucide-react"
 import { cn } from "@/shared/ui/utils"
-import { Session } from "next-auth"
 import { Profile } from "../types/types"
 
 export const ProfileAvatar = ({

@@ -1,4 +1,4 @@
-import { ColumnFiltersState, SortingState } from "@tanstack/react-table"
+import { ColumnFiltersState } from "@tanstack/react-table"
 
 export type Stock = {
   id: string

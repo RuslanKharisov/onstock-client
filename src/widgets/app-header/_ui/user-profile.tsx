@@ -19,7 +19,7 @@ import { useSession } from "next-auth/react"
 
 export function UserProfile() {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const user = session?.user
 
   if (!session?.user) {

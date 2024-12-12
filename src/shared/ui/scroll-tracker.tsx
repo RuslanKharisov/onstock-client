@@ -6,7 +6,7 @@ const ScrollTracker = () => {
     const [scrollTop, setScrollTop] = useState(0);
   
     useEffect(() => {
-      const handleScroll = (event:any) => {
+      const handleScroll = () => {
         setScrollTop(window.scrollY);
       };
   

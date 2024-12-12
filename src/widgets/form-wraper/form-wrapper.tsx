@@ -9,7 +9,6 @@ interface CardWrapperProps {
   headerLabel: string
   backButtonLabel: string
   backButtonHref: string
-  showSocial?: boolean
 }
 
 const FormWrapper = ({
@@ -17,7 +16,6 @@ const FormWrapper = ({
   headerLabel,
   backButtonLabel,
   backButtonHref,
-  showSocial,
 }: CardWrapperProps) => {
   return (
     <Card className="mx-auto w-[320px]">

@@ -1,4 +1,5 @@
 import { apiClient } from "@/shared/api/base";
+import { Supplier } from "../_domain/types";
 
 
 export const getSupplier = async (

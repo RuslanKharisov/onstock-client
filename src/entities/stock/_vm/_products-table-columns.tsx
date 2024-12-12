@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/tooltip"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Earth, MailPlus, MoreHorizontal } from "lucide-react"
+import { Earth, MailPlus } from "lucide-react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.

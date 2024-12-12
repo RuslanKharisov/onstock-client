@@ -1,9 +1,7 @@
 "use client"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 
-export function MainNav({ role }: { role: Role | undefined }) {
-  const session = useSession()
+export function MainNav({ role }: { role: string | undefined }) {
 
   return (
     <nav className="flex flex-col items-start gap-6 text-sm font-medium md:flex-row md:items-center ">

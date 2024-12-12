@@ -1,7 +1,5 @@
 import { apiClient } from "@/shared/api/base";
 import { PaginatedStockListDto } from "../dto/stock-with-pagination.dto";
-import { StockQuery } from "./query/stock.query";
-import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import { stockQueryDto } from "../_domain/types";
 
 export const getStocks = async (

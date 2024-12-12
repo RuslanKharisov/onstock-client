@@ -8,7 +8,6 @@ import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
-import { useState, useTransition } from "react"
 import {
   Form,
   FormControl,
@@ -18,15 +17,12 @@ import {
   FormMessage,
 } from "@/shared/ui/form"
 import { useSearchParams } from "next/navigation"
-import { newPasword } from "../_actions/new-password"
+import { useUpdatePassword } from "../_api/auth.queries"
+import { error } from "console"
 
 export function NewPasswordForm() {
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
-
-  const [error, setError] = useState<string | undefined>("")
-  const [success, setSuccess] = useState<string | undefined>("")
-  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -35,16 +31,19 @@ export function NewPasswordForm() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-    setError("")
-    setSuccess("")
+  const {
+    mutate: updatePasword,
+    isPending,
+    isError,
+    data,
+    error,
+  } = useUpdatePassword()
+    console.log("🚀 ~ NewPasswordForm ~ data:", data)
 
-    startTransition(() => {
-      newPasword(values, token).then((data) => {
-        setError(data?.error)
-        setSuccess(data?.success)
-      })
-    })
+  const onSubmit = (data: z.infer<typeof NewPasswordSchema>) => {
+    if (token) {
+      updatePasword({ data, token })
+    }
   }
 
   return (
@@ -69,8 +68,9 @@ export function NewPasswordForm() {
               </FormItem>
             )}
           />
-          <FormEroor message={error} />
-          <FormSuccess message={success} />
+          {isError && <FormEroor message={error.message} />}
+          {data?.error && <FormEroor message={data.error} />}
+          {data?.success && <FormSuccess message={data.success} />}
           <Button type="submit" disabled={isPending}>
             {isPending && (
               <Spinner

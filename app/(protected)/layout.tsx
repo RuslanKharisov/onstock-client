@@ -12,7 +12,7 @@ if (session?.user.role !== "ADMIN") redirect("/")
   
   return (
     <>
-      <AppHeader variant="auth" />
+      <AppHeader />
       {children}
     </>
   )

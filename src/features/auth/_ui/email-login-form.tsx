@@ -38,11 +38,11 @@ export function EmailLoginForm() {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("")
     setSuccess("")
+    setShowTwoFactor(false)
 
     startTransition(async () => {
       try {
-        const result = await signIn("credentials", {
-          redirect: false, // Отключаем автоматический редирект 
+        const result = await signIn("credentials", { 
           email: values.email,
           password: values.password,
         });
@@ -60,7 +60,7 @@ export function EmailLoginForm() {
           // Выполняем редирект вручную, если необходимо 
           window.location.href = DEFAULT_LOGIN_REDIRECT;
         }
-      } catch (error) {
+      } catch {
         setError("Что-то пошло не так");
       }
     });

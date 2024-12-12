@@ -8,7 +8,6 @@ import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
-import { useState, useTransition } from "react"
 import {
   Form,
   FormControl,
@@ -17,30 +16,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { resetPasswordAPI } from "@/shared/api/auth"
+import { useResetPassword } from "../_api/auth.queries"
 
 export function ResetForm() {
-  const [error, setError] = useState<string | undefined>("")
-  const [success, setSuccess] = useState<string | undefined>("")
-  const [isPending, startTransition] = useTransition()
-
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
     defaultValues: {
-      email: ""
+      email: "",
     },
   })
 
-  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
-    setError("")
-    setSuccess("")
+  const {
+    mutate: resetPassword,
+    isPending,
+    data,
+    isError,
+    error
+  } = useResetPassword()
 
-    startTransition(() => {
-      resetPasswordAPI(values).then((data) => {
-        setError(data?.error)
-        setSuccess(data?.success)
-      })
-    })
+  const onSubmit = (data: z.infer<typeof ResetSchema>) => {
+    resetPassword({ data })
   }
 
   return (
@@ -68,8 +63,9 @@ export function ResetForm() {
               </FormItem>
             )}
           />
-          <FormEroor message={error} />
-          <FormSuccess message={success} />
+          {data?.error && <FormEroor message={data?.error} />}
+          {isError && <FormEroor message={error.message} />}
+          {data?.success && <FormSuccess message={data?.success} />}
           <Button type="submit" disabled={isPending}>
             {isPending && (
               <Spinner

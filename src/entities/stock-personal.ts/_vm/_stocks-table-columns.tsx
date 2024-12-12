@@ -5,7 +5,7 @@ import { Stock } from "../../stock/_domain/types"
 import { ActionButtons } from "@/shared/ui/action-buttons"
 
 const ActionColumn: Partial<ColumnDef<Stock>> = {
-  cell: ({ getValue, row: { index }, column: { id }, table }) => {
+  cell: ({ getValue, table }) => {
     const initialValue = getValue() as string
 
     const handleDelete = () => {
