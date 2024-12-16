@@ -9,6 +9,7 @@ import {
 import { jwtVerify } from "jose"
 import { createUserAPI } from "@/shared/api/user/create-user"
 
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -40,8 +41,8 @@ export const {
               ...res.user,
               backendTokens: res.backendTokens,
             }
-          } catch (error) {
-            console.error("Error in authorize:", error)
+          } catch {
+            console.error("Error in authorize:")
             return null
           }
         }
@@ -96,8 +97,8 @@ export const {
         try {
           const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
           await jwtVerify(token.backendTokens.accessToken, secret)
-        } catch {
-          // В случае ошибки валидации попытка обновления
+        } catch (error) {
+          console.log("Access token validation failed, attempting refresh...", error);
           try {
             const refreshedToken = await refreshTokenApi(token)
             if (refreshedToken)
@@ -110,6 +111,7 @@ export const {
       return token
     },
   },
+  debug: true,
   session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
 })

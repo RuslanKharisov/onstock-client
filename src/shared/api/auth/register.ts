@@ -1,25 +1,27 @@
-import axios from 'axios';
+import { API_URL } from "@/shared/config"
+import axios from "axios"
 
 interface RegisterDto {
-    email: string
-    password: string
-    name: string
-    type: string | null
+  email: string
+  password: string
+  name: string
+  type: string | null
 }
 
-export const registerUserAPI = async (
-  data: RegisterDto
-) => {  
-  console.log("🚀 ~ data:", data)
+export const registerUserAPI = async (data: RegisterDto) => {
   try {
-    const res = await axios.post(`http://localhost:5000/auth/register`, data);
+    const res = await axios.post(`${API_URL}/auth/register`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
     if (res.data.success) {
-      return  res.data.success 
+      return res.data.success
     } else {
-      return  res.data.error ;
-    }    
+      return res.data.error
+    }
   } catch (error) {
     console.error("error:", error)
-    // throw error
+    throw error
   }
-};
+}

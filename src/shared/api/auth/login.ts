@@ -1,19 +1,23 @@
-import { LoginSchema } from '@/entities/user/_domain/schemas';
-import axios from 'axios';
-import { z } from 'zod';
+import { API_URL } from "@/shared/config"
+import axios from "axios"
 
-export const loginUserAPI = async (
-  data: z.infer<typeof LoginSchema>
-) => {  
+interface LoginDto {
+  email: string
+  password: string
+  code?: string
+}
+
+export const loginUserAPI = async (data: LoginDto) => {
   try {
-    const res = await axios.post(`http://localhost:5000/auth/login`, data, {
+    const res = await axios.post(`${API_URL}/auth/login`, data, {
       headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-      return  res.data
+        "Content-Type": "application/json",
+      },
+    })
+    return res.data
   } catch (error) {
     console.error("🚀 ~ error:", error)
     throw error
   }
-};
+}
+
