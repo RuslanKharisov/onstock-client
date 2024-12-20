@@ -34,6 +34,7 @@ const tariffs: TTariff[] = [
   { id: 4, name: "TARIFF_1000", maxProducts: 1000, pricePerUnit: 9.0 },
   { id: 5, name: "TARIFF_2 000", maxProducts: 2000, pricePerUnit: 9.0 },
   { id: 6, name: "TARIFF_3 000", maxProducts: 3000, pricePerUnit: 9.0 },
+  
   { id: 7, name: "TARIFF_4 000", maxProducts: 4000, pricePerUnit: 9.0 },
   { id: 8, name: "TARIFF_5 000", maxProducts: 5000, pricePerUnit: 8.0 },
   { id: 9, name: "TARIFF_10 000", maxProducts: 10000, pricePerUnit: 7.0 },

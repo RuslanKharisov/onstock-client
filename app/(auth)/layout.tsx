@@ -1,14 +1,15 @@
-import { AppHeader } from "@/widgets/app-header/app-header";
+import { AppHeader } from "@/widgets/app-header/app-header"
+import { Suspense } from "react"
 
 export default async function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <>
       <AppHeader />
-      {children}
+      <Suspense>{children}</Suspense>
     </>
-  );
+  )
 }
