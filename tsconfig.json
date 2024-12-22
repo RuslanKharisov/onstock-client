@@ -37,7 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/entities/user/types/**/*.d.ts"
-, "src/widgets/sidebar/model/menu-groups.tsx"  ],
+, "src/widgets/sidebar/model/menu-groups.tsx", "next.config.mjs"  ],
   "exclude": [
     "node_modules"
   ]

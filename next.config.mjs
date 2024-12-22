@@ -1,6 +1,6 @@
-module.exports = {
+const config = {
   env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL, 
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   async redirects() {
     return [
@@ -12,3 +12,5 @@ module.exports = {
     ];
   },
 };
+
+export default config;
