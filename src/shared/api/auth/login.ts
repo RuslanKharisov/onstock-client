@@ -1,4 +1,3 @@
-import { API_URL } from "@/shared/config"
 import axios from "axios"
 
 interface LoginDto {
@@ -9,7 +8,7 @@ interface LoginDto {
 
 export const loginUserAPI = async (data: LoginDto) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/login`, data, {
+    const res = await axios.post(`${process.env.API_URL}/auth/login`, data, {
       headers: {
         "Content-Type": "application/json",
       },

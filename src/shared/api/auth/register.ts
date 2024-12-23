@@ -1,4 +1,3 @@
-import { API_URL } from "@/shared/config"
 import axios from "axios"
 
 interface RegisterDto {
@@ -10,7 +9,7 @@ interface RegisterDto {
 
 export const registerUserAPI = async (data: RegisterDto) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/register`, data, {
+    const res = await axios.post(`${process.env.API_URL}/auth/register`, data, {
       headers: {
         "Content-Type": "application/json",
       },
