@@ -7,7 +7,7 @@ interface RegisterDto {
   type: string | null
 }
 
-console.log(`${process.env.API_URL}/auth/register`)
+console.log(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`)
 
 export const registerUserAPI = async (data: RegisterDto) => {
   try {
