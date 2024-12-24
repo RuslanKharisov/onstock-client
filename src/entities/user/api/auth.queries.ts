@@ -6,6 +6,7 @@ import { newPassword } from "./new-password"
 import { resetPassword } from "./reset-password"
 import { EmailRegisterDto } from "../dto/email-register.dto"
 import { registerUser } from "./register-user"
+import { emailVerify } from "./email-verify"
 
 export const useUpdatePassword = () =>
   useMutation({
@@ -21,5 +22,11 @@ export const useResetPassword = () =>
 export const useRegisterUser = () => {
   return useMutation({
     mutationFn: ({ data }: { data: EmailRegisterDto }) => registerUser(data),
+  })
+}
+
+export const useEmailUserVerify = () => {
+  return useMutation({
+    mutationFn: ({ token }: { token: string }) => emailVerify(token),
   })
 }

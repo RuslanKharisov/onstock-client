@@ -1,5 +1,5 @@
 "use client"
-import { useEmailUserVerify } from "@/features/user/_auth-hooks"
+import { useEmailUserVerify } from "@/entities/user/api/auth.queries"
 import { FormEroor } from "@/shared/ui/form-error"
 import { FormSuccess } from "@/shared/ui/form-success"
 import { Spinner } from "@/shared/ui/spinner"
@@ -8,32 +8,27 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function NewVerificationPage() {
-  const [error, setError] = useState<string | undefined>()
-  const [success, setSuccess] = useState<string | undefined>()
-  const { mutate, status } = useEmailUserVerify()
+  const [errorMsg, setErrorMsg] = useState<string | undefined>()
   const searchParams = useSearchParams()
   const token = searchParams.get("token")
 
+  const {
+    mutate: EmailUserVerify,
+    isPending,
+    data,
+    isError,
+    error
+  } = useEmailUserVerify()
+
   useEffect(() => {
-    setError("");
-    setSuccess("");
 
     if (!token) {
-      setError("Missing token!");
-      return;
+      setErrorMsg("Missing token!")
+      return
     }
+    EmailUserVerify({ token })
 
-    mutate(token, {
-      onSuccess: (data) => {
-        setSuccess(data.success);
-        setError(data.error);
-      },
-      onError: () => {
-        setError("Что-то пошло не так!");
-      },
-    });
-  }, [token, mutate]);
-
+  }, [EmailUserVerify, token])
 
   return (
     <div className=" flex h-screen flex-col items-center justify-center">
@@ -43,9 +38,11 @@ export default function NewVerificationPage() {
         backButtonHref="/auth/register"
       >
         <div className="flex items-center justify-center">
-          {status === "pending" && <Spinner />}
-          <FormSuccess message={success} />
-          <FormEroor message={error} />
+          {isPending && <Spinner />}
+          {data?.error && <FormEroor message={data?.error} />}
+          {errorMsg && <FormEroor message={errorMsg} />}
+          {isError && <FormEroor message={error.message} />}
+          {data?.success && <FormSuccess message={data?.success} />}
         </div>
       </FormWrapper>
     </div>
