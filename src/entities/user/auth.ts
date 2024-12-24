@@ -24,11 +24,13 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Credentials received:", credentials);
         const validatedFields = LoginSchema.safeParse(credentials)
 
         if (validatedFields.success) {
           try {
             const res = await loginUser(validatedFields.data)
+            console.log("🚀 ~ authorize ~ res:", res)
 
             if (res.error) {
               throw new Error(res.error)
