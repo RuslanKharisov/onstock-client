@@ -89,6 +89,7 @@ export const {
         token.name = user.name
         token.email = user.email
         token.provider = account?.provider
+        
         token.backendTokens = user.backendTokens
       }
 
@@ -104,6 +105,7 @@ export const {
           )
           try {
             const refreshedToken = await refreshToken(token)
+            console.log("🚀 ~ jwt ~ refreshedToken:", refreshedToken)
             if (refreshedToken)
               token.backendTokens = refreshedToken.backendTokens
           } catch (refreshError) {

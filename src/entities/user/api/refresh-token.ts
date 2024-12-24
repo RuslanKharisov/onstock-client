@@ -14,11 +14,14 @@ export const refreshToken = async (token: JWT): Promise<IrefreshToken> => {
     `/auth/refresh`,
     body,
     token.backendTokens.refreshToken,
-    'Refresh'
-    )
+    "Refresh",
+  )
 
   return {
     ...token,
-    backendTokens: res.backendTokens,
+    backendTokens: {
+      accessToken: res.backendTokens.accessToken,
+      refreshToken: res.backendTokens.refreshToken,
+    },
   }
 }
