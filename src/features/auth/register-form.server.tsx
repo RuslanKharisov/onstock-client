@@ -1,13 +1,12 @@
-"use server";
+"use server"
 
-import { cn } from "@/shared/ui/utils";
-import { EmailRegisterForm } from "./_ui/email-register-form";
-import { ProviderButton } from "./_ui/provider-button";
-import { Divider } from "./_ui/divider";
-import { providers } from "./_api/providers";
+import { cn } from "@/shared/ui/utils"
+import { EmailRegisterForm } from "./_ui/email-register-form"
+import { ProviderButton } from "./_ui/provider-button"
+import { Divider } from "./_ui/divider"
+import { providers } from "./providers"
 
 export async function RegisterForm({ className }: { className?: string }) {
-
   return (
     <div className={cn("grid gap-6", className)}>
       <EmailRegisterForm />
@@ -16,5 +15,5 @@ export async function RegisterForm({ className }: { className?: string }) {
         <ProviderButton key={index} provider={provider} />
       ))}
     </div>
-  );
+  )
 }

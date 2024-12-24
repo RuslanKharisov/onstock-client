@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { useResetPassword } from "../_api/auth.queries"
+import { useResetPassword } from "../../../entities/user/api/auth.queries"
 
 export function ResetForm() {
   const form = useForm<z.infer<typeof ResetSchema>>({
@@ -31,7 +31,7 @@ export function ResetForm() {
     isPending,
     data,
     isError,
-    error
+    error,
   } = useResetPassword()
 
   const onSubmit = (data: z.infer<typeof ResetSchema>) => {

@@ -3,7 +3,7 @@
 import { Divider } from "./_ui/divider"
 import { cn } from "@/shared/ui/utils"
 import { EmailLoginForm } from "./_ui/email-login-form"
-import { providers } from "./_api/providers"
+import { providers } from "./providers"
 import { ProviderButton } from "./_ui/provider-button"
 
 export async function LoginForm({ className }: { className?: string }) {

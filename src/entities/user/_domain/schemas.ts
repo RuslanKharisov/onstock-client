@@ -43,7 +43,7 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "Укажите имя",
   }),
-  type: z.string()
+  type: z.string().optional() 
 })
 
 export const TariffSchema = z.object({

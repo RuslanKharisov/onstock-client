@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/shared/ui/form"
 import { useSearchParams } from "next/navigation"
-import { useUpdatePassword } from "../_api/auth.queries"
+import { useUpdatePassword } from "../../../entities/user/api/auth.queries"
 
 export function NewPasswordForm() {
   const searchParams = useSearchParams()
@@ -37,7 +37,7 @@ export function NewPasswordForm() {
     data,
     error,
   } = useUpdatePassword()
-    console.log("🚀 ~ NewPasswordForm ~ data:", data)
+  console.log("🚀 ~ NewPasswordForm ~ data:", data)
 
   const onSubmit = (data: z.infer<typeof NewPasswordSchema>) => {
     if (token) {
