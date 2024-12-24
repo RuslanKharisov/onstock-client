@@ -10,6 +10,6 @@ export const registerUser = async (
   data: NewPasswordDto
 ):Promise<registerUser> => {
   const body = { ...data }
-  return await apiClient.post(`/auth/new-password`, body)
+  return await apiClient.post(`/auth/new-register`, body)
 }
 
