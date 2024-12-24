@@ -76,8 +76,6 @@ export const {
       }
     },
     async session({ session, token }) {
-      console.log("Session callback - session:", session)
-      console.log("Session callback - token:", token)
       session.user.id = token.sub as string
       session.user.name = token.name as string
       session.user.email = token.email as string
@@ -87,8 +85,6 @@ export const {
     },
 
     async jwt({ token, user, account }) {
-      console.log("JWT callback - token:", token)
-      console.log("JWT callback - user:", user)
       if (user) {
         token.name = user.name
         token.email = user.email
@@ -100,7 +96,7 @@ export const {
       // Валидация токенов с backendTokens для Credentials
       if (token.backendTokens?.accessToken) {
         try {
-          const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
+          const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET)
           await jwtVerify(token.backendTokens.accessToken, secret)
         } catch (error) {
           console.log(
@@ -109,7 +105,6 @@ export const {
           )
           try {
             const refreshedToken = await refreshToken(token)
-            console.log("🚀 ~ jwt ~ refreshedToken:", refreshedToken)
             if (refreshedToken)
               token.backendTokens = refreshedToken.backendTokens
           } catch (refreshError) {
@@ -122,5 +117,5 @@ export const {
   },
   debug: true,
   session: { strategy: "jwt" },
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 })
