@@ -4,8 +4,9 @@ import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
 import { refreshTokenApi } from "@/shared/api/auth"
 import { jwtVerify } from "jose"
-import { createUserAPI } from "@/shared/api/user/create-user"
 import { loginUser } from "./api/login-user"
+import { createUser } from "./api/create-user"
+import { refreshToken } from "./api/refresh-token"
 
 export const {
   handlers: { GET, POST },
@@ -57,7 +58,7 @@ export const {
     async signIn({ user, account }) {
       if (!account) return false
 
-      const res = await createUserAPI({
+      const res = await createUser({
         name: user.name as string,
         email: user.email as string,
         password: "",
@@ -103,7 +104,7 @@ export const {
             error,
           )
           try {
-            const refreshedToken = await refreshTokenApi(token)
+            const refreshedToken = await refreshToken(token)
             if (refreshedToken)
               token.backendTokens = refreshedToken.backendTokens
           } catch (refreshError) {

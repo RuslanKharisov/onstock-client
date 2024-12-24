@@ -11,5 +11,5 @@ export const AddOrUpdateStockItem = async (
   data: addOrUpdateProductDto,
 ): Promise<AddOrUpdateStockItemResponse> => {
   const body = { ...data }
-  return await apiClient.post(`/product-management`, body, accessToken)
+  return await apiClient.post(`/product-management`, body, accessToken, 'Bearer')
 }

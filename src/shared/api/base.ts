@@ -43,14 +43,15 @@ export class ApiClient {
   public async post<TResult = unknown, TData = Record<string, unknown>>(
     endpoint: string,
     body: TData,
-    accessToken?: string,
+    token?: string,
+    tokenType: 'Bearer' | 'Refresh' = 'Bearer',  // Добавляем тип токена с значением по умолчанию
   ): Promise<TResult> {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
     }
 
-    if (accessToken) {
-      headers["Authorization"] = `Bearer ${accessToken}`
+    if (token) {
+      headers["Authorization"] = `${tokenType} ${token}`  // Используем переданный тип токена
     }
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
