@@ -5,13 +5,14 @@ import {
   apiAuthPrefix,
 } from "@/shared/lib/routes";
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/entities/user/auth";
 import { verifyToken } from "@/shared/lib/auth-ulils";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  console.log("🚀 ~ middleware ~ process.env.AUTH_SECRET:", process.env.AUTH_SECRET)
+  console.log("🚀 ~ middleware ~ token:", token)
   let isLoggedIn = false;
 
   if(!token) isLoggedIn = false;
