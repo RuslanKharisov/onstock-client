@@ -2,13 +2,10 @@ import NextAuth, { BackendTokens } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
-import {
-  loginUserAPI,
-  refreshTokenApi,
-} from "@/shared/api/auth"
+import { refreshTokenApi } from "@/shared/api/auth"
 import { jwtVerify } from "jose"
 import { createUserAPI } from "@/shared/api/user/create-user"
-
+import { loginUser } from "./api/login-user"
 
 export const {
   handlers: { GET, POST },
@@ -30,22 +27,23 @@ export const {
         const validatedFields = LoginSchema.safeParse(credentials)
 
         if (validatedFields.success) {
-          // const { email, password } = validatedFields.data
-
           try {
-            const res = await loginUserAPI(validatedFields.data)
-            if (res.status === 401) {
-              return null
+            const res = await loginUser(validatedFields.data)
+
+            if (res.error) {
+              throw new Error(res.error)
             }
+
             return {
               ...res.user,
               backendTokens: res.backendTokens,
             }
-          } catch {
-            console.error("Error in authorize:")
+          } catch (error) {
+            console.error("Login error:", error)
             return null
           }
         }
+        console.error("Validation error:", validatedFields.error)
         return null
       },
     }),
@@ -98,7 +96,10 @@ export const {
           const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
           await jwtVerify(token.backendTokens.accessToken, secret)
         } catch (error) {
-          console.log("Access token validation failed, attempting refresh...", error);
+          console.log(
+            "Access token validation failed, attempting refresh...",
+            error,
+          )
           try {
             const refreshedToken = await refreshTokenApi(token)
             if (refreshedToken)
