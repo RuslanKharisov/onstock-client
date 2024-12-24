@@ -24,7 +24,7 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("Credentials received:", credentials);
+        console.log("Credentials received:", credentials)
         const validatedFields = LoginSchema.safeParse(credentials)
 
         if (validatedFields.success) {
@@ -76,6 +76,8 @@ export const {
       }
     },
     async session({ session, token }) {
+      console.log("Session callback - session:", session)
+      console.log("Session callback - token:", token)
       session.user.id = token.sub as string
       session.user.name = token.name as string
       session.user.email = token.email as string
@@ -85,11 +87,13 @@ export const {
     },
 
     async jwt({ token, user, account }) {
+      console.log("JWT callback - token:", token)
+      console.log("JWT callback - user:", user)
       if (user) {
         token.name = user.name
         token.email = user.email
         token.provider = account?.provider
-        
+
         token.backendTokens = user.backendTokens
       }
 
