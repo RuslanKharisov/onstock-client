@@ -8,6 +8,7 @@ export interface IemailVerify {
 export const emailVerify = async (
   token: string
 ):Promise<IemailVerify> => {
-  return await apiClient.post(`/auth/verify-email`, token)
+  const body = {token: token}
+  return await apiClient.post(`/auth/verify-email`, body)
 }
 
