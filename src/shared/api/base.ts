@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://prom-stock.ru/apiserv";
+const API_URL = process.env.NEXT_PUBLIC_API_URL as string
 
 export class ApiClient {
   private baseUrl: string

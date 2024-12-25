@@ -1,7 +1,7 @@
 import { auth } from "@/entities/user/auth"
 import UpdateProfileForm from "@/features/update-profile/update-profile-form"
 import UpdateSupplierForm from "@/features/update-supplier/update-supplier-form"
-import { getUserById } from "@/shared/api/user/get-user-by-id"
+import { getUserById } from "@/entities/user/api/get-user-by-id"
 
 
 export default async function ProfilePage() {
@@ -19,7 +19,7 @@ export default async function ProfilePage() {
   return (
     <main className="container ">
       <div className="flex flex-col justify-center items-center gap-5 py-3">
-        <UpdateProfileForm session={session} existingUser={existingUser}/>
+        <UpdateProfileForm accessToken={accessToken} existingUser={existingUser}/>
         <UpdateSupplierForm 
         userId={userId} 
         accessToken={accessToken}

@@ -1,7 +1,7 @@
 "use client"
 
 import { ProfileSchema } from "@/entities/user/_domain/schemas"
-import { useState, useTransition } from "react"
+
 import { useForm } from "react-hook-form"
 import { useSession } from "next-auth/react"
 import { z } from "zod"
@@ -9,8 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
-import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
 import { Spinner } from "@/shared/ui/spinner"
 import {
   Form,
@@ -20,20 +18,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form"
-import { updateUser } from "@/shared/api/user"
 import { UserEntity } from "@/entities/user/types/types"
-import { Session } from "next-auth"
+import { useUpdateUser } from "@/entities/user/api/auth.queries"
 
 interface UpdateProfileFormProps {
-  existingUser: UserEntity;
-  session: Session;
+  existingUser: UserEntity
+  accessToken: string
 }
 
-const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, session } ) => {
-  const [error, setError] = useState<string | undefined>()
-  const [success, setSuccess] = useState<string | undefined>()
-  const [isPending, startTransition] = useTransition()
+const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({
+  existingUser,
+  accessToken,
+}) => {
   const { update } = useSession()
+
+  const { mutate: updateUser, isPending, isSuccess, isError } = useUpdateUser()
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -45,33 +44,25 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
     },
   })
 
-
-  const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
-    startTransition(async () => {
-      await updateUser(existingUser?.id, session.backendTokens.accessToken, values)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error)
-          }
-          if (data.success) {
-            update()
-            setSuccess(data.success)
-          }
-        })
-        .catch(() => setError("Что-то пошло не так"))
-    })
+  const onSubmit = (data: z.infer<typeof ProfileSchema>) => {
+    if (existingUser) {
+      updateUser({ data, accessToken })
+    }
   }
+
+  if (isSuccess) {
+    update()
+  }
+
   return (
     <Card className="w-full ">
       <CardHeader className=" items-center gap-3">
-        <h2 className="text-center text-lg font-bold">
-          Редактировать профиль
-        </h2>
+        <h2 className="text-center text-lg font-bold">Редактировать профиль</h2>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="mb-5 grid md:grid-cols-2 gap-3">
+            <div className="mb-5 grid gap-3 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="name"
@@ -143,8 +134,16 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({ existingUser, ses
                   </FormItem>
                 )}
               /> */}
-              <FormEroor message={error} />
-              <FormSuccess message={success} />
+              {isSuccess && (
+                <h2 className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
+                  Успешно
+                </h2>
+              )}
+              {isError && (
+                <h2 className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
+                  Что-то пошло не так
+                </h2>
+              )}
             </div>
             <Button type="submit" size="sm" disabled={isPending}>
               {isPending && <Spinner className="mr-2 h-4 w-full " />}
