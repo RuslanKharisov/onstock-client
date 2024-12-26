@@ -1,15 +1,14 @@
-import { apiClient } from "@/shared/api/base";
-import { PaginatedStockListDto } from "../dto/stock-with-pagination.dto";
-import { stockQueryDto } from "../_domain/types";
+import { apiClient } from "@/shared/api/base"
+import { PaginatedStockListDto } from "../dto/stock-with-pagination.dto"
+import { stockQueryDto } from "../_domain/types"
 
 export const getStocks = async (
-  data: stockQueryDto
+  data: stockQueryDto,
 ): Promise<PaginatedStockListDto> => {
-  const query: Record<string, string | number> = {
-    ...data,
+  const body = {
+    page: data.page,
+    perPage: data.perPage,
     filters: JSON.stringify(data.filters || []),
   }
-  return await apiClient.get<PaginatedStockListDto>('/stock', query)
+  return await apiClient.post<PaginatedStockListDto>("/stock", body)
 }
-
-

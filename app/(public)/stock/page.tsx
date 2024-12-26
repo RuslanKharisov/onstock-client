@@ -2,9 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-columns"
-import { stockQueries } from "@/entities/stock/api/stock.queries"
+import { useGetStocks } from "@/entities/stock/api/stock.queries"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
-import { useQuery } from "@tanstack/react-query"
 import {
   DataTable,
   usePagination,
@@ -18,13 +17,19 @@ export default function StockPage() {
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination()
   const [filters, setFilters] = useState<ColumnFiltersState>([])
-  const { data, isLoading } = useQuery(
-    stockQueries.list({
-      page: pagination.pageIndex + 1,
-      perPage: pagination.pageSize,
-      filters,
-    }),
-  )
+  // const { data, isLoading } = useQuery(
+  //   stockQueries.list({
+  //     page: pagination.pageIndex + 1,
+  //     perPage: pagination.pageSize,
+  //     filters,
+  //   }),
+  // )
+
+  const {data, isPending} = useGetStocks({
+    page: pagination.pageIndex + 1,
+    perPage: pagination.pageSize,
+    filters,
+  });
   
   useEffect(() => {
     if (data) {
@@ -47,7 +52,7 @@ export default function StockPage() {
       <DataTable
         columns={ProductsTableColumns}
         data={stockArray}
-        loading={isLoading}
+        loading={isPending}
         rowCount={count}
         handleDelete={handleDelete}
         manualPagination={true}

@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string
+console.log("🚀 ~ API_URL:", API_URL)
 
 export class ApiClient {
   private baseUrl: string
@@ -6,7 +7,7 @@ export class ApiClient {
   constructor(url: string) {
     this.baseUrl = url
   }
-
+  
   async handleResponse<TResult>(response: Response): Promise<TResult> {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
@@ -18,7 +19,7 @@ export class ApiClient {
       throw new Error("Error parsing JSON response")
     }
   }
-
+  
   public async get<TResult = unknown>(
     endpoint: string,
     queryParams?: Record<string, string | number>,
@@ -29,17 +30,17 @@ export class ApiClient {
         url.searchParams.append(key, value.toString())
       })
     }
-
+    
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-
+    
     return this.handleResponse<TResult>(response)
   }
-
+  
   public async post<TResult = unknown, TData = Record<string, unknown>>(
     endpoint: string,
     body: TData,
@@ -49,6 +50,7 @@ export class ApiClient {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
     }
+    console.log("🚀 ~ ApiClient ~ this.baseUrl:", this.baseUrl)
 
     if (token) {
       headers["Authorization"] = `${tokenType} ${token}`  // Используем переданный тип токена
