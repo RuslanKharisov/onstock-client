@@ -30,7 +30,7 @@ export const HeroSection = () => {
             Зарегистрируйтесь и продавайте оборудование с вашего склада
           </p>
           <LoginButton>
-            <Button variant="outline" size="lg">
+            <Button variant="destructive" size="lg">
               Стать поставщиком
             </Button>
           </LoginButton>
