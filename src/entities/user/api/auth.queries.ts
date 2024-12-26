@@ -38,3 +38,11 @@ export const useEmailUserVerify = () => {
     mutationFn: ({ token }: { token: string }) => emailVerify(token),
   })
 }
+
+// Не используется, поскольку loginUser(data) вызывается из calback signIn NextAuth
+// 
+// export const useLoginUser = () => {
+//   return useMutation({
+//     mutationFn: (data: z.infer<typeof LoginSchema>) => loginUser(data),
+//   })
+// }
