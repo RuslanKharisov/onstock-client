@@ -24,15 +24,15 @@ export function UpdateFromFile({
   accessToken: string
 }) {
   const [error, setError] = useState<string | undefined>()
-  // const [success, setSuccess] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
 
   const {
-      mutate: addOrUpdateProduct,
-      isPending,
-      isSuccess,
-      isError,
-    } = useAddOrUpdateProduct()
+    mutate: addOrUpdateProduct,
+    isPending,
+    data,
+    isError,
+    error: resError,
+  } = useAddOrUpdateProduct()
 
   function handleFileUpload(e: any) {
     const file = e.target.files[0]
@@ -112,19 +112,27 @@ export function UpdateFromFile({
         </Button>
       </CardContent>
       <CardContent>
-        {isSuccess && (
+        {data?.success && (
           <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
-            Успешно
+            {data?.success}
           </p>
         )}
-        {isError ? (
-          <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
-            Что-то пошло не так. 
+        {error && (
+          <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
+            {error}
           </p>
-        ) : error ? 
-         <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">{error}</p> 
-         : ""
-        }
+        )}
+        {data?.error ? (
+          <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
+            {data?.error}
+          </p>
+        ) : isError ? (
+          <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
+            {resError.message}
+          </p>
+        ) : (
+          ""
+        )}
       </CardContent>
     </Card>
   )

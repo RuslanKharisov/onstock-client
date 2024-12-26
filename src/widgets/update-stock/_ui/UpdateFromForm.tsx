@@ -18,6 +18,8 @@ import { createProductFormSchema } from "@/entities/stock/_domain/schemas"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
 import { Supplier } from "@/entities/supplier/_domain/types"
 import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal-stock.queries"
+import { FormEroor } from "@/shared/ui/form-error"
+import { FormSuccess } from "@/shared/ui/form-success"
 
 export function UpdateFromForm({
   supplier,
@@ -29,8 +31,9 @@ export function UpdateFromForm({
   const {
     mutate: addOrUpdateProduct,
     isPending,
-    isSuccess,
     isError,
+    error,
+    data,
   } = useAddOrUpdateProduct()
 
   const form = useForm({
@@ -122,24 +125,15 @@ export function UpdateFromForm({
                 </FormItem>
               )}
             />
+            {data?.error && <FormEroor message={data?.error} />}
+            {isError && <FormEroor message={error.message} />}
+            {data?.success && <FormSuccess message={data?.success} />}
             <Button className="w-full" type="submit" disabled={isPending}>
               Добавить
             </Button>
           </form>
         </Form>
-      </CardContent>
-      <CardContent>
-        {isSuccess && (
-          <h2 className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
-            Успешно
-          </h2>
-        )}
-        {isError && (
-          <h2 className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
-            Что-то пошло не так
-          </h2>
-        )}
-      </CardContent>
+      </CardContent> 
     </Card>
   )
 }

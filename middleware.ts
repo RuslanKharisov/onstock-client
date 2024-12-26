@@ -37,8 +37,6 @@ export async function middleware(req: NextRequest) {
     const expirationDate = new Date(session.expires)
     const expTimeInSec = expirationDate.getTime() / 1000
     const curTimeInSec = Date.now() / 1000
-    console.log("Истекает:", new Date(expTimeInSec * 1000))
-    console.log("Действителен до:", new Date(curTimeInSec * 1000))
     if (expTimeInSec > curTimeInSec) {
       isLoggedIn = true
     } else {

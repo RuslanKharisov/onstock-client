@@ -3,7 +3,6 @@
 import { ProfileSchema } from "@/entities/user/_domain/schemas"
 
 import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
@@ -30,8 +29,6 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({
   existingUser,
   accessToken,
 }) => {
-  const { update } = useSession()
-
   const { mutate: updateUser, isPending, isSuccess, isError } = useUpdateUser()
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
@@ -48,10 +45,6 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({
     if (existingUser) {
       updateUser({ data, accessToken })
     }
-  }
-
-  if (isSuccess) {
-    update()
   }
 
   return (
@@ -134,6 +127,7 @@ const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({
                   </FormItem>
                 )}
               /> */}
+              
               {isSuccess && (
                 <h2 className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
                   Успешно
