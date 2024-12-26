@@ -14,7 +14,7 @@ export class ApiClient {
 
     try {
       return await response.json()
-    } catch (error) {
+    } catch  {
       throw new Error("Error parsing JSON response")
     }
   }
@@ -49,7 +49,6 @@ export class ApiClient {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
     }
-    console.log("🚀 ~ ApiClient ~ this.baseUrl:", this.baseUrl)
 
     if (token) {
       headers["Authorization"] = `${tokenType} ${token}` // Используем переданный тип токена
