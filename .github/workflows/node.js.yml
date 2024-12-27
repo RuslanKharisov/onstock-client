@@ -24,19 +24,12 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: echo "$(pwd)"
-      - run: |
-          echo "JWT_SECRET= ${{ secrets.JWT_SECRET }}" >> .env
-          echo "NEXTAUTH_URL= ${{ secrets.NEXTAUTH_URL }}" >> .env
-          echo "NEXT_PUBLIC_API_URL= ${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
-          echo "NEXTAUTH_SECRET= ${{ secrets.NEXTAUTH_SECRET }}" >> .env
-          echo "AUTH_TRUST_HOST= ${{ secrets.AUTH_TRUST_HOST }}" >> .env
-          echo "YANDEX_CLIENT_ID= ${{ secrets.YANDEX_CLIENT_ID }}" >> .env
-          echo "YANDEX_CLIENT_SECRET= ${{ secrets.YANDEX_CLIENT_SECRET }}" >> .env
-          echo "ADMIN_EMAIL= ${{ secrets.ADMIN_EMAIL }}" >> .env
-          echo "ADMIN_PASSWORD= ${{ secrets.ADMIN_PASSWORD }}" >> .env
-          echo "RESEND_API_KEY= ${{ secrets.RESEND_API_KEY }}" >> .env
-          echo "RESEND_CONFIRM_UR= ${{ secrets.RESEND_CONFIRM_UR }}" >> .env
-          echo "RESEND_RESET_PASS_LINK= ${{ secrets.RESEND_RESET_PASS_LINK }}" >> .env
-      - run: |
-          scp -o StrictHostKeyChecking=no .env admin2@lfrgxxjmck: .
+      - name: Preserve .env
+        run: |
+          cp .env ../.env.bak || echo "No existing .env"
+      - run: npm ci
+      - run: npm run build --if-present
+      - name: Restore .env
+        run: |
+          mv ../.env.bak .env || echo "No .env to restore"
       - run: pm2 restart 4
