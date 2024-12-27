@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x]
-    env:
-      NEXT_WEBSITE_URL: ${secrets.NEXT_WEBSITE_URL}
+    # env:
+      # NEXT_WEBSITE_URL: ${secrets.NEXT_WEBSITE_URL}
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
