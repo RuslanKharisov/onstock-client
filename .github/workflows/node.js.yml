@@ -20,7 +20,7 @@ jobs:
           if [ -d ".git" ]; then
             git pull origin main
           else
-            git clone https://github.com/username/repo.git .
+            git clone https://github.com/RuslanKharisov/onstock-client.git .
           fi
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
