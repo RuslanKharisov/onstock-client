@@ -3,7 +3,7 @@ name: CI/CD Nextjs Pipeline
 on:
   push:
     branches:
-      - product
+      - production
 
 jobs:
   deploy:
@@ -30,4 +30,4 @@ jobs:
             git pull origin Product
             npm install
             npm run build
-            pm2 restart nextstart-app
+            pm2 restart nextStart
