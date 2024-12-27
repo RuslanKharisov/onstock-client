@@ -61,6 +61,7 @@ const UpdateSupplierForm = ({
         email: supplier?.email || "",
         siteUrl: supplier?.siteUrl || "",
       }) 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supplier])
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {

@@ -25,9 +25,9 @@ jobs:
 
           script: |
             echo "Current directory: $(pwd)" 
-            cd /var/www/nextjs
+            cd /var/www/onstock-client
             echo "Current directory: $(pwd)"
             git pull origin Product
             npm install
             npm run build
-            pm2 restart nextjs-app
+            pm2 restart nextstart-app

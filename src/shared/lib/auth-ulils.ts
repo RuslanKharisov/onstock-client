@@ -12,7 +12,7 @@ export async function verifyToken(
     } else {
       return { valid: false }
     }
-  } catch (error) {
+  } catch {
     return { valid: false }
   }
 }

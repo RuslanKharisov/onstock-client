@@ -26,6 +26,7 @@ import { Search } from "lucide-react"
 import { Button } from "@/shared/ui/button"
 
 declare module "@tanstack/react-table" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
     deleteData: (id: string) => void
   }
