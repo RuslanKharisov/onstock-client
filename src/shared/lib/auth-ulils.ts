@@ -5,7 +5,7 @@ export async function verifyToken(
   accessToken: string,
 ): Promise<{ valid: boolean }> {
   try {
-    const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
+    const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET)
     const { payload } = await jwtVerify(accessToken, secret)
     if (payload) {
       return { valid: true }

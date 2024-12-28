@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+
     runs-on: self-hosted
 
     strategy:
@@ -17,20 +18,20 @@ jobs:
 
     steps:
       - run: echo "$(pwd)"
-      # - run: |
-      #       cp .env ../.env.bak || echo "No existing .env"
-      # - uses: actions/checkout@v4
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      #     cache: "npm"
-      # - run: npm ci
-      # - name: Restore .env
-      #   run: |
-      #     mv ../.env.bak .env || echo "No .env to restore"
-      # - run: npm run build --if-present
-      # - run: echo "$(pwd)"
-      # - run: npm ci
-      # - run: npm run build --if-present
-      # - run: pm2 restart 4
+      - run: |
+            cp .env ../.env.bak || echo "No existing .env"
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - name: Restore .env
+        run: |
+          mv ../.env.bak .env || echo "No .env to restore"
+      - run: npm run build --if-present
+      - run: echo "$(pwd)"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: pm2 restart 4
