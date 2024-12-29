@@ -1,6 +1,12 @@
-const Spinner = () => {
+import { cn } from "./utils"
+
+interface SpinnerProps {
+  className?: string
+}
+
+const Spinner = ({className}:SpinnerProps) => {
   return (
-    <div className="text-center w-full ">
+    <div className={cn("text-center w-full", className)}>
       <div >
         <svg
           aria-hidden="true"

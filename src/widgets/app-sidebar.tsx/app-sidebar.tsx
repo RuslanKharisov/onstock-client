@@ -1,10 +1,17 @@
-import { ToggleTheme } from "@/features/theme/toggle-theme";
-import { SidebarHeader, SidebarContent, SidebarGroup, Sidebar, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroupContent } from "@/shared/ui/sidebar";
-import { Store, Home, User, Database } from "lucide-react"
-import Link from 'next/link'
-import { UserProfile } from "../app-header/_ui/user-profile";
+"use client"
 
-const items = [
+import { Store, Home, User, Database, LucideIcon } from "lucide-react"
+import { useMediaQuery } from "usehooks-ts"
+import { SidebarDesktop } from "./sidebar-desktop"
+import { SidebarMobile } from "./sidebar-mobile"
+
+export interface IsideBarItems {
+  title: string
+  url: string
+  icon?: LucideIcon
+}
+
+const sideBarItems = [
   {
     title: "Home",
     url: "/stock",
@@ -28,33 +35,11 @@ const items = [
 ]
 
 export function AppSidebar() {
-  return (
-    <Sidebar>
-      <SidebarHeader className=" font-semibold my-3">
-        <h1 className="text-center">Личный кабинет</h1>
-        <div className="flex items-center justify-center space-x-3 ">
-          <ToggleTheme />
-          <UserProfile/>
-        </div>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild variant='outline' size='lg' >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
-  )
+  const isDesktop = useMediaQuery("(min-width:640px)", {
+    initializeWithValue: false,
+  })
+  console.log("🚀 ~ isDesktop ~ isDesktop:", isDesktop)
+  if (isDesktop) return <SidebarDesktop sideBarItems={sideBarItems} />
+
+  return <SidebarMobile sideBarItems={sideBarItems} />
 }

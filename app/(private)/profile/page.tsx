@@ -1,3 +1,4 @@
+
 import { auth } from "@/entities/user/auth"
 import UpdateProfileForm from "@/features/update-profile/update-profile-form"
 import UpdateSupplierForm from "@/features/update-supplier/update-supplier-form"
@@ -7,7 +8,6 @@ import { getUserById } from "@/entities/user/api/get-user-by-id"
 export default async function ProfilePage() {
   const session = await auth()
   if (!session) return null
-
   const userId = session.user.id
   const accessToken = session.backendTokens.accessToken
   

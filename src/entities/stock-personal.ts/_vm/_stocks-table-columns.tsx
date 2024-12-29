@@ -13,7 +13,7 @@ const ActionColumn: Partial<ColumnDef<Stock>> = {
     }
 
     return (
-      <div className={"lg:flex flex-row gap-x-2 whitespace-nowrap hidden  "}>
+      <div className={"lg:flex flex-row justify-center gap-x-2 whitespace-nowrap"}>
         <ActionButtons onDelete={handleDelete} />
       </div>
     )

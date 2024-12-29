@@ -1,4 +1,3 @@
-import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar"
 import { AppSidebar } from "@/widgets/app-sidebar.tsx"
 
 export default async function Layout({
@@ -7,12 +6,9 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   return (
-    <SidebarProvider>
+    <>
       <AppSidebar />
-      <div className="w-full">
-        <SidebarTrigger className=" absolute top-2"/>
-        {children}
-      </div>
-    </SidebarProvider>
+      <main className="sm:ml-[300px] mt-16 w-full">{children}</main>
+    </>
   )
 }
