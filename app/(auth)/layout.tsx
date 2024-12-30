@@ -9,7 +9,9 @@ export default async function AuthLayout({
   return (
     <>
       <AppHeader />
-      <Suspense>{children}</Suspense>
+      <div className="pt-20 md:pt-5">
+        <Suspense>{children}</Suspense>
+      </div>
     </>
   )
 }
