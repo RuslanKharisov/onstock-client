@@ -12,10 +12,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
+  totalCount?: number
 }
 
 export function DataTablePagination<TData>({
   table,
+  totalCount
 }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex flex-col items-center px-2 my-5">
@@ -85,6 +87,9 @@ export function DataTablePagination<TData>({
             <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
           </Button>
+        </div>
+        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+          Найдено: {totalCount}
         </div>
       </div>
     </div>

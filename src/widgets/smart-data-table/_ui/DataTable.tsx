@@ -139,7 +139,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} totalCount={rowCount}/>
       {loading ? (
         <div className="mt-20">
           <Spinner />
