@@ -4,7 +4,7 @@ import { Suspense } from "react"
 
 const NewPasswordPage = () => {
   return (
-    <div className=" flex h-screen flex-col items-center justify-center">
+    <div className=" flex flex-col md:items-center justify-center pt-5">
       <FormWrapper
         headerLabel="Придумайте новый пароль."
         backButtonLabel="На станицу входа"

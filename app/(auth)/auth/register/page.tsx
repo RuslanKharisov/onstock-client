@@ -4,7 +4,7 @@ import { Suspense } from "react"
 
 export default function RegisterPage() {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-5">
       <FormWrapper
         headerLabel="Регистрация"
         backButtonLabel="Уже зарегистрированы? Войти."
