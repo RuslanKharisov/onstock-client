@@ -2,8 +2,8 @@
 
 import { Store, Home, User, Database, LucideIcon } from "lucide-react"
 import { useMediaQuery } from "usehooks-ts"
-import { SidebarDesktop } from "./sidebar-desktop"
-import { SidebarMobile } from "./sidebar-mobile"
+import { SidebarDesktop } from "./_ui/sidebar-desktop"
+import { SidebarMobile } from "./_ui/sidebar-mobile"
 
 export interface IsideBarItems {
   title: string

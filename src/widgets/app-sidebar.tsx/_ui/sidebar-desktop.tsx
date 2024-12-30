@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { IsideBarItems } from "./app-sidebar"
+import { IsideBarItems } from "../app-sidebar"
 import { SidebarButton } from "./sidebar-button"
 import { usePathname } from "next/navigation"
 import { ToggleTheme } from "@/features/theme/toggle-theme"
-import { UserProfile } from "../app-header/_ui/user-profile"
+import { UserProfile } from "../../app-header/_ui/user-profile"
 interface SidebarDesktopProps {
   sideBarItems: IsideBarItems[]
 }
@@ -11,7 +11,7 @@ interface SidebarDesktopProps {
 const SidebarDesktop = ({ sideBarItems }: SidebarDesktopProps) => {
   const pathname = usePathname()
   return (
-    <aside className="h-screen w-[270px] lg:min-w-[270px] max-w-xs bg-background border-r ">
+    <aside className="h-screen w-[270px] max-w-xs border-r bg-background lg:min-w-[270px] ">
       <div className="h-full px-3 py-4">
         <div className="ml-4">
           <h1 className="">Личный кабинет</h1>

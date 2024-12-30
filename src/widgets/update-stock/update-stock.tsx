@@ -45,7 +45,7 @@ export function ApdateStock({
     <section className="flex flex-wrap items-start justify-center gap-5">
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="sm">Добавить товар на склад</Button>
+          <Button size="sm" className="w-full sm:w-fit">Добавить товар на склад</Button>
         </SheetTrigger>
         <SheetContent
           side="top"
@@ -64,7 +64,7 @@ export function ApdateStock({
 
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="sm">Импортировать из файла</Button>
+          <Button size="sm" className="w-full sm:w-fit">Импортировать из файла</Button>
         </SheetTrigger>
         <SheetContent
           side="top"

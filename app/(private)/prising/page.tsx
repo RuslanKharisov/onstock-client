@@ -10,7 +10,6 @@ import {
   SelectItem,
 } from "@/shared/ui/select"
 import { useState } from "react"
-import { Separator } from "@/shared/ui/separator"
 import { LightBill } from "@/widgets/bill"
 import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem } from "@/shared/ui/form"
@@ -72,9 +71,8 @@ const Prising = () => {
   }
 
   return (
-    <main className="container">
-      <Separator />
-      <div className="flex flex-col items-center justify-center py-5">
+    <div className="container">
+      <div className="flex flex-col items-center justify-center py-3">
         <Card className="w-full">
           <CardHeader>
             <h2 className="text-center text-lg font-bold">Выберите тариф</h2>
@@ -110,7 +108,7 @@ const Prising = () => {
                     </FormItem>
                   )}
                 ></FormField>
-                <Button size="sm" type="submit" className="mt-4">
+                <Button size="sm" type="submit" className="mt-4 w-full sm:w-fit">
                   Рассчитать стоимость
                 </Button>
               </form>
@@ -120,7 +118,7 @@ const Prising = () => {
       </div>
       <RequestByMail />
       <LightBill billDetails={selectedTariff} />
-    </main>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { IsideBarItems } from "./app-sidebar"
+import { IsideBarItems } from "../app-sidebar"
 import {
   Sheet,
   SheetClose,
@@ -11,7 +11,7 @@ import { Button } from "@/shared/ui/button"
 import { Menu, X } from "lucide-react"
 import { SidebarButtonSheet as SidebarButton } from "./sidebar-button"
 import { usePathname } from "next/navigation"
-import { UserProfile } from "../app-header/_ui/user-profile"
+import { UserProfile } from "../../app-header/_ui/user-profile"
 import { ToggleTheme } from "@/features/theme/toggle-theme"
 
 interface SidebarMobileProps {
@@ -23,14 +23,16 @@ const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="icon" variant="ghost" className="fixed left-3 top-3">
-          <Menu size={20} />
-        </Button>
+        <div className="fixed z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-3 pl-3">
+          <Button size="icon" variant="ghost" className="">
+            <Menu size={25} />
+          </Button>
+        </div>
       </SheetTrigger>
 
       <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
         <SheetHeader className="flex flex-row items-center justify-between ">
-          <div className="ml-4 mb-3">
+          <div className="mb-3 ml-4">
             <h1 className="">Личный кабинет</h1>
             <div className="flex items-center gap-3 ">
               <UserProfile />

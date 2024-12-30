@@ -3,8 +3,8 @@ import { HeroSection } from "@/widgets/hero-section/hero-section"
 
 export default async function Home() {
   return (
-    <main className="">
+    <div className="mt-10">
       <HeroSection/>
-    </main>
+    </div>
   )
 }

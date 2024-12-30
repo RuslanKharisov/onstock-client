@@ -40,7 +40,7 @@ export default function StockPage() {
   const handleDelete = () => null
 
   return (
-    <main className="container py-1 px-3">
+    <div className="container py-1 px-3">
 
       <DataTable
         columns={ProductsTableColumns}
@@ -53,6 +53,6 @@ export default function StockPage() {
         onPaginationChange={onPaginationChange}
         onFilteringChange={handleFilterChange}
       />
-    </main>
+    </div>
   )
 }

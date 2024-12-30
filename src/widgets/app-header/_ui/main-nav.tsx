@@ -1,24 +1,41 @@
-"use client"
 import Link from "next/link"
+import { IHeaderItems } from "../app-header"
+import { Logo } from "@/shared/ui/logo"
+import { ToggleTheme } from "@/features/theme/toggle-theme"
+import { UserProfile } from "./user-profile"
+import { usePathname } from "next/navigation"
 
-export function MainNav({ role }: { role: string | undefined }) {
+interface MainNavProps {
+  headerItems: IHeaderItems[]
+}
 
+function MainNav({ headerItems }: MainNavProps) {
+  const pathname = usePathname()
   return (
-    <nav className="flex flex-col items-start gap-6 text-sm font-medium md:flex-row md:items-center ">
-      <Link
-        className="text-foreground/60 transition-colors hover:text-foreground/80"
-        href={`/stock`}
-      >
-        Онлайн склад
-      </Link>
-      {role === "ADMIN" && (
-        <Link
-          className="text-foreground/60 transition-colors hover:text-foreground/80"
-          href="/settings"
-        >
-          Консоль
-        </Link>
-      )}
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex  items-center gap-12 h-14">
+        <div className="mr-4 hidden md:flex">
+          <Logo />
+        </div>
+        <div className="flex flex-1 gap-7 items-center">
+          {headerItems.map((item, idx) => (
+            <Link
+              key={idx}
+              className={` ${pathname === item.url ? "text-destructive/70" : "text-foreground/60"}  transition-colors hover:text-destructive`}
+              href={item.url}
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+
+        <div className="flex flex-1 items-center justify-end space-x-3 ">
+          <ToggleTheme />
+          <UserProfile />
+        </div>
+      </div>
     </nav>
   )
 }
+
+export { MainNav }

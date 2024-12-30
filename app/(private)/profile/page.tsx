@@ -17,7 +17,7 @@ export default async function ProfilePage() {
   ) 
 
   return (
-    <main className="container ">
+    <div className="container ">
       <div className="flex flex-col justify-center items-center gap-5 py-3">
         <UpdateProfileForm accessToken={accessToken} existingUser={existingUser}/>
         <UpdateSupplierForm 
@@ -25,6 +25,6 @@ export default async function ProfilePage() {
         accessToken={accessToken}
       />
       </div>
-    </main>
+    </div>
   )
 }
