@@ -35,10 +35,9 @@ const sideBarItems = [
 ]
 
 export function AppSidebar() {
-  const isDesktop = useMediaQuery("(min-width:640px)", {
+  const isDesktop = useMediaQuery("(min-width:768px)", {
     initializeWithValue: false,
   })
-  console.log("🚀 ~ isDesktop ~ isDesktop:", isDesktop)
   if (isDesktop) return <SidebarDesktop sideBarItems={sideBarItems} />
 
   return <SidebarMobile sideBarItems={sideBarItems} />

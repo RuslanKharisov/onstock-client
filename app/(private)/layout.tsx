@@ -6,9 +6,9 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <div className="flex">
       <AppSidebar />
-      <main className="sm:ml-[300px] mt-16 w-full">{children}</main>
-    </>
+      <main className="mt-16 w-full">{children}</main>
+    </div>
   )
 }

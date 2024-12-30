@@ -11,7 +11,7 @@ interface SidebarDesktopProps {
 const SidebarDesktop = ({ sideBarItems }: SidebarDesktopProps) => {
   const pathname = usePathname()
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[270px] max-w-xs border-r">
+    <aside className="h-screen w-[270px] lg:min-w-[270px] max-w-xs bg-background border-r ">
       <div className="h-full px-3 py-4">
         <div className="ml-4">
           <h1 className="">Личный кабинет</h1>
