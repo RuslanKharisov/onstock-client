@@ -7,8 +7,13 @@ import {
 
 import { Table } from "@tanstack/react-table"
 import { Button } from "@/shared/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select"
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select"
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
@@ -17,15 +22,18 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({
   table,
-  totalCount
+  totalCount,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex flex-col items-center px-2 my-5">
-      <div className="flex-1 text-sm text-muted-foreground mb-5">
+    <div className="my-5 flex flex-col gap-y-3 items-center px-2">
+      <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} из{" "}
         {table.getFilteredRowModel().rows.length} строк(и) выбрано.
       </div>
-      <div className="flex items-center space-x-3 lg:space-x-8">
+      <div className="flex w-[100px] items-center justify-center text-sm font-medium text-foreground/70">
+        Найдено: {totalCount}
+      </div>
+      <div className="flex flex-wrap items-center space-x-3 lg:space-x-8">
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Показать</p>
           <Select
@@ -87,9 +95,6 @@ export function DataTablePagination<TData>({
             <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
           </Button>
-        </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Найдено: {totalCount}
         </div>
       </div>
     </div>
