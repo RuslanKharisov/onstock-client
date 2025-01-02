@@ -21,44 +21,46 @@ interface MobileNavProps extends ButtonProps {
 function MobileNav({ headerItems }: MobileNavProps) {
   const pathname = usePathname()
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <div className="fixed z-50 w-full bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <Button size="icon" variant="ghost" className="">
-            <Menu size={25} />
-          </Button>
-        </div>
-      </SheetTrigger>
-
-      <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
-        <SheetHeader className="flex flex-row items-center justify-between ">
-          <div className="mb-3 ml-4">
-            <h1 className="">Личный кабинет</h1>
-            <div className="flex items-center gap-3 ">
-              <UserProfile />
-              <ToggleTheme />
-            </div>
-          </div>
-          <SheetClose>
-            <Button className="h-7 w-7 p-0" variant="ghost">
-              <X size={15} />
+    <header>
+      <Sheet>
+        <SheetTrigger asChild>
+          <div className="fixed z-50 w-full bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <Button size="icon" variant="ghost" className="">
+              <Menu size={25} />
             </Button>
-          </SheetClose>
-        </SheetHeader>
-        <div>
-          {headerItems.map((item, idx) => (
-            <Link key={idx} href={item.url}>
-              <HeaderSidebarButton
-                variant={pathname === item.url ? "secondary" : "ghost"}
-                icon={item.icon}
-              >
-                <span>{item.title}</span>
-              </HeaderSidebarButton>
-            </Link>
-          ))}
-        </div>
-      </SheetContent>
-    </Sheet>
+          </div>
+        </SheetTrigger>
+
+        <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
+          <SheetHeader className="flex flex-row items-center justify-between ">
+            <div className="mb-3 ml-4">
+              <h1 className="">Личный кабинет</h1>
+              <div className="flex items-center gap-3 ">
+                <UserProfile />
+                <ToggleTheme />
+              </div>
+            </div>
+            <SheetClose>
+              <Button className="h-7 w-7 p-0" variant="ghost">
+                <X size={15} />
+              </Button>
+            </SheetClose>
+          </SheetHeader>
+          <div>
+            {headerItems.map((item, idx) => (
+              <Link key={idx} href={item.url}>
+                <HeaderSidebarButton
+                  variant={pathname === item.url ? "secondary" : "ghost"}
+                  icon={item.icon}
+                >
+                  <span>{item.title}</span>
+                </HeaderSidebarButton>
+              </Link>
+            ))}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </header>
   )
 }
 export { MobileNav }

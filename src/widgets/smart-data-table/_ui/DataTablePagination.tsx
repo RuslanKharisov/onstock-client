@@ -33,7 +33,7 @@ export function DataTablePagination<TData>({
       <div className="flex w-[100px] items-center justify-center text-sm font-medium text-foreground/70">
         Найдено: {totalCount}
       </div>
-      <div className="flex flex-wrap items-center space-x-3 lg:space-x-8">
+      <div className="flex flex-wrap items-center justify-center gap-5 lg:space-x-8">
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Показать</p>
           <Select
