@@ -9,7 +9,7 @@ export default async function Layout({
   return (
     <>
       <AppHeader />
-      <main className="mt-8 w-full">{children}</main>
+      <main className="w-full">{children}</main>
       <Footer />
     </>
   )
