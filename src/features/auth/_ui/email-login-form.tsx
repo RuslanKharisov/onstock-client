@@ -46,12 +46,13 @@ export function EmailLoginForm() {
           email: values.email,
           password: values.password,
         });
+        console.log("🚀 ~ startTransition ~ result:", result)
 
         if (result?.error) {
           setError(result.error);
           form.reset();
         } else {
-          setSuccess("Вход выполнен!");
+          // setSuccess("Вход выполнен!");
           form.reset();
 
           // Явно обновляем сессию после успешного входа 

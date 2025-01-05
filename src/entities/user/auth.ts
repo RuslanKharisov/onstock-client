@@ -31,10 +31,16 @@ export const {
           try {
             const res = await loginUser(validatedFields.data)
             console.log("🚀 ~ authorize ~ res:", res)
+            console.log("🚀 ~ authorize ~ res:", res.error)
+            console.log("🚀 ~ authorize ~ res:", res.success)
+            console.log("🚀 ~ authorize ~ res:", res.user)
 
             if (res.error) {
               throw new Error(res.error)
-            }
+            } 
+            // else if (res.user.name === 'Unauthorized') {
+            //   return {...res.user}
+            // }
 
             return {
               ...res.user,
