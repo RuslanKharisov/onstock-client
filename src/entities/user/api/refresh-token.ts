@@ -11,7 +11,7 @@ export interface IrefreshToken {
 export const refreshToken = async (token: JWT): Promise<IrefreshToken> => {
   const body = { token: token }
   const res = await apiClient.post<IrefreshToken>(
-    `/auth/refresh`,
+    `auth/refresh`,
     body,
     token.backendTokens.refreshToken,
     "Refresh",

@@ -15,7 +15,7 @@ export const getPersonalStock = async (
     filters: JSON.stringify(filters || []),
   }
   return await apiClient.post<TPersonalPaginatedStockDto>(
-    `/stock/${userId}`,
+    `stock/${userId}`,
     body,
     accessToken,
     "Bearer",

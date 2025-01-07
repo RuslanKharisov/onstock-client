@@ -12,6 +12,7 @@ import { ColumnFiltersState } from "@tanstack/react-table"
 
 export default function StockPage() {
   const [stocks, setStocks] = useState<any[]>([])
+  console.log("🚀 ~ StockPage ~ stocks:", stocks)
   const [count, setCount] = useState(0)
 
   // Хуки для пагинации и сортировки
@@ -40,7 +41,7 @@ export default function StockPage() {
   const handleDelete = () => null
 
   return (
-    <div className="container py-1 px-3">
+    <div className="container py-1 px-3 pt-12 md:pt-0">
 
       <DataTable
         columns={ProductsTableColumns}

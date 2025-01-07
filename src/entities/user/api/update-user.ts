@@ -7,5 +7,5 @@ export const updateUser = async (
   accessToken: string,
 ): Promise<UserEntity> => {
   const body = { ...data }
-  return await apiClient.patch(`/user`, body, accessToken)
+  return await apiClient.patch(`user`, body, accessToken)
 }

@@ -5,5 +5,5 @@ export const getUserByEmail = async (
   email?: string | null,
 ): Promise<UserEntity> => {
   const body = { email: email }
-  return await apiClient.post(`/user/`, body)
+  return await apiClient.post(`user/`, body)
 }

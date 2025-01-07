@@ -7,7 +7,7 @@ export const getUserById = async (
   accessToken: string,
 ): Promise<UserEntity> => {
   const body = {}
-  return await apiClient.post(`/user/${userId}`, 
+  return await apiClient.post(`user/${userId}`, 
     body,
     accessToken,
     "Bearer",

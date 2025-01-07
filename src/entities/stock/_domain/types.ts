@@ -1,3 +1,4 @@
+import { Product } from "@/entities/producrts-list/_domain/types"
 import { ColumnFiltersState } from "@tanstack/react-table"
 
 export type Stock = {
@@ -9,6 +10,11 @@ export type Stock = {
   supplier: string
   email: string
   siteUrl: string | null
+  newDeliveryQty1: number
+  newDeliveryDate1: Date
+  newDeliveryQty2: number
+  newDeliveryDate2: Date
+  manufacturer: string
 }
 
 export type StockListElementWithRelations = {
@@ -16,12 +22,11 @@ export type StockListElementWithRelations = {
   supplierId: number
   productId: string
   quantity: number
-  product: {
-    id: string
-    sku: string
-    name: string
-    description: string
-  }
+  newDeliveryQty1: number
+  newDeliveryDate1: Date
+  newDeliveryQty2: number
+  newDeliveryDate2: Date
+  product: Product
   supplier: getSupplier
 }
 
@@ -36,14 +41,13 @@ type getSupplier = {
 
 // Тип для ответа с пагинацией
 export type PaginatedStockList = {
-  data: StockListElementWithRelations[];
-  totalCount: number;
-  limit: number;
-  skip: number;
-  currentPage: number;
-  totalPages: number;
+  data: StockListElementWithRelations[]
+  totalCount: number
+  limit: number
+  skip: number
+  currentPage: number
+  totalPages: number
 }
-
 
 // заготовка для склада
 export type CreateStockElementCommand = {
@@ -51,7 +55,6 @@ export type CreateStockElementCommand = {
   supplierId: number // для connect к id поставщика
   productId: string // для coonnect к id продукта, если он уже есть в базе
 }
-
 
 export interface stockQueryDto {
   page: number

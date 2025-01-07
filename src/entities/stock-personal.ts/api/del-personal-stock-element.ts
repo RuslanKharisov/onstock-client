@@ -5,7 +5,7 @@ export const deletePersonalStockElement = async (
   accessToken: string,
 ): Promise<{ success: boolean }> => {
   return await apiClient.delete<{ success: boolean }>(
-    `/stock/${stockId}`,
+    `stock/${stockId}`,
     accessToken,
   )
 }

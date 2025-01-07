@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/shared/ui/sheet"
 import { UpdateFromFile } from "./_ui/UpdateFromFile"
-import { UpdateFromForm } from "./_ui/UpdateFromForm"
+// import { UpdateFromForm } from "./_ui/UpdateFromForm"
 import { Button } from "@/shared/ui/button"
 import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
 import { useRouter } from "next/navigation"
@@ -42,8 +42,9 @@ export function ApdateStock({
     )
 
   return (
-    <section className="flex flex-wrap items-start justify-center gap-5">
-      <Sheet>
+    <section className="flex flex-wrap items-start justify-between gap-5">
+
+      {/* <Sheet>
         <SheetTrigger asChild>
           <Button size="sm" className="w-full sm:w-fit">Добавить товар на склад</Button>
         </SheetTrigger>
@@ -60,7 +61,7 @@ export function ApdateStock({
           </SheetHeader>
           {data && <UpdateFromForm supplier={data} accessToken={accessToken} />}
         </SheetContent>
-      </Sheet>
+      </Sheet> */}
 
       <Sheet>
         <SheetTrigger asChild>

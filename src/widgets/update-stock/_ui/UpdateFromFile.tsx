@@ -10,6 +10,7 @@ import DownloadExcelSample from "./DownloadExcelSample"
 import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal-stock.queries"
 import { Supplier } from "@/entities/supplier/_domain/types"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
+import { addOrUpdateProductDto } from "@/entities/stock-personal.ts/dto/add-stock-item.dto"
 
 export interface ProductsStock {
   Name: string
@@ -17,7 +18,6 @@ export interface ProductsStock {
 }
 
 export function UpdateFromFile({
-  supplier,
   accessToken,
 }: {
   supplier: Supplier
@@ -25,6 +25,7 @@ export function UpdateFromFile({
 }) {
   const [error, setError] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
+  console.log("🚀 ~ stockData:", stockData)
 
   const {
     mutate: addOrUpdateProduct,
@@ -79,15 +80,54 @@ export function UpdateFromFile({
     }
   }
 
+  function parseDate(dateString: string) {
+    if (typeof dateString !== "string") {
+      throw new TypeError("Expected a string")
+    }
+    const dateMatch = dateString.match(
+      /^(0?[1-9]|[12][0-9]|3[01])[\/\-.](0?[1-9]|1[012])[\/\-.](\d{4})$/,
+    )
+
+    if (!dateMatch) {
+      throw new Error("Invalid date format")
+    }
+
+    const day = Number(dateMatch[1])
+    const month = Number(dateMatch[2])
+    const year = Number(dateMatch[3])
+
+    // Если год состоит из 2 цифр, добавляем 2000 для получения полного года
+    const fullYear = year < 100 ? year + 2000 : year
+
+    // Создаем объект Date (месяцы начинаются с 0)
+    return new Date(fullYear, month - 1, day)
+  }
+
   async function handleClick() {
     for (const product of stockData) {
-      const data = {
+      const data: addOrUpdateProductDto = {
         sku: product.sku,
         name: product.name || "",
+        category: product.category || undefined,
         description: product.description || "",
         quantity: product.quantity,
-        supplierId: supplier?.id,
+        manufacturer: product.manufacturer || undefined,
+        newDeliveryQty1:
+          typeof product.newdelivery_qty_1 === "number"
+            ? product.newdelivery_qty_1
+            : 0,
+        newDeliveryDate1: product.newdelivery_date_1
+          ? parseDate(product.newdelivery_date_1)
+          : new Date(),
+        newDeliveryQty2:
+          typeof product.newdelivery_qty_2 === "number"
+            ? product.newdelivery_qty_2
+            : 0,
+        newDeliveryDate2: product.newdelivery_date_2
+          ? parseDate(product.newdelivery_date_2)
+          : new Date(),
       }
+
       addOrUpdateProduct({ data, accessToken })
     }
   }

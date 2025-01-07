@@ -1,6 +1,5 @@
 "use client"
 
-import { Input } from "@/shared/ui/input"
 import {
   TableHeader,
   TableRow,
@@ -22,8 +21,7 @@ import React from "react"
 import { DataTablePagination } from "./DataTablePagination"
 import { PaginationState } from "../model/pagination-state"
 import { Spinner } from "@/shared/ui/spinner"
-import { Search } from "lucide-react"
-import { Button } from "@/shared/ui/button"
+import { DataTableSearchBar } from "./DataTableSearchBar"
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -86,7 +84,11 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="mx-auto w-full">
-      <div className="my-5 flex flex-col items-center justify-center gap-5 py-4 sm:flex-row">
+      <DataTableSearchBar
+        table={table}
+        applyFilter={applyFilter}
+      />
+      {/* <div className="my-5 flex flex-col items-center justify-center gap-5 py-4 sm:flex-row">
         <div className="relative w-full">
           <Input
             className="z-20 block w-full rounded-lg border border-s-2 border-gray-300 bg-gray-50  p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500"
@@ -138,8 +140,8 @@ export function DataTable<TData, TValue>({
             <Search size={16} />
           </Button>
         </div>
-      </div>
-      <DataTablePagination table={table} totalCount={rowCount}/>
+      </div> */}
+      <DataTablePagination table={table} totalCount={rowCount} />
       {loading ? (
         <div className="mt-20">
           <Spinner />

@@ -8,7 +8,7 @@ export default async function Layout({
   return (
     <div className="flex">
       <AppSidebar />
-      <main className="mt-16 w-full">{children}</main>
+      <main className="w-full">{children}</main>
     </div>
   )
 }

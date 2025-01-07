@@ -11,5 +11,5 @@ export const newPassword = async (
   token: string,
 ): Promise<NewPasswordResponse> => {
   const body = { ...data, token }
-  return await apiClient.post(`/auth/new-password`, body)
+  return await apiClient.post(`auth/new-password`, body)
 }

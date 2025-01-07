@@ -12,9 +12,3 @@ type supplierTariff = {
   maxProducts: number
   pricePerUnit: number 
 }
-   
-// type CreateSupplierCmd = {
-//   name: string
-//   email: string
-//   siteUrl: string | null
-// }

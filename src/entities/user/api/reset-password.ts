@@ -10,5 +10,5 @@ export const resetPassword = async (
   data: ResetPasswordDto,
 ): Promise<ResetPasswordResponse> => {
   const body = { ...data }
-  return await apiClient.post(`/auth/reset-password`, body)
+  return await apiClient.post(`auth/reset-password`, body)
 }

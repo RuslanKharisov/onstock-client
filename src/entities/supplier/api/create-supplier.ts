@@ -8,5 +8,5 @@ export const createSupplier = async (
   values: ChangeSupplierDto,
 ) => {
   const body = {...values}
-  return await apiClient.post(`/supplier`, body, accessToken, 'Bearer');
+  return await apiClient.post(`supplier`, body, accessToken, 'Bearer');
 };

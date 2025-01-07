@@ -21,5 +21,5 @@ export const loginUser = async (
   data: EmailLoginDto,
 ): Promise<IEmailLoginUser> => {
   const body = { ...data }
-  return await apiClient.post(`/auth/login`, body)
+  return await apiClient.post(`auth/login`, body)
 }

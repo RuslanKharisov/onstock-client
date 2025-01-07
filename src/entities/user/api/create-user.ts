@@ -11,5 +11,5 @@ export const createUser = async (
   data: CreateUserDto,
 ): Promise<Session> => {
   const body = { ...data }
-  return await apiClient.post(`/auth/oauth`, body)
+  return await apiClient.post(`auth/oauth`, body)
 }

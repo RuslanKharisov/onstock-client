@@ -9,5 +9,5 @@ export const updateSupplier = async (
 ) => {
   console.log('updateSupplier')
   const body = {...data}
-  return await apiClient.patch(`/supplier`, body, accessToken);
+  return await apiClient.patch(`supplier`, body, accessToken);
 };
