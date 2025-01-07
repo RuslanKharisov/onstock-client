@@ -66,26 +66,34 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
     id: "delivery",
     enableHiding: false,
     cell: ({ row, column }) => {
-      const newDeliveryDate1 = new Date(row.original.newDeliveryDate1)
       const newDeliveryQty1 = row.original.newDeliveryQty1
+      const newDeliveryDate1 = row.original.newDeliveryDate1!
+        ? new Date(row.original.newDeliveryDate1).toLocaleDateString("ru-RU")
+        : ""
       const newDeliveryQty2 = row.original.newDeliveryQty2
-      const newDeliveryDate2 = new Date(row.original.newDeliveryDate2)
-
+      const newDeliveryDate2 = row.original.newDeliveryDate2!
+        ? new Date(row.original.newDeliveryDate2).toLocaleDateString("ru-RU")
+        : ""
       return (
         <div
           data-title={column.columnDef.header as string}
           className="flex flex-col md:gap-2 md:text-xs"
         >
+          {newDeliveryQty1 > 0 ? (
             <p>
-              {newDeliveryQty1} шт.{" "}
-              <span>{newDeliveryDate1.toLocaleDateString("ru-RU")}</span>
+              {newDeliveryQty1} шт. <span>{newDeliveryDate1}</span>
             </p>
+          ) : (
+            ""
+          )}
 
+          {newDeliveryQty2 > 0 ? (
             <p>
-              {newDeliveryQty2} шт.{" "}
-              <span>{newDeliveryDate2.toLocaleDateString("ru-RU")}</span>
+              {newDeliveryQty2} шт. <span>{newDeliveryDate2}</span>
             </p>
-          
+          ) : (
+            ""
+          )}
         </div>
       )
     },

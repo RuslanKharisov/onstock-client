@@ -115,17 +115,17 @@ export function UpdateFromFile({
         newDeliveryQty1:
           typeof product.newdelivery_qty_1 === "number"
             ? product.newdelivery_qty_1
-            : 0,
+            : undefined,
         newDeliveryDate1: product.newdelivery_date_1
           ? parseDate(product.newdelivery_date_1)
-          : new Date(),
+          : undefined,
         newDeliveryQty2:
           typeof product.newdelivery_qty_2 === "number"
             ? product.newdelivery_qty_2
-            : 0,
+            : undefined,
         newDeliveryDate2: product.newdelivery_date_2
           ? parseDate(product.newdelivery_date_2)
-          : new Date(),
+          : undefined,
       }
 
       addOrUpdateProduct({ data, accessToken })
