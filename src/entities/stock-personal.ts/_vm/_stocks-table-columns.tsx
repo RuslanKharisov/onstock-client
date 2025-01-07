@@ -41,7 +41,7 @@ export const StockTableColumns: ColumnDef<Stock>[] = [
   },
   {
     accessorKey: "quantity",
-    header: "Количество",
+    header: "Кол.",
     cell: ({ row, column }) => (
       <div data-title={column.columnDef.header as string}>
         <i>{row.getValue("quantity")}</i>
@@ -56,6 +56,44 @@ export const StockTableColumns: ColumnDef<Stock>[] = [
         <i>{row.getValue("supplier")}</i>
       </div>
     ),
+  },
+  {
+    accessorKey: "manufacturer",
+    header: "Вендор",
+    cell: ({ row, column }) => (
+      <div data-title={column.columnDef.header as string}>
+        <i>{row.getValue("manufacturer")}</i>
+      </div>
+    ),
+  },
+  {
+    header: "Скоро",
+    id: "delivery",
+    enableHiding: false,
+    cell: ({ row, column }) => {
+      const newDeliveryDate1 = new Date(row.original.newDeliveryDate1)
+      const newDeliveryQty1 = row.original.newDeliveryQty1
+      const newDeliveryQty2 = row.original.newDeliveryQty2
+      const newDeliveryDate2 = new Date(row.original.newDeliveryDate2)
+
+      return (
+        <div
+          data-title={column.columnDef.header as string}
+          className="flex flex-col md:gap-2 md:text-xs"
+        >
+            <p>
+              {newDeliveryQty1} шт.{" "}
+              <span>{newDeliveryDate1.toLocaleDateString("ru-RU")}</span>
+            </p>
+
+            <p>
+              {newDeliveryQty2} шт.{" "}
+              <span>{newDeliveryDate2.toLocaleDateString("ru-RU")}</span>
+            </p>
+          
+        </div>
+      )
+    },
   },
   {
     id: "action",

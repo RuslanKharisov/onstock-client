@@ -26,6 +26,7 @@ import Link from "next/link"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useMask } from '@react-input/mask';
 
 const UpdateSupplierForm = ({
   userId,
@@ -34,6 +35,10 @@ const UpdateSupplierForm = ({
   userId: string
   accessToken: string
 }) => {
+  const inputRef = useMask({
+    mask: 'https://_____________________________________',
+    replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ }, // Позволяет вводить буквы и цифры
+  });
   const {
     mutate: createSupplier,
     isPending: isCreateLoading,
@@ -151,8 +156,9 @@ const UpdateSupplierForm = ({
                       <FormControl>
                         <Input
                           {...field}
+                          ref={inputRef}
                           type="text"
-                          placeholder="https:// ...."
+                          placeholder="site.ru"
                           disabled={isCreateLoading || isUpdateLoading}
                         />
                       </FormControl>

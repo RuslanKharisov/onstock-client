@@ -16,6 +16,6 @@ convertToStockArray = (stockList: StockListElementWithRelations[]): Stock[] => {
     newDeliveryDate1: stockItem.newDeliveryDate1,
     newDeliveryQty2: stockItem.newDeliveryQty2,
     newDeliveryDate2: stockItem.newDeliveryDate2,
-    manufacturer: stockItem.product.manufacturer.name,
+    manufacturer: stockItem.product.manufacturer?.name,
   }));
 };
