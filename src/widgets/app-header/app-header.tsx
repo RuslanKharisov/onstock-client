@@ -14,7 +14,7 @@ export interface IHeaderItems {
 
 const headerItems = [
   {
-    title: "Home",
+    title: "Главная",
     url: "/",
     icon: Home,
   },
