@@ -1,7 +1,7 @@
 import { apiClient } from "@/shared/api/base"
 import { UserEntity } from "../types/types"
 
-interface UserResponse {
+export interface UserResponse {
   user?: UserEntity | null; // Поле с пользователем
   error?: string; // Поле с сообщением об ошибке
 }
@@ -9,7 +9,7 @@ interface UserResponse {
 export const getUserById = async (
   userId: string,
   accessToken: string,
-): Promise<UserEntity | null> => {
+): Promise<UserResponse | null> => {
   const body = {}
   try {
     const res: UserResponse = await apiClient.post(
@@ -24,9 +24,9 @@ export const getUserById = async (
       throw new Error(res.error)
     }
     
-    return res as UserEntity; // Приведение типа к UserEntity
+    return res as UserResponse; // Приведение типа к UserEntity
   } catch (error) {
     console.error(error); // Логирование ошибки
-    return null;
+    return null
   }
 }

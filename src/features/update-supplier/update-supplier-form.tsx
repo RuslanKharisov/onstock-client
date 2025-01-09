@@ -26,7 +26,7 @@ import Link from "next/link"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useMask } from '@react-input/mask';
+import { useMask } from "@react-input/mask"
 
 const UpdateSupplierForm = ({
   userId,
@@ -36,9 +36,9 @@ const UpdateSupplierForm = ({
   accessToken: string
 }) => {
   const inputRef = useMask({
-    mask: 'https://_____________________________________',
-    replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ }, // Позволяет вводить буквы и цифры
-  });
+    mask: "https://_____________________________________",
+    replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ },
+  })
   const {
     mutate: createSupplier,
     isPending: isCreateLoading,
@@ -102,9 +102,16 @@ const UpdateSupplierForm = ({
             </div>
           ) : (
             <div>
-              <h3 className="text-center text-lg font-bold mb-2">{supplier.name}</h3>
-              <p className="text-center text-sm ">Активный тариф: <span>{supplier.supplierTariff.name}</span> </p>
-              <p className="text-center text-sm ">Лимит склада по тарифу: <span>{supplier.supplierTariff.maxProducts}</span> </p>
+              <h3 className="mb-2 text-center text-lg font-bold">
+                {supplier.name}
+              </h3>
+              <p className="text-center text-sm ">
+                Активный тариф: <span>{supplier.supplierTariff.name}</span>{" "}
+              </p>
+              <p className="text-center text-sm ">
+                Лимит склада по тарифу:{" "}
+                <span>{supplier.supplierTariff.maxProducts}</span>{" "}
+              </p>
             </div>
           )}
         </CardHeader>

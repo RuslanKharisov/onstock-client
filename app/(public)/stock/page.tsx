@@ -12,7 +12,6 @@ import { ColumnFiltersState } from "@tanstack/react-table"
 
 export default function StockPage() {
   const [stocks, setStocks] = useState<any[]>([])
-  console.log("🚀 ~ StockPage ~ stocks:", stocks)
   const [count, setCount] = useState(0)
 
   // Хуки для пагинации и сортировки

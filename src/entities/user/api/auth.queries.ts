@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query"
 
 import { NewPasswordDto } from "../dto/new-password.dto"
 import { ResetPasswordDto } from "../dto/reset-password.dto"
@@ -9,6 +9,7 @@ import { registerUser } from "./register-user"
 import { emailVerify } from "./email-verify"
 import { updateUser } from "./update-user"
 import { UpdateUserDto } from "../dto/update-user.dto"
+import { getUserById } from "./get-user-by-id"
 
 export const useUpdatePassword = () =>
   useMutation({
@@ -36,6 +37,17 @@ export const useRegisterUser = () => {
 export const useEmailUserVerify = () => {
   return useMutation({
     mutationFn: ({ token }: { token: string }) => emailVerify(token),
+  })
+}
+
+export const useGetUser = (
+  userId: string,
+  accessToken: string,
+) => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserById(userId, accessToken),
+    placeholderData: keepPreviousData,
   })
 }
 

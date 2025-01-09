@@ -21,12 +21,12 @@ import { UserEntity } from "@/entities/user/types/types"
 import { useUpdateUser } from "@/entities/user/api/auth.queries"
 
 interface UpdateProfileFormProps {
-  existingUser: UserEntity
+  existingUser?: UserEntity | null
   accessToken: string
 }
 
 const UpdateProfileForm: React.FC<UpdateProfileFormProps> = ({
-  existingUser,
+  existingUser ,
   accessToken,
 }) => {
   const { mutate: updateUser, isPending, isSuccess, isError } = useUpdateUser()

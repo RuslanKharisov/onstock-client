@@ -15,7 +15,7 @@ export const useGetSupplier = (userId: string, accessToken: string) => {
   return useQuery({
     queryKey: [...supplierQueries.details(), userId, accessToken],
     queryFn: () => getSupplier(userId, accessToken),
-    staleTime: 3000,
+    // staleTime: 3000,
   })
 };
 
