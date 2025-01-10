@@ -11,6 +11,7 @@ import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal
 import { Supplier } from "@/entities/supplier/_domain/types"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
 import { addOrUpdateProductDto } from "@/entities/stock-personal.ts/dto/add-stock-item.dto"
+import { Spinner } from "@/shared/ui/spinner"
 
 export interface ProductsStock {
   Name: string
@@ -82,14 +83,16 @@ export function UpdateFromFile({
 
   function parseDate(dateString: string) {
     if (typeof dateString !== "string") {
-      throw new TypeError("Expected a string")
+      setError("Поле даты должно быть текстовое")
+      return;
     }
     const dateMatch = dateString.match(
       /^(0?[1-9]|[12][0-9]|3[01])[\/\-.](0?[1-9]|1[012])[\/\-.](\d{4})$/,
     )
 
     if (!dateMatch) {
-      throw new Error("Invalid date format")
+      setError(" Проверьте даты, формат DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY ")
+      return;
     }
 
     const day = Number(dateMatch[1])
@@ -148,7 +151,8 @@ export function UpdateFromFile({
           className=" duration-300 hover:bg-slate-300"
         />
         <Button variant="default" onClick={handleClick} disabled={isPending}>
-          Добавить товары из файла
+          { isPending? <Spinner/> : "Добавить товары из файла" }
+          
         </Button>
       </CardContent>
       <CardContent>
@@ -158,7 +162,7 @@ export function UpdateFromFile({
           </p>
         )}
         {error && (
-          <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
+          <p className="mb-2 rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
             {error}
           </p>
         )}
