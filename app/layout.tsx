@@ -3,6 +3,9 @@ import "@/globalStyles*"
 import { Roboto } from "next/font/google"
 import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
+import YandexMetrikaContainer from "@/shared/lib/YandexMetrika"
+
+const analyticsEnabled = !!(process.env.NODE_ENV === "production")
 
 export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
@@ -11,8 +14,8 @@ export const metadata: Metadata = {
 }
 
 const roboto = Roboto({
-  style: ['normal'],
-  weight: ['100', '400', '500', '700'],
+  style: ["normal"],
+  weight: ["100", "400", "500", "700"],
   subsets: ["latin", "cyrillic"],
   display: "swap",
   variable: "--font-roboto",
@@ -32,6 +35,8 @@ export default async function RootLayout({
         )}
       >
         <AppProvider>{children}</AppProvider>
+
+        <YandexMetrikaContainer enabled={analyticsEnabled} />
       </body>
     </html>
   )

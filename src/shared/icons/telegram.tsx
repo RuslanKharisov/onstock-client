@@ -7,7 +7,7 @@ function Telegram() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_9728_19)">
+      <g clipPath ="url(#clip0_9728_19)">
         <path
           d="M17.5 35C27.165 35 35 27.165 35 17.5C35 7.83502 27.165 0 17.5 0C7.83502 0 0 7.83502 0 17.5C0 27.165 7.83502 35 17.5 35Z"
           fill="#D0D8DE"

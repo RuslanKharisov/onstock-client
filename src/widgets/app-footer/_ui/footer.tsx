@@ -1,14 +1,14 @@
-"use client"
-
 import Link from "next/link"
 import { LogoIcon } from "@/shared/ui/logo-icon"
 import { Telegram } from "@/shared/icons/telegram"
 import { WhatsApp } from "@/shared/icons/whatsapp"
 
-const whatsLink = process.env.WHATSAPP
-const tgLink = process.env.TELEGRAM
 
-const Footer = () => (
+const Footer = () => {  
+  const whatsLink = process.env.NEXT_WHATSAPP
+  const tgLink = process.env.NEXT_TELEGRAM 
+  
+  return(
   <footer className="w-full py-8">
     <div className="container">
       <section className="flex flex-col items-center justify-between gap-y-3 lg:flex-row ">
@@ -19,18 +19,14 @@ const Footer = () => (
           Промышленный склад
         </Link>
         <div className="flex space-x-6">
-          <a
-            href={`https://api.whatsapp.com/send/?phone=${whatsLink}`}
-            className=""
-            aria-label="Напишите в WhatsApp"
-          >
-            <WhatsApp />
-          </a>
-          <a
-            href={tgLink}
-            className=""
-            aria-label="Напишите в Telegram"
-          >
+            <a
+              href={`https://api.whatsapp.com/send/?phone=${whatsLink}`}
+              className=""
+              aria-label="Напишите в WhatsApp"
+            >
+              <WhatsApp />
+            </a>
+          <a href={tgLink} className="" aria-label="Напишите в Telegram">
             <Telegram />
           </a>
         </div>
@@ -46,6 +42,6 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-)
+)}
 
 export { Footer }
