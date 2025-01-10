@@ -11,5 +11,5 @@ export const SupplierSchema = z.object({
   }),
   siteUrl: z.string().regex(/^https?:\/\/([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}([\/?#].*)?$/, {
     message: "Укажите корректный URL с указанием зоны (например, https://example.com)",
-  }),
+  }).optional(),
 })
