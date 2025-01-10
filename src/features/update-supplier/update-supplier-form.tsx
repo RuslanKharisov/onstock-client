@@ -60,7 +60,7 @@ const UpdateSupplierForm = ({
     defaultValues: {
       name: supplier?.name || "",
       email: supplier?.email || "",
-      siteUrl: supplier?.siteUrl || "",
+      siteUrl: supplier?.siteUrl || undefined,
     },
   })
 
@@ -165,7 +165,7 @@ const UpdateSupplierForm = ({
                           {...field}
                           ref={inputRef}
                           type="text"
-                          placeholder="site.ru"
+                          placeholder="site.ru (опционально)"
                           disabled={isCreateLoading || isUpdateLoading}
                         />
                       </FormControl>
