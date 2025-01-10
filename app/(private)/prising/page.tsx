@@ -72,7 +72,7 @@ const Prising = () => {
 
   return (
     <div className="container">
-      <div className="flex flex-col items-center justify-center py-3">
+      <div className="flex flex-col items-center justify-center pt-16">
         <Card className="w-full">
           <CardHeader>
             <h2 className="text-center text-lg font-bold">Выберите тариф</h2>

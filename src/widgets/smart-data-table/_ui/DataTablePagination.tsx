@@ -25,11 +25,11 @@ export function DataTablePagination<TData>({
   totalCount,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="my-5 flex flex-col gap-y-3 items-center px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
+    <div className="my-5 flex flex-col items-center gap-y-3 px-2">
+      {/* <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} из{" "}
         {table.getFilteredRowModel().rows.length} строк(и) выбрано.
-      </div>
+      </div> */}
       <div className="flex w-[100px] items-center justify-center text-sm font-medium text-foreground/70">
         Найдено: {totalCount}
       </div>
@@ -55,8 +55,14 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+          {table.getPageCount() > 0 ? (
+            <>
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount()}
+            </>
+          ) : (
+            <span>Нет данных</span>
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <Button
