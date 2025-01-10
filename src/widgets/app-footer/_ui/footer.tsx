@@ -1,8 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { LogoIcon } from "@/shared/ui/logo-icon"
+import { Telegram } from "@/shared/icons/telegram"
+import { WhatsApp } from "@/shared/icons/whatsapp"
+
+const whatsLink = process.env.WHATSAPP
+const tgLink = process.env.TELEGRAM
 
 const Footer = () => (
   <footer className="w-full py-8">
@@ -15,23 +19,19 @@ const Footer = () => (
           Промышленный склад
         </Link>
         <div className="flex space-x-6">
-          <a href="#" className="">
-            <Image
-              src={"/images/telegram.svg"}
-              priority
-              width={32}
-              height={32}
-              alt="logoImage"
-            />
+          <a
+            href={`https://api.whatsapp.com/send/?phone=${whatsLink}`}
+            className=""
+            aria-label="Напишите в WhatsApp"
+          >
+            <WhatsApp />
           </a>
-          <a href="#" className="">
-            <Image
-              src={"/images/whatsapp.svg"}
-              priority
-              width={32}
-              height={32}
-              alt="logoImage"
-            />
+          <a
+            href={tgLink}
+            className=""
+            aria-label="Напишите в Telegram"
+          >
+            <Telegram />
           </a>
         </div>
       </section>
