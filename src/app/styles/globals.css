@@ -99,6 +99,11 @@
     @apply mb-4 text-xl font-extrabold tracking-tight text-gray-900 dark:text-white
   }
 
+  i {   
+    font-style: normal !important;
+  } 
+    
+
   @media (max-width:770px) {  
     table thead tr {
        display: none;

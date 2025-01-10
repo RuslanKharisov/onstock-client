@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import "@/globalStyles*"
-import { Roboto_Mono } from "next/font/google"
+import { Roboto } from "next/font/google"
 import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
-
 
 export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
@@ -11,14 +10,16 @@ export const metadata: Metadata = {
     "Поиск оборудования и запасных частей на складах Российских компаний по всей стране",
 }
 
-const roboto_mono = Roboto_Mono({
+const roboto = Roboto({
+  style: ['normal'],
+  weight: ['100', '400', '500', '700'],
   subsets: ["latin", "cyrillic"],
   display: "swap",
-  variable: "--font-roboto-mono",
+  variable: "--font-roboto",
 })
 
 export default async function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {
@@ -27,10 +28,10 @@ export default async function RootLayout({
       <body
         className={cn(
           "h-screen bg-background antialiased ",
-          `${roboto_mono.className}`,
+          `${roboto.className}`,
         )}
-        >
-          <AppProvider>{children}</AppProvider>
+      >
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   )
