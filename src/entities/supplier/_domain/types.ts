@@ -4,11 +4,21 @@ export type Supplier = {
   email: string
   siteUrl: string | null
   userId: string
-  supplierTariff: supplierTariff
+  subscriptions: Subscription[]
 } | null
 
-type supplierTariff = {
-  id: 1, name: string
+type Subscription = {
+  id: number
+  supplierId: number
+  tariffId: number
+  startDate: Date
+  endDate: Date
+  tariff: Tariff
+}
+
+type Tariff = {
+  id: number
+  name: string
   maxProducts: number
-  pricePerUnit: number 
+  pricePerUnit: number
 }

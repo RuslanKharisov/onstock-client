@@ -106,11 +106,12 @@ const UpdateSupplierForm = ({
                 {supplier.name}
               </h3>
               <p className="text-center text-sm ">
-                Активный тариф: <span>{supplier.supplierTariff.name}</span>{" "}
+                Активный тариф:{" "}
+                <span>{supplier?.subscriptions?.[0].tariff.name}</span>{" "}
               </p>
               <p className="text-center text-sm ">
                 Лимит склада по тарифу:{" "}
-                <span>{supplier.supplierTariff.maxProducts}</span>{" "}
+                <span>{supplier?.subscriptions?.[0].tariff.maxProducts}</span>{" "}
               </p>
             </div>
           )}

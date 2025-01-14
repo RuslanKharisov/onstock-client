@@ -44,7 +44,7 @@ export class ApiClient {
     endpoint: string,
     body: TData,
     token?: string,
-    tokenType: "Bearer" | "Refresh" = "Bearer", // Добавляем тип токена с значением по умолчанию
+    tokenType: "Bearer" | "Refresh" | undefined = "Bearer", // Добавляем тип токена с значением по умолчанию
   ): Promise<TResult> {
     const headers: HeadersInit = {
       "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import { jwtVerify } from "jose"
 import { loginUser } from "./api/login-user"
 import { createUser } from "./api/create-user"
 import { refreshToken } from "./api/refresh-token"
+import { getUserByEmail } from "./api/get-user-by-email"
 
 export const {
   handlers: { GET, POST },
@@ -34,9 +35,6 @@ export const {
             if (res.error) {
               throw new Error(res.error)
             }
-            // else if (res.user.name === 'Unauthorized') {
-            //   return {...res.user}
-            // }
 
             return {
               ...res.user,
@@ -53,31 +51,34 @@ export const {
     }),
   ],
   pages: {
-    error: "/",
-    signIn: "/",
-    signOut: "/",
+    signIn: "/auth/login",
+    // signOut: "/",
+    error: "/auth/login",
   },
   callbacks: {
     async signIn({ user, account }) {
       if (!account) return false
 
-      const res = await createUser({
-        name: user.name as string,
-        email: user.email as string,
-        password: "",
-        provider: account.provider,
-        providerAccountId: account.providerAccountId,
-        type: account.type,
-        image: user.image,
-      })
-
-      if (res.user) {
-        user.backendTokens = res.backendTokens
-        user.id = res.user.id
-        return true
-      } else {
-        return false
+      const existingUser = await getUserByEmail(user.email)
+      if (!existingUser) {
+        const res = await createUser({
+          name: user.name as string,
+          email: user.email as string,
+          password: "",
+          provider: account.provider,
+          providerAccountId: account.providerAccountId,
+          type: account.type,
+          image: user.image,
+        })
+        if (res.user) {
+          user.backendTokens = res.backendTokens
+          user.id = res.user.id
+          return true
+        } else {
+          return false
+        }
       }
+      return true
     },
     async session({ session, token }) {
       session.user.id = token.sub as string

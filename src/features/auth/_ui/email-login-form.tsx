@@ -15,17 +15,13 @@ import {
   FormMessage,
 } from "@/shared/ui/form"
 import { FormEroor } from "@/shared/ui/form-error"
-import { FormSuccess } from "@/shared/ui/form-success"
-import { useState, useTransition } from "react"
 import Link from "next/link"
-import { getSession, signIn } from "next-auth/react"
-import { DEFAULT_LOGIN_REDIRECT } from "@/shared/lib/routes"
+import { authenticate } from "../_vm/authenticate"
+import { useFormState } from "react-dom"
 
 export function EmailLoginForm() {
-  const [showToFactor, setShowTwoFactor] = useState(false)
-  const [error, setError] = useState<string | undefined>("")
-  const [success, setSuccess] = useState<string | undefined>("")
-  const [isPending, startTransition] = useTransition()
+
+  const [errorMsg, dispatch, isPending] = useFormState(authenticate, undefined)
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -35,65 +31,48 @@ export function EmailLoginForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("")
-    setSuccess("")
-    setShowTwoFactor(false)
+  // const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  //   setError("")
+  //   setSuccess("")
+  //   setShowTwoFactor(false)
 
-    startTransition(async () => {
-      try {
-        const result = await signIn("credentials", { 
-          email: values.email,
-          password: values.password,
-        });
-        console.log("🚀 ~ startTransition ~ result:", result)
+  //   startTransition(async () => {
+  //     try {
+  //       const result = await signIn("credentials", { 
+  //         email: values.email,
+  //         password: values.password,
+  //       });
+  //       console.log("🚀 ~ startTransition ~ result:", result)
 
-        if (result?.error) {
-          setError(result.error);
-          form.reset();
-        } else {
-          // setSuccess("Вход выполнен!");
-          form.reset();
+  //       if (result?.error) {
+  //         setError(result.error);
+  //         form.reset();
+  //       } else {
+  //         // setSuccess("Вход выполнен!");
+  //         form.reset();
 
-          // Явно обновляем сессию после успешного входа 
-          await getSession();
+  //         // Явно обновляем сессию после успешного входа 
+  //         await getSession();
 
-          // Выполняем редирект вручную, если необходимо 
-          window.location.href = DEFAULT_LOGIN_REDIRECT;
-        }
-      } catch {
-        setError("Что-то пошло не так");
-      }
-    });
-  }
+  //         // Выполняем редирект вручную, если необходимо 
+  //         window.location.href = DEFAULT_LOGIN_REDIRECT;
+  //       }
+  //     } catch (error) {
+  //         if (error instanceof AuthError) {
+  //           return "log in failed"
+  //         }
+  //         throw error
+  //       }
+  //   });
+  // }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form 
+      action={dispatch}
+      // onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="grid gap-3">
-          {showToFactor && (
-            <FormField
-              control={form.control}
-              name="code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Two Factor Code</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="123456"
-                      autoCapitalize="none"
-                      autoCorrect="off"
-                      disabled={isPending}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-          {!showToFactor && (
-            <>
               <FormField
                 control={form.control}
                 name="email"
@@ -143,11 +122,9 @@ export function EmailLoginForm() {
                   </FormItem>
                 )}
               />
-            </>
-          )}
 
-          <FormEroor message={error} />
-          <FormSuccess message={success} />
+          <FormEroor message={errorMsg ? "Не верные данные" : "" } />
+          {/* <FormSuccess message={success} /> */}
           <Button type="submit" disabled={isPending}>
             {isPending && (
               <Spinner

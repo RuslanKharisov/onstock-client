@@ -6,14 +6,14 @@ export interface UserResponse {
   error?: string; // Поле с сообщением об ошибке
 }
 
-export const getUserById = async (
+export const getAllUsers = async (
   userId: string,
   accessToken: string,
 ): Promise<UserResponse | null> => {
   const body = {}
   try {
     const res: UserResponse = await apiClient.post(
-      `user/${userId}`,
+      `user`,
       body,
       accessToken,
       "Bearer",
@@ -24,9 +24,9 @@ export const getUserById = async (
       throw new Error(res.error)
     }
     
-    return res as UserResponse;
+    return res as UserResponse; // Приведение типа к UserEntity
   } catch (error) {
-    console.error(error);
+    console.error(error); // Логирование ошибки
     return null
   }
 }

@@ -16,10 +16,21 @@ import { ProfileAvatar, getProfileDisplayName } from "@/entities/user/profile"
 import { LoginButton } from "@/features/login-user/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
 
 export function UserProfile() {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
-  const { data: session } = useSession()
+  const { data: session, update } = useSession()
+  const [isSessionUpdated, setIsSessionUpdated] = useState(false)
+
+  useEffect(() => {
+    if (!isSessionUpdated && session === null) {
+      update()
+        .then(() => setIsSessionUpdated(true))
+        .catch((error) => console.error("Ошибка при обновлении сессии:", error))
+    }
+  }, [isSessionUpdated, session, update])
+
   const user = session?.user
 
   if (!session?.user) {

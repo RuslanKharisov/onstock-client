@@ -9,7 +9,7 @@ function SupplierInfo({ supplier }: { supplier: Supplier }) {
       <p className="text-sm font-semibold">
         Текущий тариф:
         <span className="ms-2">
-          {supplier?.supplierTariff.name}
+          {supplier?.subscriptions?.[0].tariff.name}
         </span>
         <span>
           <Button size="sm" variant="link">
@@ -25,7 +25,7 @@ function SupplierInfo({ supplier }: { supplier: Supplier }) {
       <p className="text-sm font-semibold">
         Максимальное количество по текущему тарифу:
         <span className="ms-2">
-          {supplier?.supplierTariff.maxProducts}
+          {supplier?.subscriptions?.[0].tariff.maxProducts}
         </span>
       </p>
     </section>
