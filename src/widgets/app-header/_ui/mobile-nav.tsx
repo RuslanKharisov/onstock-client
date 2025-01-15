@@ -24,7 +24,7 @@ function MobileNav({ headerItems }: MobileNavProps) {
     <header>
       <Sheet>
         <SheetTrigger asChild>
-          <div className="fixed z-50 w-full bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex justify-between fixed z-50 w-full bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <Button size="icon" variant="ghost" className="">
               <Menu size={25} />
             </Button>

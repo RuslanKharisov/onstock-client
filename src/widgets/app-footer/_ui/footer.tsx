@@ -1,11 +1,9 @@
 import Link from "next/link"
 import { LogoIcon } from "@/shared/ui/logo-icon"
-import { Telegram } from "@/shared/icons/telegram"
-import { WhatsApp } from "@/shared/icons/whatsapp"
+import { Socials } from "@/widgets/socials"
+import { socialsData } from "@/widgets/socials/_vm/constans"
 
 const Footer = () => {
-  const whatsLink = process.env.NEXT_WHATSAPP
-  const tgLink = process.env.NEXT_TELEGRAM
 
   return (
     <footer className="w-full py-8">
@@ -17,18 +15,7 @@ const Footer = () => {
             </span>
             Промышленный склад
           </Link>
-          <div className="flex space-x-6">
-            <a
-              href={`https://api.whatsapp.com/send/?phone=${whatsLink}`}
-              className=""
-              aria-label="Напишите в WhatsApp"
-            >
-              <WhatsApp />
-            </a>
-            <a href={tgLink} className="" aria-label="Напишите в Telegram">
-              <Telegram />
-            </a>
-          </div>
+          <Socials socialsData={socialsData} />
         </section>
         <div className=" my-8 flex flex-col items-center gap-y-5 md:my-2">
           <p className="text-center text-xs">

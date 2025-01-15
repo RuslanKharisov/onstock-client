@@ -29,7 +29,6 @@ export function AppHeader() {
   const isDesktop = useMediaQuery("(min-width:768px)", {
     initializeWithValue: false,
   })
-
   if(isDesktop) return <MainNav headerItems={headerItems}/>
 
   return <MobileNav headerItems = {headerItems}/>

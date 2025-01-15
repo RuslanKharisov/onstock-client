@@ -3,8 +3,8 @@ import FutureItem from "./future-item"
 
 const FutureSection = () => {
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
+    <section className="">
+      <div className="container px-4 py-8 sm:py-16 lg:px-6">
         <div className="mb-8 max-w-screen-md lg:mb-16">
           <h2 className="mb-4 text-xl lg:text-4xl font-extrabold tracking-tight">
             Мы стремимся помочь найти оборудование для промышленности в наличии.

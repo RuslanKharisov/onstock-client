@@ -5,6 +5,7 @@ import { GoToStockButton } from "@/features/stock/go-to-stock-btn"
 import { Button } from "@/shared/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
+import { useEffect } from "react"
 
 const ImageWithCTAButton = () => {
   const { theme } = useTheme()
@@ -13,9 +14,10 @@ const ImageWithCTAButton = () => {
       ? "/images/SearchResultDark.webp"
       : "/images/SearchResult.webp"
 
+
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl items-center gap-y-10 gap-8 px-4 py-5 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
+    <section className="">
+      <div className="container items-center gap-y-10 gap-8 px-4 py-5 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
         <div className="mt-4 md:mt-0">
           <h2 className="mb-4 text-xl lg:text-4xl font-extrabold tracking-tight">
             Быстрый поиск промышленного оборудования по ключевым словам.
