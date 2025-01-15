@@ -16,21 +16,11 @@ const ImageWithCTAButton = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-screen-xl items-center gap-y-10 gap-8 px-4 py-5 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
-        <div className="overflow-hidden rounded-lg shadow-md mb-8 md:mb-0">
-          <Image
-            width={1000}
-            height={1000}
-            src={imageSrc}
-            style={{  }}
-            className="scale-150 translate-x-1/4 translate-y-1/4 md:scale-100 md:translate-x-0 md:translate-y-0"
-            alt=""
-          />
-        </div>
         <div className="mt-4 md:mt-0">
           <h2 className="mb-4 text-xl lg:text-4xl font-extrabold tracking-tight">
             Быстрый поиск промышленного оборудования по ключевым словам.
           </h2>
-          <p className="mb-6 font-light md:text-lg">
+          <p className="mb-6 md:text-lg">
             Вводите вы слово полностью, или лишь фрагмент необходимой
             характеристики, поисковый алгоритм выдаст вам все совпадения с
             информацией у кого это оборудование имеется в наличиии.
@@ -43,6 +33,16 @@ const ImageWithCTAButton = () => {
               </span>
             </Button>
           </GoToStockButton>
+        </div>
+        <div className="hidden md:block overflow-hidden rounded-lg shadow-md ">
+          <Image
+            width={1000}
+            height={1000}
+            src={imageSrc}
+            style={{  }}
+            className="scale-150 translate-x-1/4 translate-y-1/4 md:scale-100 md:translate-x-0 md:translate-y-0"
+            alt=""
+          />
         </div>
       </div>
     </section>
