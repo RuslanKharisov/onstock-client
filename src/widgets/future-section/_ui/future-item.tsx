@@ -13,7 +13,7 @@ const FutureItem = ({ title, text, icon:Icon }: FutureItemProps) => {
       {Icon && <Icon size={20} color="white"/> }
       </div>
       <h3 className="mb-2 text-xl font-bold dark:text-white">{title}</h3>
-      <p className="text-gray-500 dark:text-gray-400">{text}</p>
+      <p className="font-light md:text-lg">{text}</p>
     </div>
   )
 }
