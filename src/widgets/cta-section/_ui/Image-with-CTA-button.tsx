@@ -5,7 +5,6 @@ import { GoToStockButton } from "@/features/stock/go-to-stock-btn"
 import { Button } from "@/shared/ui/button"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
-import { useEffect } from "react"
 
 const ImageWithCTAButton = () => {
   const { theme } = useTheme()
