@@ -9,7 +9,7 @@ export default async function ProfilePage() {
   const session = await auth()
   if (!session) return null
   const userId = session.user.id
-  const accessToken = session.backendTokens.accessToken
+  const accessToken = session?.backendTokens?.accessToken
   
   const existingUser = await getUserById(userId, accessToken)
   if (!existingUser) return (
