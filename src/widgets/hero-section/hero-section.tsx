@@ -14,7 +14,7 @@ export const HeroSection = () => {
                 Поможем найти
               </h2>
               <p className="text-center text-base font-extrabold text-white sm:text-2xl md:text-2xl lg:text-2xl xl:text-3xl">
-                Поиск оборудования для АСУТП на складах в
+                Поиск оборудования для АСУ ТП на складах в
                 России и СНГ
               </p>
               <GoToStockButton>
