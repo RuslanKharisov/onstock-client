@@ -1,12 +1,15 @@
 "use client"
+import { cn } from "@/shared/ui/utils"
 import { useRouter } from "next/navigation"
 
 interface ButtonProps {
   children: React.ReactNode
+  className?: string
 }
 
 export const GoToStockButton = ({
-  children
+  children,
+  className
 }: ButtonProps) => {
   const router = useRouter()
   
@@ -15,7 +18,7 @@ export const GoToStockButton = ({
   }
 
   return ( 
-    <span onClick={onClick} className="coursor-pointer">
+    <span onClick={onClick} className={cn("coursor-pointer", className)}>
       {children}
     </span>
    );
