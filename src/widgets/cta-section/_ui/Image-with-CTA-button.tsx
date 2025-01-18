@@ -23,9 +23,9 @@ const ImageWithCTAButton = () => {
     <section className="">
       <div className="container items-center gap-8 pb-10 pt-5 sm:py-16 md:grid md:grid-cols-2 lg:px-6 xl:gap-16">
         <div className="mt-4 flex flex-col items-center gap-3 md:mt-0 md:items-start">
-          <h1 className="text-center text-xl font-extrabold tracking-tight md:text-start lg:text-4xl">
+          <h2 className="text-center text-xl font-extrabold tracking-tight md:text-start lg:text-4xl">
             Быстрый поиск промышленного оборудования по ключевым словам.
-          </h1>
+          </h2>
           <p className="text-center md:text-start md:text-lg">
             Оборудование АСУТП, КИП и электроприводы от ведущих производителей -
             всегда в наличии на складе поставщиков! Выберите лучшее решение по

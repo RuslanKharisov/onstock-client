@@ -12,11 +12,11 @@ export async function BlogArticle({
 }) {
   return (
     <div className={className}>
-      <section className="container m-auto grid items-center pb-8">
+      <section className="container m-auto grid items-center py-8">
         <div className="relative m-auto max-w-4xl flex flex-col items-start justify-center gap-8">
-          <h2 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
+          <h1 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
             {post.title}
-          </h2>
+          </h1>
           <div className="overflow-hidden  w-full">
             <Image
               height={600}
@@ -27,7 +27,7 @@ export async function BlogArticle({
             />
           </div>
 
-          <Markdown className="space-y-4 text-zinc-700 dark:text-zinc-300">
+          <Markdown className="space-y-4 ">
             {post.metadata.content}
           </Markdown>
         </div>
