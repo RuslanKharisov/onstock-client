@@ -80,17 +80,17 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
           className="flex flex-col md:gap-2 md:text-xs"
         >
           {newDeliveryQty1 > 0 ? (
-            <p>
+            <i>
               {newDeliveryQty1} шт. <span>{newDeliveryDate1}</span>
-            </p>
+            </i>
           ) : (
             ""
           )}
 
           {newDeliveryQty2 > 0 ? (
-            <p>
+            <i>
               {newDeliveryQty2} шт. <span>{newDeliveryDate2}</span>
-            </p>
+            </i>
           ) : (
             ""
           )}
