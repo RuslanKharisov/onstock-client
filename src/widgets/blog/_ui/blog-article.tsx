@@ -13,23 +13,24 @@ export async function BlogArticle({
   return (
     <div className={className}>
       <section className="container m-auto grid items-center py-8">
-        <div className="relative m-auto max-w-4xl flex flex-col items-start justify-center gap-8">
+        <div className="relative m-auto flex max-w-4xl flex-col items-start justify-center gap-8">
           <h1 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
             {post.title}
           </h1>
-          <div className="overflow-hidden  w-full">
+          <div className="w-full  overflow-hidden">
             <Image
               height={600}
               width={1000}
               src={`${post.metadata.image.imgix_url}`}
               alt={post.title}
-              className="mx-auto aspect-video object-cover  rounded-xl"
+              className="mx-auto aspect-video rounded-xl  object-cover"
             />
           </div>
-
-          <Markdown className="space-y-4 ">
-            {post.metadata.content}
-          </Markdown>
+          <article>
+            <Markdown className="space-y-4 ">
+              {post.metadata.content}
+            </Markdown>
+          </article>
         </div>
       </section>
     </div>

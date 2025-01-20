@@ -105,7 +105,16 @@
 
   i {   
     font-style: normal !important;
-  } 
+  }  
+
+  article div ul li {
+    list-style-type: circle;
+    list-style-position: inside;
+  }
+
+  article div ul li:not(:last-child){
+    margin-bottom: 0.5rem;
+  }
     
 
   @media (max-width:770px) {  
