@@ -10,7 +10,7 @@ const analyticsEnabled = !!(process.env.NODE_ENV === "production")
 export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
   description:
-    "Поиск оборудования и запасных частей на складах Российских компаний по всей стране",
+    "Промышленный склад: Агрегатор оборудования для АСУ ТП, КИП и автоматизации производств",
 }
 
 const roboto = Roboto({
