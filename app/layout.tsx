@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import "@/globalStyles*"
-import { Roboto } from "next/font/google"
 import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
 import YandexMetrikaContainer from "@/shared/lib/YandexMetrika"
@@ -13,13 +12,7 @@ export const metadata: Metadata = {
     "Промышленный склад: Агрегатор оборудования для АСУ ТП, КИП и автоматизации производств",
 }
 
-const roboto = Roboto({
-  style: ["normal"],
-  weight: ["100", "400", "500", "700"],
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  variable: "--font-roboto",
-})
+
 
 export default async function RootLayout({
   children,
@@ -31,7 +24,6 @@ export default async function RootLayout({
       <body
         className={cn(
           "h-screen bg-background antialiased ",
-          `${roboto.className}`,
         )}
       >
         <AppProvider>{children}</AppProvider>
