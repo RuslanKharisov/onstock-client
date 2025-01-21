@@ -35,10 +35,31 @@ const UpdateSupplierForm = ({
   userId: string
   accessToken: string
 }) => {
-  const inputRef = useMask({
+  const siteUrlRef = useMask({
     mask: "https://_____________________________________",
     replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ },
   })
+
+  const vkUrlRef = useMask({
+    mask: "https://_____________________________________",
+    replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ },
+  })
+
+  const phoneWorkRef  = useMask({
+    mask: "+7 (___) ___-__-__",
+    replacement: { _: /\d/ },
+  })
+
+  const phoneMobileRef = useMask({
+    mask: "+7 (___) ___-__-__",
+    replacement: { _: /\d/ },
+  })
+
+  const whatsappRef = useMask({
+    mask: "+7 (___) ___-__-__",
+    replacement: { _: /\d/ },
+  })
+  
   const {
     mutate: createSupplier,
     isPending: isCreateLoading,
@@ -184,7 +205,7 @@ const UpdateSupplierForm = ({
                       <FormControl>
                         <Input
                           {...field}
-                          ref={inputRef}
+                          ref={siteUrlRef}
                           type="text"
                           placeholder="site.ru (опционально)"
                           disabled={isCreateLoading || isUpdateLoading}
@@ -206,7 +227,8 @@ const UpdateSupplierForm = ({
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder="Рабочий телефон (опционально)"
+                              ref={phoneWorkRef}
+                              placeholder="+7 (000) 000-00-00 (опционально)"
                               disabled={isCreateLoading || isUpdateLoading}
                             />
                           </FormControl>
@@ -223,7 +245,8 @@ const UpdateSupplierForm = ({
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder="Мобильный телефон (опционально)"
+                              ref={phoneMobileRef}
+                              placeholder="+7 (000) 000-00-00 (опционально)"
                               disabled={isCreateLoading || isUpdateLoading}
                             />
                           </FormControl>
@@ -257,7 +280,8 @@ const UpdateSupplierForm = ({
                           <FormControl>
                             <Input
                               {...field}
-                              placeholder="Номер для WhatsApp (опционально)"
+                              ref={whatsappRef}
+                              placeholder="+7 (000) 000-00-00 (опционально)"
                               disabled={isCreateLoading || isUpdateLoading}
                             />
                           </FormControl>
@@ -274,6 +298,7 @@ const UpdateSupplierForm = ({
                           <FormControl>
                             <Input
                               {...field}
+                              ref={vkUrlRef}
                               placeholder="Ссылка на VK (опционально)"
                               disabled={isCreateLoading || isUpdateLoading}
                             />
