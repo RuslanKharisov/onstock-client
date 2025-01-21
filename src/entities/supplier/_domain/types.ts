@@ -5,6 +5,17 @@ export type Supplier = {
   siteUrl: string | null
   userId: string
   subscriptions: Subscription[]
+
+  phoneWork?: string
+  phoneMobile?: string
+  telegramAccount?: string
+  whatsappNumber?: string
+  vkProfile?: string
+  country?: string
+  city?: string
+  street?: string
+  houseNumber?: string
+  logoUrl?: string
 } | null
 
 type Subscription = {

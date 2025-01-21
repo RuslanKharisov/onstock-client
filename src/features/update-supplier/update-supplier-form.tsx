@@ -61,6 +61,16 @@ const UpdateSupplierForm = ({
       name: supplier?.name || "",
       email: supplier?.email || "",
       siteUrl: supplier?.siteUrl || undefined,
+      phoneWork: supplier?.phoneWork || "", // Новые поля
+      phoneMobile: supplier?.phoneMobile || "",
+      telegramAccount: supplier?.telegramAccount || "",
+      whatsappNumber: supplier?.whatsappNumber || "",
+      vkProfile: supplier?.vkProfile || "",
+      country: supplier?.country || "",
+      city: supplier?.city || "",
+      street: supplier?.street || "",
+      houseNumber: supplier?.houseNumber || "",
+      logoUrl: supplier?.logoUrl || "",
     },
   })
 
@@ -69,6 +79,16 @@ const UpdateSupplierForm = ({
       name: supplier?.name || "",
       email: supplier?.email || "",
       siteUrl: supplier?.siteUrl || "",
+      phoneWork: supplier?.phoneWork || "", // Новые поля
+      phoneMobile: supplier?.phoneMobile || "",
+      telegramAccount: supplier?.telegramAccount || "",
+      whatsappNumber: supplier?.whatsappNumber || "",
+      vkProfile: supplier?.vkProfile || "",
+      country: supplier?.country || "",
+      city: supplier?.city || "",
+      street: supplier?.street || "",
+      houseNumber: supplier?.houseNumber || "",
+      logoUrl: supplier?.logoUrl || "",
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supplier])
@@ -119,7 +139,7 @@ const UpdateSupplierForm = ({
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="mb-5 grid gap-3 lg:grid-cols-3">
+              <div className="mb-5 grid gap-x-3 gap-y-8 lg:grid-cols-2 xl:grid-cols-3">
                 <FormField
                   control={form.control}
                   name="name"
@@ -174,9 +194,185 @@ const UpdateSupplierForm = ({
                     </FormItem>
                   )}
                 />
+                {/* Дополнительные поля */}
+                {supplier && (
+                  <>
+                    <FormField
+                      control={form.control}
+                      name="phoneWork"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Телефон рабочий</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Рабочий телефон (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phoneMobile"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Телефон мобильный</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Мобильный телефон (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="telegramAccount"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Аккаунт Telegram</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Telegram аккаунт (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="whatsappNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Номер WhatsApp</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Номер для WhatsApp (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="vkProfile"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Профиль VK</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Ссылка на VK (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="country"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Страна</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Страна (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="city"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Город</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Город (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="street"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Улица</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Улица (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="houseNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>№ дома</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="№ дома (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="logoUrl"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Ссылка на изображение</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Ссылка (опционально)"
+                              disabled={isCreateLoading || isUpdateLoading}
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    {/* Добавьте остальные дополнительные поля по необходимости */}
+                  </>
+                )}
                 <FormEroor
                   message={
-                    isCreateError || isUpdateError ? "Что то пошло не так" : ""
+                    isCreateError || isUpdateError ? "Что-то пошло не так" : ""
                   }
                 />
                 <FormSuccess
@@ -187,13 +383,13 @@ const UpdateSupplierForm = ({
                 type="submit"
                 size="sm"
                 disabled={isCreateLoading || isUpdateLoading}
-                className="w-[120px] "
+                className="w-[120px]"
               >
                 {isCreateLoading
                   ? "Создание..."
                   : isUpdateLoading
-                    ? "Обновление..."
-                    : "Сохранить"}
+                  ? "Обновление..."
+                  : "Сохранить"}
               </Button>
             </form>
           </Form>
