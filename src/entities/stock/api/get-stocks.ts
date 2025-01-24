@@ -8,7 +8,7 @@ export const getStocks = async (
   const body = {
     page: data.page,
     perPage: data.perPage,
-    filters: JSON.stringify(data.filters || []),
+    searchQuery: data.searchQuery
   }
   return await apiClient.post<PaginatedStockListDto>("stock", body)
 }

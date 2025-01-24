@@ -1,5 +1,4 @@
 import { Product } from "@/entities/producrts-list/_domain/types"
-import { ColumnFiltersState } from "@tanstack/react-table"
 
 export type Stock = {
   id: string
@@ -59,5 +58,5 @@ export type CreateStockElementCommand = {
 export interface stockQueryDto {
   page: number
   perPage: number
-  filters?: ColumnFiltersState
+  searchQuery?: string
 }

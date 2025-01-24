@@ -21,7 +21,6 @@ import React from "react"
 import { DataTablePagination } from "./DataTablePagination"
 import { PaginationState } from "../model/pagination-state"
 import { Spinner } from "@/shared/ui/spinner"
-import { DataTableSearchBar } from "./DataTableSearchBar"
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -40,6 +39,7 @@ interface DataTableProps<TData, TValue> {
   onPaginationChange?: OnChangeFn<PaginationState>
   onFilteringChange?: (newFilters: ColumnFiltersState) => void
   handleDelete: (id: string) => void
+  initialFilters?: ColumnFiltersState // Добавляем initialFilters
 }
 
 export function DataTable<TData, TValue>({
@@ -50,18 +50,8 @@ export function DataTable<TData, TValue>({
   pagination,
   manualPagination: manualPagination,
   onPaginationChange,
-  onFilteringChange,
   handleDelete,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  )
-
-  const applyFilter = () => {
-    if (onFilteringChange) {
-      onFilteringChange(columnFilters)
-    }
-  }
 
   const table = useReactTable({
     columns,
@@ -71,7 +61,7 @@ export function DataTable<TData, TValue>({
     pageCount: manualPagination
       ? Math.ceil(rowCount / pagination.pageSize)
       : undefined,
-    state: { pagination, columnFilters },
+    state: { pagination },
     getCoreRowModel: getCoreRowModel(),
     meta: {
       deleteData: (id: string) => {
@@ -79,15 +69,10 @@ export function DataTable<TData, TValue>({
       },
     },
     onPaginationChange,
-    onColumnFiltersChange: setColumnFilters,
   })
 
   return (
     <div className="mx-auto w-full">
-      <DataTableSearchBar
-        table={table}
-        applyFilter={applyFilter}
-      />
       <DataTablePagination table={table} totalCount={rowCount} />
       {loading ? (
         <div className="mt-20">
