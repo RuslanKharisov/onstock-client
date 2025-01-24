@@ -1,5 +1,6 @@
 import { Footer } from "@/widgets/app-footer"
 import { AppHeader } from "@/widgets/app-header/app-header"
+import { Suspense } from "react"
 
 export default async function Layout({
   children,
@@ -9,7 +10,9 @@ export default async function Layout({
   return (
     <>
       <AppHeader />
-      <main className="w-full">{children}</main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <main className="w-full">{children}</main>
+      </Suspense>
       <Footer />
     </>
   )
