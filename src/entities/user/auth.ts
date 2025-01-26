@@ -51,7 +51,7 @@ export const {
   ],
   pages: {
     signIn: "/auth/login",
-    // signOut: "/",
+    signOut: "/",
     error: "/auth/login",
   },
   callbacks: {
@@ -91,7 +91,6 @@ export const {
         token.name = user.name
         token.email = user.email
         token.provider = account?.provider
-
         token.backendTokens = user.backendTokens
       }
 
@@ -109,8 +108,9 @@ export const {
             const refreshedToken = await refreshToken(token)
             if (refreshedToken)
               token.backendTokens = refreshedToken.backendTokens
-          } catch (refreshError) {
-            console.error("Ошибка при обновлении токена:", refreshError)
+          } catch (error){
+            console.error("Ошибка при обновлении токена", error)
+            await signOut()
           }
         }
       }
