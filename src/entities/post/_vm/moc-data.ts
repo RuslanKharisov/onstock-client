@@ -46,7 +46,7 @@ export const posts: PostType[] = [
       categories: postCategory,
       image: {
         imgix_url:
-          "https://flowbite.com/docs/images/people/profile-picture-1.jpg",
+          "#",
       },
       content: postContent,
       author: {
@@ -54,7 +54,7 @@ export const posts: PostType[] = [
         metadata: {
           image: {
             imgix_url:
-              "https://flowbite.com/docs/images/people/profile-picture-2.jpg",
+              "#",
           },
         },
       },
@@ -80,7 +80,7 @@ export const post: PostType = {
       metadata: {
         image: {
           imgix_url:
-            "https://flowbite.com/docs/images/people/profile-picture-2.jpg",
+            "#",
         },
       },
     },

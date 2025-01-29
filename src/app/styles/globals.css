@@ -62,6 +62,7 @@
   }
 
   :root {
+    /* Сайд бар в ЛК */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 222.2 84% 4.9%;
     --sidebar-primary: 221.2 83.2% 53.3%;
@@ -70,9 +71,13 @@
     --sidebar-accent-foreground: 222.2 47.4% 11.2%;
     --sidebar-border: 214.3 31.8% 91.4%;
     --sidebar-ring: 221.2 83.2% 53.3%;
+
+    /* Сайдбар в Fumadocs */
+
   }
  
   .dark {
+    /* Сайд бар в ЛК */
     --sidebar-background: 222.2 50% 4.9%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 217.2 91.2% 59.8%;
@@ -81,6 +86,11 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217.2 32.6% 17.5%;
     --sidebar-ring: 224.3 76.3% 48%;
+
+    /* Сайдбар в Fumadocs */
+    --fd-card: 222.2 84% 4.9%; 
+    
+    
   }
 
 

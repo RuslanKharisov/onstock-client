@@ -19,10 +19,11 @@ export async function BlogArticle({
           </h1>
           <div className="w-full  overflow-hidden">
             <Image
-              height={600}
-              width={1000}
+              height={1024}
+              width={1024}
               src={`${post.metadata.image.imgix_url}`}
               alt={post.title}
+              loading="lazy"
               className="mx-auto aspect-video rounded-xl  object-cover"
             />
           </div>

@@ -6,6 +6,10 @@ export const publicRoutes: string[] = [
   "/stock",
   "/news",
   "/auth/new-verification",
+  "/docs",
+  "/docs/rules",
+  "/docs/policy",
+  "/docs/user-agreement",
 ]
 
 /**

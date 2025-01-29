@@ -21,14 +21,24 @@ interface MobileNavProps extends ButtonProps {
 function MobileNav({ headerItems }: MobileNavProps) {
   const pathname = usePathname()
   return (
-    <header>
+    <>
       <Sheet>
         <SheetTrigger asChild>
-          <div className="flex justify-between fixed z-50 w-full bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <Button size="icon" variant="ghost" className="">
+          <header
+            aria-label="Header area"
+            title="Header area"
+            className="fixed z-50 flex w-full justify-between bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+          >
+            <Button
+              size="icon"
+              variant="ghost"
+              className=""
+              aria-label="Open menu"
+              title="Open menu"
+            >
               <Menu size={25} />
             </Button>
-          </div>
+          </header>
         </SheetTrigger>
 
         <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
@@ -60,7 +70,7 @@ function MobileNav({ headerItems }: MobileNavProps) {
           </div>
         </SheetContent>
       </Sheet>
-    </header>
+    </>
   )
 }
 export { MobileNav }
