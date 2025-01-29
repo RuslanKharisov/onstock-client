@@ -4,11 +4,4 @@ export const baseOptions: BaseLayoutProps = {
   nav: {
     title: 'Prom-Stock',
   },
-  links: [
-    {
-      text: 'Пlsjflkjfdklj',
-      url: '/stock',
-      active: 'nested-url',
-    },
-  ],
 };
