@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { metadataImage } from '@/shared/lib/metadata';
 import { source } from '@/shared/lib/source';
+import { MDXComponents } from '@/shared/mdx/mdx-components';
  
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -20,12 +21,13 @@ export default async function Page(props: {
   const MDX = page.data.body;
  
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={page.data.toc} full={page.data.full} >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
+        <MDX components={{ ...defaultMdxComponents, MDXComponents }} />
       </DocsBody>
+      
     </DocsPage>
   );
 }

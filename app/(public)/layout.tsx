@@ -9,11 +9,15 @@ export default async function Layout({
 }) {
   return (
     <>
-      <AppHeader />
+      <Suspense fallback={<div>Loading Header...</div>}>
+        <AppHeader />
+      </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
         <main className="w-full">{children}</main>
       </Suspense>
-      <Footer />
+      <Suspense fallback={<div>Loading Footer...</div>}>
+        <Footer />
+      </Suspense>
     </>
   )
 }

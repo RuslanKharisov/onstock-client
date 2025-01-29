@@ -17,6 +17,7 @@ const config = {
       },
     ],
   },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
 }
 
 export default withMDX(config)

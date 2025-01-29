@@ -2,6 +2,13 @@ import { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
  
 export const baseOptions: BaseLayoutProps = {
   nav: {
-    title: 'My App',
+    title: 'Prom-Stock',
   },
+  links: [
+    {
+      text: 'Пlsjflkjfdklj',
+      url: '/stock',
+      active: 'nested-url',
+    },
+  ],
 };
