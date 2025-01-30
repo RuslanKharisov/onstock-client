@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
       - name: Restore .env
         run: |
-          copy /home/admin2/secrets/.env.next .env.production || echo "No .env.production to copy"
+          cp /home/admin2/secrets/.env.next .env.production || echo "No .env.production to copy"
       - run: npm run build --if-present
       - run: pm2 restart 6
 
