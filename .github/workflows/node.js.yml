@@ -18,8 +18,8 @@ jobs:
 
     steps:
       - run: echo "$(pwd)"
-      - run: |
-            cp .env ../.env.bak || echo "No existing .env"
+      # - run: |
+            # cp .env ../.env.bak || echo "No existing .env"
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -29,8 +29,8 @@ jobs:
       - run: npm ci
       - name: Restore .env
         run: |
-          mv ../../../.env.production .env.production || echo "No .env.production to copy"
+          copy /home/admin2/secrets/env.next .env.production || echo "No .env.production to copy"
       - run: npm run build --if-present
       - run: pm2 restart 6
 
-      #  ../actions-runner-next/onStockClient/onstock-client/onstock-client/.env
+      #  ../actions-runner-next/onStockClient/onstock-client/onstock-client/.env /home/admin2/secrets/env.next
