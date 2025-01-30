@@ -29,6 +29,8 @@ jobs:
       - run: npm ci
       - name: Restore .env
         run: |
-          mv ../.env.bak .env || echo "No .env to restore"
+          mv ../../../.env.production .env.production || echo "No .env.production to copy"
       - run: npm run build --if-present
       - run: pm2 restart 6
+
+      #  ../actions-runner-next/onStockClient/onstock-client/onstock-client/.env
