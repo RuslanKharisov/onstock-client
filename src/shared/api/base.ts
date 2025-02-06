@@ -19,11 +19,13 @@ export class ApiClient {
     }
   }
 
+
   public async get<TResult = unknown>(
     endpoint: string,
     queryParams?: Record<string, string | number>,
   ): Promise<TResult> {
     const url = new URL(endpoint, this.baseUrl)
+    console.log(url.toString())
     if (queryParams) {
       Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value.toString())

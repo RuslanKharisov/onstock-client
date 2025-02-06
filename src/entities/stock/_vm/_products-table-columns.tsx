@@ -11,6 +11,7 @@ import {
 } from "@/shared/ui/tooltip"
 import { ColumnDef } from "@tanstack/react-table"
 import { Earth, MailPlus } from "lucide-react"
+import Link from "next/link"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -46,11 +47,13 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
   {
     accessorKey: "supplier",
     header: "Поставщик",
-    cell: ({ row, column }) => (
-      <div data-title={column.columnDef.header as string}>
-        <i>{row.getValue("supplier")}</i>
+    cell: ({ row, column }) => {
+      const stock = row.original
+      return (
+      <div data-title={column.columnDef.header as string} className="">        
+        <Link className="text-primary hover:text-destructive font-semibold" href={`/supplier/${stock.supplierId}`} >{stock.supplier}</Link>
       </div>
-    ),
+    )},
   },
   {
     accessorKey: "manufacturer",

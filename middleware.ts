@@ -34,7 +34,7 @@ export async function middleware(req: NextRequest) {
   const isLoggedIn = await isValidSession();
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/supplier');
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   // Если это API аутентификации, продолжаем выполнение

@@ -10,6 +10,7 @@ convertToStockArray = (stockList: StockListElementWithRelations[]): Stock[] => {
     description: stockItem.product.description,
     quantity: stockItem.quantity,
     supplier: stockItem.supplier.name,
+    supplierId: stockItem.supplier.id,
     email: stockItem.supplier.email,
     siteUrl: stockItem.supplier.siteUrl,
     newDeliveryQty1: stockItem.newDeliveryQty1,

@@ -7,6 +7,7 @@ export type Stock = {
   description: string
   quantity: number
   supplier: string
+  supplierId: number
   email: string
   siteUrl: string | null
   newDeliveryQty1: number
