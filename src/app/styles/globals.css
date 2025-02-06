@@ -110,8 +110,9 @@
   }
 
   h1 {
-    @apply mb-4 text-xl font-extrabold tracking-tight text-gray-900 dark:text-white
+    @apply mb-4 text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white
   }
+  
 
   p, li {
     @apply text-[18px] leading-6 font-light

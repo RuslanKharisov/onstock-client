@@ -6,7 +6,7 @@ import { useGetStocks } from "@/entities/stock/api/stock.queries";
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array";
 import { DataTable, usePagination } from "@/widgets/smart-data-table";
 import { useSearchParams, useRouter } from "next/navigation";
-import { TextFilterInput } from "@/widgets/smart-data-table/_ui/text-filter-input";
+import { TextFilterInput } from "@/shared/ui/text-filter-input";
 
 export default function StockPage() {
   const searchParams = useSearchParams();
@@ -19,6 +19,13 @@ export default function StockPage() {
 
   // Хуки для пагинации и сортировки
   const { onPaginationChange, pagination } = usePagination();
+
+  // Извлечение `filter_search` при монтировании и обновлении 
+  useEffect (() => {
+    const filterParam = searchParams.get("filter_search") || "";
+    setSearchQueryDraft(filterParam);
+    setSearchQuery(filterParam);
+  }, [searchParams])  
 
   const { data, isPending } = useGetStocks({
     page: pagination.pageIndex + 1,

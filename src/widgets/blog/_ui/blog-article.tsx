@@ -1,7 +1,6 @@
 import Markdown from "react-markdown"
 
 import { post } from "@/entities/post/_vm/moc-data"
-import Image from "next/image"
 
 export async function BlogArticle({
   className,
@@ -17,16 +16,7 @@ export async function BlogArticle({
           <h1 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
             {post.title}
           </h1>
-          <div className="w-full  overflow-hidden">
-            <Image
-              height={1024}
-              width={1024}
-              src={`${post.metadata.image.imgix_url}`}
-              alt={post.title}
-              loading="lazy"
-              className="mx-auto aspect-video rounded-xl  object-cover"
-            />
-          </div>
+          
           <article>
             <Markdown className="space-y-4 ">
               {post.metadata.content}

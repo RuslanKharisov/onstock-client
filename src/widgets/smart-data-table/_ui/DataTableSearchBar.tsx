@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { CategorySelector } from "./category-selector"
 import { useGetCategories } from "@/entities/category/_api/category.queries"
-import { TextFilterInput } from "./text-filter-input"
+import { TextFilterInput } from "../../../shared/ui/text-filter-input"
 
 interface DataTableSearchBarProps {
   searchQueryDraft: string
