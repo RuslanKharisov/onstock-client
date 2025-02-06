@@ -2,6 +2,7 @@ import { getSupplierInfo } from "@/entities/supplier/api/get-supplier-info"
 import { Telegram } from "@/shared/icons/telegram"
 import { WhatsApp } from "@/shared/icons/whatsapp"
 import { Badge } from "@/shared/ui/badge"
+import { Skeleton } from "@/shared/ui/skeleton"
 
 export default async function Supplier({
   params,
@@ -16,7 +17,7 @@ export default async function Supplier({
   return (
     <>
       <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
-        <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
+        <div className="container px-4 2xl:px-0">
           <nav className="mb-4 flex" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
               <li className="inline-flex items-center">
@@ -104,29 +105,31 @@ export default async function Supplier({
           <div className="py-4 md:py-8">
             <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
               <div className="space-y-4">
-                <div className="h-24 flex space-x-4">
+                <div className="flex h-24 space-x-4">
                   <div className="w-24">
-                    <img
-                      className="h-full w-full object-cover  rounded-lg"
-                      src={`${supplier.logoUrl}`}
-                      alt="Logo image"
-                    />
+                    {supplier.logoUrl ? (
+                      <img
+                        className="h-full w-full rounded-lg  object-cover"
+                        src={`${supplier.logoUrl}`}
+                        alt="Logo image"
+                      />
+                    ) : (
+                      <Skeleton className="h-full w-full" />
+                    )}
                   </div>
-                  <div>
-                    <Badge variant="success">
-                      Подтвержден
-                    </Badge>                    
+                  <div className=" space-y-2">
+                    <Badge variant="success">Подтвержден</Badge>
                     <h2 className="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
                       {supplier.name}
                     </h2>
                     <a href={`${supplier.siteUrl}`}>
-                          <p className="mb-0.5 font-medium text-gray-900 dark:text-white">
-                            {" "}
-                            {supplier.siteUrl}
-                          </p>
-                        </a>
+                      <p className="mb-0.5 font-medium text-gray-900 dark:text-white">
+                        {" "}
+                        {supplier.siteUrl}
+                      </p>
+                    </a>
                   </div>
-                </div>                
+                </div>
 
                 <dl>
                   <dt className="font-semibold text-gray-900 dark:text-white">
@@ -182,8 +185,7 @@ export default async function Supplier({
                   </dd>
                 </dl>
               </div>
-              <div className="space-y-4 flex flex-col justify-end">
-                
+              <div className="flex flex-col justify-end space-y-4">
                 <dl className="">
                   <dt className="font-semibold text-gray-900 dark:text-white">
                     Напишите нам
@@ -211,17 +213,16 @@ export default async function Supplier({
                       href="#"
                       className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
                     >
-                      <WhatsApp size="22"/>
+                      <WhatsApp size="22" />
                     </a>
                     <a
                       href="#"
                       className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
                     >
-                      <Telegram size="22"/>
-                    </a>                    
+                      <Telegram size="22" />
+                    </a>
                   </div>
                 </dl>
-                
               </div>
             </div>
             <button
