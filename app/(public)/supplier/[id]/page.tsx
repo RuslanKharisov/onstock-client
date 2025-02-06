@@ -101,7 +101,6 @@ export default async function Supplier({
           <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
             Подробнее о компании: &#34;{supplier.name}&#34;
           </h2>
-
           <div className="py-4 md:py-8">
             <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
               <div className="space-y-4">
