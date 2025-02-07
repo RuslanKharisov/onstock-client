@@ -4,6 +4,7 @@ import { updateSupplier } from "./update-supplier";
 import { getSupplier } from "./get-supplier";
 import { createSupplier } from "./create-supplier";
 import { ChangeSupplierDto } from "../dto";
+import { getSupplierInfo } from "./get-supplier-info";
 
 export const supplierQueries = {
   all: () => ["suppliers"],
@@ -11,6 +12,7 @@ export const supplierQueries = {
   details: () => [...supplierQueries.all(), "supplier"]
 };
 
+// Хук для получение поставщика по ID пользователя в ЛК
 export const useGetSupplier = (userId: string, accessToken: string) => {
   return useQuery({
     queryKey: [...supplierQueries.details(), userId, accessToken],
@@ -19,7 +21,16 @@ export const useGetSupplier = (userId: string, accessToken: string) => {
   })
 };
 
-// Создайте хуки для мутаций
+// Хук для получение информации о поставщике по ID поставщика из params
+export const useGetSupplierInfo = (supplierId: number) => {
+  return useQuery({
+    queryKey: ["supplier", supplierId, ],
+    queryFn: () => getSupplierInfo(supplierId),
+    enabled: !!supplierId, // Запрос выполняется только если есть id
+  })
+};
+
+// Хуки для мутаций
 export const useCreateSupplier = () =>
   useMutation({
     mutationFn: ({ userId, accessToken, values }: { userId: string; accessToken: string; values: ChangeSupplierDto }) =>

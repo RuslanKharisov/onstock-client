@@ -1,18 +1,32 @@
-import { getSupplierInfo } from "@/entities/supplier/api/get-supplier-info"
+'use client'
+
+import { useGetSupplierInfo } from "@/entities/supplier/api/supplier.queries"
 import { Telegram } from "@/shared/icons/telegram"
 import { WhatsApp } from "@/shared/icons/whatsapp"
 import { Badge } from "@/shared/ui/badge"
 import { Skeleton } from "@/shared/ui/skeleton"
+import Image from "next/image"
 
-export default async function Supplier({
+export default  function Supplier({
   params,
 }: {
-  params: Promise<{ id: number }>
+  params: { id: number }
 }) {
-  const supplierId = (await params).id
-  const supplier = await getSupplierInfo(supplierId)
+  const supplierId = Number(params.id)
 
-  if (!supplier) return <h1>Что то пошло не так</h1>
+  const { data:supplier, isPending } =  useGetSupplierInfo(supplierId)
+
+  if (isPending) return (
+    <div className="container h-full flex flex-col items-center justify-center">
+      <h1>... загружаем данные</h1>
+    </div>
+)
+
+  if (!supplier) return (
+    <div className="container h-full flex flex-col items-center justify-center">
+      <h1>Что то пошло не так</h1>
+    </div>
+)
 
   return (
     <>
@@ -107,7 +121,9 @@ export default async function Supplier({
                 <div className="flex h-24 space-x-4">
                   <div className="w-24">
                     {supplier.logoUrl ? (
-                      <img
+                      <Image
+                        width={100}
+                        height={100}
                         className="h-full w-full rounded-lg  object-cover"
                         src={`${supplier.logoUrl}`}
                         alt="Logo image"
