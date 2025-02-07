@@ -24,7 +24,7 @@ function MainNav({ headerItems }: MainNavProps) {
             {headerItems.map((item, idx) => (
               <Link
                 key={idx}
-                className={` ${pathname === item.url ? "text-destructive/70" : "text-foreground/60"}  transition-colors hover:text-destructive`}
+                className={` ${pathname === item.url ? "text-primary" : "text-foreground/90"} font-medium  transition-colors hover:text-destructive`}
                 href={item.url}
               >
                 {item.title}

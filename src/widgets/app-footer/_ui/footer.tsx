@@ -2,6 +2,7 @@ import Link from "next/link"
 import { LogoIcon } from "@/shared/ui/logo-icon"
 import { Socials } from "@/widgets/socials"
 import { socialsData } from "@/widgets/socials/_vm/constans"
+import { Logo } from "@/shared/ui/logo"
 
 const Footer = () => {
 
@@ -10,10 +11,7 @@ const Footer = () => {
       <div className="container">
         <section className="flex flex-col items-center justify-between gap-y-3 lg:flex-row ">
           <Link className="space-x-2" href="/">
-            <span className="inline-block font-bold">
-              <LogoIcon className="mr-3 h-6 w-6" />
-            </span>
-            Промышленный склад
+            <Logo/>            
           </Link>
           <Socials socialsData={socialsData} />
         </section>
