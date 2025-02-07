@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { LogoIcon } from "@/shared/ui/logo-icon"
 import { Socials } from "@/widgets/socials"
 import { socialsData } from "@/widgets/socials/_vm/constans"
 import { Logo } from "@/shared/ui/logo"
