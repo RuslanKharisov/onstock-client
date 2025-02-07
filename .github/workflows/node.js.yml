@@ -8,51 +8,56 @@ on:
 
 jobs:
   build:
-
     runs-on: self-hosted
 
     strategy:
       matrix:
         node-version: [22.x]
-        
 
     steps:
       - run: echo "$(pwd)"
       - uses: actions/checkout@v4
 
-      # Кэширование npm-модулей
+      # Кэширование npm и Next.js
       - name: Cache Node.js modules
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+          path: |
+            ~/.npm
+            node_modules/.cache
+          key: npm-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             npm-${{ runner.os }}-${{ matrix.node-version }}-
-
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm ci
+
+      - name: Install dependencies
+        run: |
+          if [ ! -d "node_modules" ]; then
+            npm ci
+          else
+            echo "Skipping npm ci - node_modules already exists"
+          fi
 
       # Восстанавливаем .env
       - name: Restore .env
         run: |
           cp /home/admin2/secrets/.env.production .env.production || echo "No .env.production to copy"
 
-      # Кэшируем сборку Next.js
       - name: Cache Next.js build
         uses: actions/cache@v4
         with:
-          path: .next/cache
+          path: |
+            .next/cache
+            node_modules/.next/cache
           key: nextjs-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json', 'next.config.js') }}
           restore-keys: |
-            nextjs-${{ runner.os }}-${{ matrix.node-version }}-    
-
+            nextjs-${{ runner.os }}-${{ matrix.node-version }}-
 
       - run: npm run build --if-present
 
-      # Перезапускаем приложение через pm2 c id 6
-      - run: pm2 restart 6
+      - run: pm2 restart 6 --update-env
