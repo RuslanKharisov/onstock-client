@@ -59,5 +59,4 @@ jobs:
             nextjs-${{ runner.os }}-${{ matrix.node-version }}-
 
       - run: npm run build --if-present
-
       - run: pm2 restart 6 --update-env
