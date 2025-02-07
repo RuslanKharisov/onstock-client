@@ -15,9 +15,7 @@ export default async function Layout({
       <Suspense fallback={<div>Loading...</div>}>
         <main className="w-full">{children}</main>
       </Suspense>
-      <Suspense fallback={<div>Loading Footer...</div>}>
-        <Footer />
-      </Suspense>
+      <Footer />
     </>
   )
 }
