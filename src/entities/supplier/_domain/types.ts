@@ -4,8 +4,7 @@ export type Supplier = {
   email: string
   siteUrl: string | null
   userId: string
-  subscriptions: Subscription[]
-
+  subscription: Subscription
   phoneWork?: string
   phoneMobile?: string
   telegramAccount?: string
@@ -16,7 +15,7 @@ export type Supplier = {
   street?: string
   houseNumber?: string
   logoUrl?: string
-} | null
+}
 
 type Subscription = {
   id: number

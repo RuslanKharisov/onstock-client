@@ -8,22 +8,29 @@ import {
   SheetTrigger,
 } from "@/shared/ui/sheet"
 import { UpdateFromFile } from "./_ui/UpdateFromFile"
-// import { UpdateFromForm } from "./_ui/UpdateFromForm"
 import { Button } from "@/shared/ui/button"
 import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
 import { useRouter } from "next/navigation"
 
+export interface StockSettings {
+  stockLenght: number
+  tariffLimit: number
+  freeSpace: number
+}
+
 export function ApdateStock({
   userId,
   accessToken,
+  stockSettings,
 }: {
   userId: string
   accessToken: string
+  stockSettings: StockSettings | null
 }) {
   const router = useRouter()
-  const { data } = useGetSupplier(userId, accessToken)
+  const { data: supplier } = useGetSupplier(userId, accessToken)
 
-  if (!data)
+  if (!supplier) {
     return (
       <main className="container flex flex-col items-center justify-center px-4 py-8 lg:px-6 lg:py-16">
         <h1 className="mb-8 text-center text-destructive">
@@ -40,10 +47,10 @@ export function ApdateStock({
         </div>
       </main>
     )
+  }
 
   return (
     <section className="flex flex-wrap items-start justify-between gap-5">
-
       {/* <Sheet>
         <SheetTrigger asChild>
           <Button size="sm" className="w-full sm:w-fit">Добавить товар на склад</Button>
@@ -65,7 +72,9 @@ export function ApdateStock({
 
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="sm" className="w-full sm:w-fit">Импортировать из файла</Button>
+          <Button size="sm" className="w-full sm:w-fit">
+            Импортировать из файла
+          </Button>
         </SheetTrigger>
         <SheetContent
           side="top"
@@ -78,7 +87,12 @@ export function ApdateStock({
               Нажмите Добавить, что-бы сохранить список в базе данных .
             </SheetDescription>
           </SheetHeader>
-          {data && <UpdateFromFile supplier={data} accessToken={accessToken} />}
+          {stockSettings && (
+            <UpdateFromFile
+              accessToken={accessToken}
+              limit={stockSettings.freeSpace}
+            />
+          )}
         </SheetContent>
       </Sheet>
     </section>

@@ -8,9 +8,7 @@ import React, { useState } from "react"
 import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
 import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal-stock.queries"
-import { Supplier } from "@/entities/supplier/_domain/types"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
-import { addOrUpdateProductDto } from "@/entities/stock-personal.ts/dto/add-stock-item.dto"
 import { Spinner } from "@/shared/ui/spinner"
 
 export interface ProductsStock {
@@ -20,13 +18,14 @@ export interface ProductsStock {
 
 export function UpdateFromFile({
   accessToken,
+  limit,
 }: {
-  supplier: Supplier
   accessToken: string
+  limit: number | null
 }) {
   const [error, setError] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
-  console.log("🚀 ~ stockData:", stockData)
+  console.log("UpdateFromFile limit ==> ", limit)
 
   const {
     mutate: addOrUpdateProduct,
@@ -84,7 +83,7 @@ export function UpdateFromFile({
   function parseDate(dateString: string) {
     if (typeof dateString !== "string") {
       setError("Поле даты должно быть текстовое")
-      return;
+      return
     }
     const dateMatch = dateString.match(
       /^(0?[1-9]|[12][0-9]|3[01])[\/\-.](0?[1-9]|1[012])[\/\-.](\d{4})$/,
@@ -92,7 +91,7 @@ export function UpdateFromFile({
 
     if (!dateMatch) {
       setError(" Проверьте даты, формат DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY ")
-      return;
+      return
     }
 
     const day = Number(dateMatch[1])
@@ -107,32 +106,39 @@ export function UpdateFromFile({
   }
 
   async function handleClick() {
-    for (const product of stockData) {
-      const data: addOrUpdateProductDto = {
-        sku: product.sku,
-        name: product.name || "",
-        category: product.category || undefined,
-        description: product.description || "",
-        quantity: product.quantity,
-        manufacturer: product.manufacturer || undefined,
-        newDeliveryQty1:
-          typeof product.newdelivery_qty_1 === "number"
-            ? product.newdelivery_qty_1
-            : undefined,
-        newDeliveryDate1: product.newdelivery_date_1
-          ? parseDate(product.newdelivery_date_1)
-          : undefined,
-        newDeliveryQty2:
-          typeof product.newdelivery_qty_2 === "number"
-            ? product.newdelivery_qty_2
-            : undefined,
-        newDeliveryDate2: product.newdelivery_date_2
-          ? parseDate(product.newdelivery_date_2)
-          : undefined,
-      }
-
-      addOrUpdateProduct({ data, accessToken })
+    if (limit === null) {
+      setError("Не удалось получить лимит товаров")
+      return
     }
+
+    const productsToUpload = stockData.slice(0, limit).map((product) => ({
+      sku: product.sku,
+      name: product.name || "",
+      category: product.category || undefined,
+      description: product.description || "",
+      quantity: product.quantity,
+      manufacturer: product.manufacturer || undefined,
+      newDeliveryQty1:
+        typeof product.newdelivery_qty_1 === "number"
+          ? product.newdelivery_qty_1
+          : undefined,
+      newDeliveryDate1: product.newdelivery_date_1
+        ? parseDate(product.newdelivery_date_1)
+        : undefined,
+      newDeliveryQty2:
+        typeof product.newdelivery_qty_2 === "number"
+          ? product.newdelivery_qty_2
+          : undefined,
+      newDeliveryDate2: product.newdelivery_date_2
+        ? parseDate(product.newdelivery_date_2)
+        : undefined,
+    }))
+
+    if (stockData.length > limit) {
+      setError("Часть товаров не загружена из-за ограничения по лимиту.")
+    }
+
+    addOrUpdateProduct({ data: productsToUpload, accessToken })
   }
 
   return (
@@ -151,14 +157,13 @@ export function UpdateFromFile({
           className=" duration-300 hover:bg-slate-300"
         />
         <Button variant="default" onClick={handleClick} disabled={isPending}>
-          { isPending? <Spinner/> : "Добавить товары из файла" }
-          
+          {isPending ? <Spinner /> : "Добавить товары из файла"}
         </Button>
       </CardContent>
       <CardContent>
-        {data?.success && (
+        {data?.messages?.[0]?.property === "ok" && (
           <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
-            {data?.success}
+            {data?.messages?.[0]?.message}
           </p>
         )}
         {error && (
@@ -166,9 +171,9 @@ export function UpdateFromFile({
             {error}
           </p>
         )}
-        {data?.error ? (
+        {data?.messages?.[0]?.property === "warning" ? (
           <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
-            {data?.error}
+            {data?.messages?.[0]?.message}
           </p>
         ) : isError ? (
           <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">

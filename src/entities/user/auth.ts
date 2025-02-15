@@ -24,7 +24,6 @@ export const {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("Credentials received:", credentials)
         const validatedFields = LoginSchema.safeParse(credentials)
 
         if (validatedFields.success) {
@@ -79,6 +78,7 @@ export const {
     },
     async session({ session, token }) {
       session.user.id = token.sub as string
+      session.user.role = token.role
       session.user.name = token.name as string
       session.user.email = token.email as string
       session.backendTokens = token.backendTokens as BackendTokens
@@ -90,6 +90,7 @@ export const {
       if (user) {
         token.name = user.name
         token.email = user.email
+        token.role = user.role
         token.provider = account?.provider
         token.backendTokens = user.backendTokens
       }
@@ -108,7 +109,7 @@ export const {
             const refreshedToken = await refreshToken(token)
             if (refreshedToken)
               token.backendTokens = refreshedToken.backendTokens
-          } catch (error){
+          } catch (error) {
             console.error("Ошибка при обновлении токена", error)
             await signOut()
           }

@@ -1,6 +1,6 @@
-import { Supplier } from "@/entities/supplier/_domain/types";
-import { Button } from "@/shared/ui/button";
-import Link from "next/link";
+import { Supplier } from "@/entities/supplier/_domain/types"
+import { Button } from "@/shared/ui/button"
+import Link from "next/link"
 
 function SupplierInfo({ supplier }: { supplier: Supplier }) {
   return (
@@ -8,9 +8,7 @@ function SupplierInfo({ supplier }: { supplier: Supplier }) {
       <h1 className="">Склад: {supplier?.name} </h1>
       <p className="text-sm font-semibold">
         Текущий тариф:
-        <span className="ms-2">
-          {supplier?.subscriptions?.[0].tariff.name}
-        </span>
+        <span className="ms-2">{supplier?.subscription.tariff.name}</span>
         <span>
           <Button size="sm" variant="link">
             <Link
@@ -25,11 +23,11 @@ function SupplierInfo({ supplier }: { supplier: Supplier }) {
       <p className="text-sm font-semibold">
         Максимальное количество по текущему тарифу:
         <span className="ms-2">
-          {supplier?.subscriptions?.[0].tariff.maxProducts}
+          {supplier?.subscription.tariff.maxProducts}
         </span>
       </p>
     </section>
-  );
+  )
 }
 
-export { SupplierInfo };
+export { SupplierInfo }

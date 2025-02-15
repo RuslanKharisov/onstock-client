@@ -37,7 +37,6 @@ export function NewPasswordForm() {
     data,
     error,
   } = useUpdatePassword()
-  console.log("🚀 ~ NewPasswordForm ~ data:", data)
 
   const onSubmit = (data: z.infer<typeof NewPasswordSchema>) => {
     if (token) {

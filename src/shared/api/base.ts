@@ -9,23 +9,21 @@ export class ApiClient {
 
   async handleResponse<TResult>(response: Response): Promise<TResult> {
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`)
+      throw new Error(`HTTP error! Message: ${response.json()}`)
     }
 
     try {
       return await response.json()
-    } catch  {
+    } catch {
       throw new Error("Error parsing JSON response")
     }
   }
-
 
   public async get<TResult = unknown>(
     endpoint: string,
     queryParams?: Record<string, string | number>,
   ): Promise<TResult> {
     const url = new URL(endpoint, this.baseUrl)
-    console.log(url.toString())
     if (queryParams) {
       Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value.toString())

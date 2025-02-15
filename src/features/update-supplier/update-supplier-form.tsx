@@ -45,7 +45,7 @@ const UpdateSupplierForm = ({
     replacement: { _: /[a-zA-Z0-9._~:/?#[\]@!$&'()*+,;=%-]/ },
   })
 
-  const phoneWorkRef  = useMask({
+  const phoneWorkRef = useMask({
     mask: "+7 (___) ___-__-__",
     replacement: { _: /\d/ },
   })
@@ -59,7 +59,7 @@ const UpdateSupplierForm = ({
     mask: "+7 (___) ___-__-__",
     replacement: { _: /\d/ },
   })
-  
+
   const {
     mutate: createSupplier,
     isPending: isCreateLoading,
@@ -148,11 +148,11 @@ const UpdateSupplierForm = ({
               </h3>
               <p className="text-center text-sm ">
                 Активный тариф:{" "}
-                <span>{supplier?.subscriptions?.[0].tariff.name}</span>{" "}
+                <span>{supplier?.subscription.tariff.name}</span>{" "}
               </p>
               <p className="text-center text-sm ">
                 Лимит склада по тарифу:{" "}
-                <span>{supplier?.subscriptions?.[0].tariff.maxProducts}</span>{" "}
+                <span>{supplier?.subscription.tariff.maxProducts}</span>{" "}
               </p>
             </div>
           )}
@@ -413,8 +413,8 @@ const UpdateSupplierForm = ({
                 {isCreateLoading
                   ? "Создание..."
                   : isUpdateLoading
-                  ? "Обновление..."
-                  : "Сохранить"}
+                    ? "Обновление..."
+                    : "Сохранить"}
               </Button>
             </form>
           </Form>

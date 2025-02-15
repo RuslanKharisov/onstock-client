@@ -1,45 +1,70 @@
-import { getPersonalStock } from "@/entities/stock-personal.ts/api/get-personal-stock"
-import { getSupplier } from "@/entities/supplier/api/get-supplier"
-import { auth } from "@/entities/user/auth"
+"use client"
+
+import { useGetPersonalStock } from "@/entities/stock-personal.ts/api/personal-stock.queries"
+import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
+import { getAvalibleStockLimits } from "@/shared/lib/get-avalible-stock-limit"
 import { StockList } from "@/widgets/stock"
-import { ApdateStock } from "@/widgets/update-stock/update-stock"
+import { ApdateStock, StockSettings } from "@/widgets/update-stock/update-stock"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
 
-async function PersonalStock() {
-  const session = await auth()
-  if (!session) return null
+function PersonalStock() {
+  const { data: session } = useSession()
+  const [stockSettings, setStockSettings] = useState<StockSettings | null>(null)
 
-  const userId = session.user.id
-  const accessToken = session.backendTokens.accessToken
+  const userId = session?.user.id
+  const accessToken = session?.backendTokens.accessToken
 
-  const supplier = await getSupplier(userId, accessToken)
-  const tariffName = supplier?.subscriptions?.[0].tariff.name
-  const tariffLimit = supplier?.subscriptions?.[0].tariff.maxProducts
+  const { data: supplier } = useGetSupplier(userId ?? "", accessToken ?? "")
 
   // получаем склад полользователя
-  const existingStock = await getPersonalStock({
-    userId: userId,
-    accessToken: accessToken,
+  const { data: existingStock } = useGetPersonalStock({
+    userId: userId ?? "",
+    accessToken: accessToken ?? "",
     page: 1,
     perPage: 5,
     filters: undefined,
   })
 
+  useEffect(() => {
+    if (supplier && existingStock) {
+      const stockSettings = getAvalibleStockLimits({
+        supplier,
+        stockLenght: existingStock.meta.total,
+      })
+      setStockSettings(stockSettings ?? null)
+    }
+  }, [supplier, existingStock]) // Следим за изменениями
+
+  if (!session) return <h3>...Loading</h3>
+
   return (
     <div className="container mx-auto px-5 pt-16 md:pt-8 lg:px-6">
       {/* to do вынести инфо о тарифе в отдельный компонент */}
       <div>
-        <h3 className="mb-2 text-center text-lg font-bold">{supplier?.name}</h3>
         <p className="text-center text-sm ">
-          Активный тариф: <span>{tariffName}</span>{" "}
+          Активный тариф:{" "}
+          <span>{supplier?.subscription.tariff.maxProducts}</span>{" "}
         </p>
         <p className="text-center text-sm ">
-          Лимит склада по тарифу: <span>{tariffLimit}</span>{" "}
+          Лимит склада по тарифу: <span>{stockSettings?.tariffLimit}</span>{" "}
+        </p>
+        <p className="text-center text-sm ">
+          Доступно: <span>{stockSettings?.freeSpace}</span>{" "}
         </p>
       </div>
 
-      <ApdateStock accessToken={accessToken} userId={userId} />
+      {userId && accessToken && (
+        <>
+          <ApdateStock
+            accessToken={accessToken}
+            userId={userId}
+            stockSettings={stockSettings}
+          />
 
-      <StockList userId={userId} accessToken={accessToken} />
+          <StockList userId={userId} accessToken={accessToken} />
+        </>
+      )}
     </div>
   )
 }
