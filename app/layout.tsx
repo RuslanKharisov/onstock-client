@@ -4,8 +4,6 @@ import { cn } from "@/shared/ui/utils"
 import { AppProvider } from "../src/app/_providers/app-provider"
 import YandexMetrikaContainer from "@/shared/lib/YandexMetrika"
 
-const analyticsEnabled = !!(process.env.NODE_ENV === "production")
-
 export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
   description:
@@ -26,6 +24,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const analyticsEnabled = !!(process.env.NODE_ENV === "production")
   return (
     <html lang="ru" suppressHydrationWarning>
       <body className={cn("h-screen bg-background antialiased ")}>

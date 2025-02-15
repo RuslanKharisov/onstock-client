@@ -1,9 +1,11 @@
 "use client"
 
-import { Store, Home, User, Database, LucideIcon } from "lucide-react"
+import { LucideIcon } from "lucide-react"
 import { useMediaQuery } from "usehooks-ts"
 import { SidebarDesktop } from "./_ui/sidebar-desktop"
 import { SidebarMobile } from "./_ui/sidebar-mobile"
+import { AdminMenuItems } from "./_vm/admin-menu-items"
+import { PrivateMenuItems } from "./_vm/privite-menu-items"
 
 export interface IsideBarItems {
   title: string
@@ -11,34 +13,18 @@ export interface IsideBarItems {
   icon?: LucideIcon
 }
 
-const sideBarItems = [
-  {
-    title: "Home",
-    url: "/stock",
-    icon: Home,
-  },
-  {
-    title: "Мой склад",
-    url: "/personal-stock",
-    icon: Store,
-  },
-  {
-    title: "Профиль",
-    url: "/profile",
-    icon: User,
-  },
-  {
-    title: "Тарифы",
-    url: "/prising",
-    icon: Database,
-  },
-]
+interface AppSidebarProps {
+  variant?: "privite" | "admin"
+}
 
-export function AppSidebar() {
+export function AppSidebar({ variant = "privite" }: AppSidebarProps) {
   const isDesktop = useMediaQuery("(min-width:768px)", {
     initializeWithValue: false,
   })
-  if (isDesktop) return <SidebarDesktop sideBarItems={sideBarItems} />
 
-  return <SidebarMobile sideBarItems={sideBarItems} />
+  const menuItems = variant === "admin" ? AdminMenuItems : PrivateMenuItems
+
+  if (isDesktop) return <SidebarDesktop sideBarItems={menuItems} />
+
+  return <SidebarMobile sideBarItems={menuItems} />
 }

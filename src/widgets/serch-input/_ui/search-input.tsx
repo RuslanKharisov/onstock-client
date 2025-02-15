@@ -8,13 +8,10 @@ export function SearchInput() {
   const router = useRouter()
 
   const handleSearchChange = (newSearchQuery: string) => {
-    console.log(newSearchQuery)
     setSearchQueryDraft(newSearchQuery) // Обновляем черновой фильтр
   }
 
   const applyFilters = () => {
-    console.log(searchQueryDraft)
-
     router.push(`stock?filter_search=${searchQueryDraft}`)
   }
 
@@ -28,5 +25,3 @@ export function SearchInput() {
     </div>
   )
 }
-
-
