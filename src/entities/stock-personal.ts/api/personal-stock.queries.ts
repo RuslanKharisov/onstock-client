@@ -6,16 +6,23 @@ import { ColumnFiltersState } from "@tanstack/react-table"
 import { AddOrUpdateStockItem } from "./add-or-update-stock-item"
 import { addOrUpdateProductDto } from "../dto/add-stock-item.dto"
 
-export const useGetPersonalStock = (
-  userId: string,
-  accessToken: string,
-  page: number,
-  limit: number,
-  filters?: ColumnFiltersState,
-) => {
+export const useGetPersonalStock = ({
+  userId,
+  accessToken,
+  page,
+  perPage,
+  filters,
+}: {
+  userId: string
+  accessToken: string
+  page: number
+  perPage: number
+  filters?: ColumnFiltersState
+}) => {
   return useQuery({
-    queryKey: ["personalStock", "list", page, limit, filters],
-    queryFn: () => getPersonalStock(userId, accessToken, page, limit, filters),
+    queryKey: ["personalStock", "list", page, perPage, filters],
+    queryFn: () =>
+      getPersonalStock({ userId, accessToken, page, perPage, filters }),
     placeholderData: keepPreviousData,
   })
 }
@@ -32,8 +39,13 @@ export const useRemovePersonalStockElement = (accessToken: string) => {
 
 export const useAddOrUpdateProduct = () => {
   return useMutation({
-    mutationFn: ({data, accessToken}:{data: addOrUpdateProductDto, accessToken: string}) =>
-      AddOrUpdateStockItem(accessToken, data),
+    mutationFn: async ({
+      data,
+      accessToken,
+    }: {
+      data: addOrUpdateProductDto[]
+      accessToken: string
+    }) => await AddOrUpdateStockItem(accessToken, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["personalStock"] })
     },

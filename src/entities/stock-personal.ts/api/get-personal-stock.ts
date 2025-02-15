@@ -2,13 +2,19 @@ import { apiClient } from "@/shared/api/base"
 import { TPersonalPaginatedStockDto } from "../dto"
 import { ColumnFiltersState } from "@tanstack/react-table"
 
-export const getPersonalStock = async (
-  userId: string,
-  accessToken: string,
-  page: number,
-  perPage: number,
-  filters?: ColumnFiltersState,
-): Promise<TPersonalPaginatedStockDto> => {
+export const getPersonalStock = async ({
+  userId,
+  accessToken,
+  page,
+  perPage,
+  filters,
+}: {
+  userId: string
+  accessToken: string
+  page: number
+  perPage: number
+  filters?: ColumnFiltersState
+}): Promise<TPersonalPaginatedStockDto> => {
   const body = {
     page,
     perPage,

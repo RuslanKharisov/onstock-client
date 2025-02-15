@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { StockTableColumns } from "@/entities/stock-personal.ts/_vm/_stocks-table-columns"
-import { useGetPersonalStock, useRemovePersonalStockElement } from "@/entities/stock-personal.ts/api/personal-stock.queries"
+import {
+  useGetPersonalStock,
+  useRemovePersonalStockElement,
+} from "@/entities/stock-personal.ts/api/personal-stock.queries"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { ColumnFiltersState } from "@tanstack/react-table"
@@ -24,18 +27,17 @@ function StockList({
   const { onPaginationChange, pagination } = usePagination()
   const [filters, setFilters] = useState<ColumnFiltersState>([])
 
-  const {data: personalStock, isLoading} = useGetPersonalStock(
-    userId, 
-    accessToken, 
-    pagination.pageIndex + 1, 
-    pagination.pageSize, 
-    filters
-  )
+  const { data: personalStock, isLoading } = useGetPersonalStock({
+    userId: userId,
+    accessToken: accessToken,
+    page: pagination.pageIndex + 1,
+    perPage: pagination.pageSize,
+    filters: filters,
+  })
 
   // Мутация для удаления продукции со склада
-  const {
-    mutate: removeStockElement,
-  } = useRemovePersonalStockElement(accessToken);
+  const { mutate: removeStockElement } =
+    useRemovePersonalStockElement(accessToken)
 
   const handleDelete = async (id: string) => {
     removeStockElement(id)
