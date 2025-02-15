@@ -1,5 +1,5 @@
 import { auth } from "@/entities/user/auth"
-import { AppHeader } from "@/widgets/app-header/app-header"
+import { AppSidebar } from "@/widgets/app-sidebar.tsx"
 import { redirect } from "next/navigation"
 
 export default async function Layout({
@@ -8,12 +8,13 @@ export default async function Layout({
   children: React.ReactNode
 }) {
   const session = await auth()
-if (session?.user.role !== "ADMIN") redirect("/")
-  
+
+  if (session?.user.role !== "ADMIN") redirect("/")
+
   return (
-    <>
-      <AppHeader />
-      {children}
-    </>
+    <div className="flex">
+      <AppSidebar variant="admin" />
+      <main className="w-full">{children}</main>
+    </div>
   )
 }

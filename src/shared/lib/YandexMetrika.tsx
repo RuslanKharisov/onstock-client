@@ -1,33 +1,33 @@
-"use client";
+"use client"
 
-import Router from "next/router";
-import React, { useCallback, useEffect } from "react";
-import ym, { YMInitializer } from "react-yandex-metrika";
+import Router from "next/router"
+import React, { useCallback, useEffect } from "react"
+import ym, { YMInitializer } from "react-yandex-metrika"
 
 type Props = {
-  enabled: boolean;
-};
+  enabled: boolean
+}
 
-const YM_COUNTER_ID = 99481276;
+const YM_COUNTER_ID = 99481276
 
 const YandexMetrikaContainer: React.FC<Props> = ({ enabled }) => {
   const hit = useCallback(
     (url: string) => {
       if (enabled) {
-        ym("hit", url);
+        ym("hit", url)
       } else {
-        console.log(`%c[YandexMetrika](HIT)`, `color: orange`, url);
+        console.log(`%c[YandexMetrika](HIT)`, `color: orange`, url)
       }
     },
     [enabled],
-  );
+  )
 
   useEffect(() => {
-    hit(window.location.pathname + window.location.search);
-    Router.events.on("routeChangeComplete", (url: string) => hit(url));
-  }, [hit]);
+    hit(window.location.pathname + window.location.search)
+    Router.events.on("routeChangeComplete", (url: string) => hit(url))
+  }, [hit])
 
-  if (!enabled) return null;
+  if (!enabled) return null
 
   return (
     <YMInitializer
@@ -41,8 +41,7 @@ const YandexMetrikaContainer: React.FC<Props> = ({ enabled }) => {
       }}
       version="2"
     />
-  );
-};
+  )
+}
 
-export default YandexMetrikaContainer;
-
+export default YandexMetrikaContainer
