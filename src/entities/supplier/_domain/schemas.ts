@@ -14,11 +14,23 @@ export const SupplierSchema = z
     telegramAccount: z.string().optional(),
     whatsappNumber: z.string().optional(),
     vkProfile: z.string().optional(),
-    country: z.string().optional(),
-    city: z.string().optional(),
-    street: z.string().optional(),
-    houseNumber: z.string().optional(),
     logoUrl: z.string().optional(),
+
+    address: z.object({
+      street: z.string().optional(),
+      house: z.string().optional(),
+      cityId: z.number().optional(),
+      city: z.object({
+        id: z.number(),
+        name: z.string().min(1),
+        region: z.object({
+          name: z.string(),
+          country: z.object({
+            name: z.string(),
+          }),
+        }),
+      }),
+    })
   })
   .superRefine((data, ctx) => {
     if (data.siteUrl && data.siteUrl.trim() !== "") {

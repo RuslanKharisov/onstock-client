@@ -6,6 +6,8 @@ export const updateSupplier = async (
   accessToken: string,
   data: ChangeSupplierDto,
 ) => {
+  console.log("data ==> ", data);
+
   const body = { ...data }
   return await apiClient.patch(`supplier`, body, accessToken)
 }

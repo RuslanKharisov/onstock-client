@@ -9,7 +9,6 @@ import {
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -24,9 +23,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { SquareArrowOutUpRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 import { useMask } from "@react-input/mask"
+import CityInput from "../update-profile/_ui/city-input"
+import RegionInput from "../update-profile/_ui/region-input"
+import CountryInput from "../update-profile/_ui/country-input"
+import { ChangeSupplierDto } from "@/entities/supplier/dto"
 
 const UpdateSupplierForm = ({
   userId,
@@ -81,17 +84,27 @@ const UpdateSupplierForm = ({
     defaultValues: {
       name: supplier?.name || "",
       email: supplier?.email || "",
-      siteUrl: supplier?.siteUrl || undefined,
+      siteUrl: supplier?.siteUrl || "",
       phoneWork: supplier?.phoneWork || "", // Новые поля
       phoneMobile: supplier?.phoneMobile || "",
       telegramAccount: supplier?.telegramAccount || "",
       whatsappNumber: supplier?.whatsappNumber || "",
       vkProfile: supplier?.vkProfile || "",
-      country: supplier?.country || "",
-      city: supplier?.city || "",
-      street: supplier?.street || "",
-      houseNumber: supplier?.houseNumber || "",
       logoUrl: supplier?.logoUrl || "",
+      address: {
+        street: supplier?.address?.street || "",
+        house: supplier?.address?.house || "",
+        city: {
+          name: supplier?.address?.city.name || "",
+          id: supplier?.address?.city.id,
+          region: {
+            name: supplier?.address?.city.region.name || "",
+            country: {
+              name: supplier?.address?.city.region.country.name || "",
+            },
+          },
+        },
+      },
     },
   })
 
@@ -100,23 +113,45 @@ const UpdateSupplierForm = ({
       name: supplier?.name || "",
       email: supplier?.email || "",
       siteUrl: supplier?.siteUrl || "",
-      phoneWork: supplier?.phoneWork || "", // Новые поля
+      phoneWork: supplier?.phoneWork || "",
       phoneMobile: supplier?.phoneMobile || "",
       telegramAccount: supplier?.telegramAccount || "",
       whatsappNumber: supplier?.whatsappNumber || "",
       vkProfile: supplier?.vkProfile || "",
-      country: supplier?.country || "",
-      city: supplier?.city || "",
-      street: supplier?.street || "",
-      houseNumber: supplier?.houseNumber || "",
       logoUrl: supplier?.logoUrl || "",
+      address: {
+        street: supplier?.address?.street || "",
+        house: supplier?.address?.house || "",
+        city: {
+          name: supplier?.address?.city.name || "",
+          id: supplier?.address?.city.id,
+          region: {
+            name: supplier?.address?.city.region.name || "",
+            country: {
+              name: supplier?.address?.city.region.country.name || "",
+            },
+          },
+        },
+      },
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supplier])
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
+    const requestData: ChangeSupplierDto = {
+      ...values,
+      address: {
+        street: values.address.street,
+        house: values.address.house,
+        city: {
+          name: values.address.city.name,
+          id: values.address.city.id,
+        },
+      },
+    }
+
     if (supplier) {
-      updateSupplier({ userId, accessToken, values })
+      updateSupplier({ userId, accessToken, values: requestData })
     } else {
       createSupplier({ userId, accessToken, values })
     }
@@ -158,7 +193,7 @@ const UpdateSupplierForm = ({
           )}
         </CardHeader>
         <CardContent>
-          <Form {...form}>
+          <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="mb-5 grid gap-x-3 gap-y-8 lg:grid-cols-2 xl:grid-cols-3">
                 <FormField
@@ -215,7 +250,7 @@ const UpdateSupplierForm = ({
                     </FormItem>
                   )}
                 />
-                {/* Дополнительные поля */}
+
                 {supplier && (
                   <>
                     <FormField
@@ -309,32 +344,42 @@ const UpdateSupplierForm = ({
                     />
                     <FormField
                       control={form.control}
-                      name="country"
+                      name="address.city.region.country.name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Страна</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Страна (опционально)"
-                              disabled={isCreateLoading || isUpdateLoading}
-                            />
+                            <CountryInput field={field} />
                           </FormControl>
                           <FormMessage className="text-xs" />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
-                      name="city"
+                      name="address.city.region.name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Регион</FormLabel>
+                          <FormControl>
+                            <RegionInput field={field} />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="address.city"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Город</FormLabel>
                           <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Город (опционально)"
-                              disabled={isCreateLoading || isUpdateLoading}
+                            <CityInput
+                              field={field}
+                              // placeholder=" (опционально)"
                             />
                           </FormControl>
                           <FormMessage className="text-xs" />
@@ -343,7 +388,7 @@ const UpdateSupplierForm = ({
                     />
                     <FormField
                       control={form.control}
-                      name="street"
+                      name="address.street"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Улица</FormLabel>
@@ -360,7 +405,7 @@ const UpdateSupplierForm = ({
                     />
                     <FormField
                       control={form.control}
-                      name="houseNumber"
+                      name="address.house"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>№ дома</FormLabel>
@@ -392,7 +437,6 @@ const UpdateSupplierForm = ({
                         </FormItem>
                       )}
                     />
-                    {/* Добавьте остальные дополнительные поля по необходимости */}
                   </>
                 )}
                 <FormEroor
@@ -417,7 +461,7 @@ const UpdateSupplierForm = ({
                     : "Сохранить"}
               </Button>
             </form>
-          </Form>
+          </FormProvider>
           {isCreateSuccess || isUpdateSuccess ? (
             <Link
               className="flex w-fit items-center text-destructive transition-colors hover:text-primary"
