@@ -1,10 +1,16 @@
-function WhatsApp({ size = "35" }: { size?: string | "35" }) {
+function WhatsApp({
+  size = "35",
+  color = "currentColor",
+}: {
+  size?: string | "35"
+  color?: string
+}) {
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 35 35"
-      fill="currentColor"
+      fill={color}
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_9728_22)">

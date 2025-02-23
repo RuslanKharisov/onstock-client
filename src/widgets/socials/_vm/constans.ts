@@ -3,9 +3,9 @@ import { WhatsApp } from "@/shared/icons/whatsapp";
 import { FC } from "react";
 
 export interface SocialsData {
-  icon: FC<{ size?: string }> ,
-    link: string,
-    label: string
+  icon: FC<{ size?: string; color?: string }>,
+  link: string,
+  label: string
 }
 
 const WHATSAPP = "79178696482"

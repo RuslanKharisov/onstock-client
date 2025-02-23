@@ -1,14 +1,14 @@
-import { FC } from "react";
+import { FC } from "react"
 
 export interface SocialsData {
-  icon: FC<{ size?: string }>; // Type for the icon as a functional component
-  link: string;
-  label: string;
+  icon: FC<{ size?: string; color?: string }> // Type for the icon as a functional component
+  link: string
+  label: string
 }
 
 interface SocialsProps {
-  size?: string;
-  socialsData: SocialsData[];
+  size?: string
+  socialsData: SocialsData[]
 }
 
 const Socials: FC<SocialsProps> = ({ size, socialsData }) => {
@@ -21,11 +21,11 @@ const Socials: FC<SocialsProps> = ({ size, socialsData }) => {
           className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-accent hover:text-accent-foreground"
           aria-label={label}
         >
-          <Icon size={size} />
+          <Icon size={size} color="#0076bd" />
         </a>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export {Socials}
+export { Socials }
