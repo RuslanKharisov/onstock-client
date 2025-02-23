@@ -3,7 +3,8 @@
 import { useGetPersonalStock } from "@/entities/stock-personal.ts/api/personal-stock.queries"
 import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
 import { getAvalibleStockLimits } from "@/shared/lib/get-avalible-stock-limit"
-import { StockList } from "@/widgets/stock"
+import { PriviteStock } from "@/widgets/stock"
+
 import { ApdateStock, StockSettings } from "@/widgets/update-stock/update-stock"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
@@ -62,7 +63,7 @@ function PersonalStock() {
             stockSettings={stockSettings}
           />
 
-          <StockList userId={userId} accessToken={accessToken} />
+          <PriviteStock userId={userId} accessToken={accessToken} />
         </>
       )}
     </div>

@@ -32,7 +32,7 @@ declare module "@tanstack/react-table" {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  loading: boolean
+  loading?: boolean // рассмотреть возможность удаления
   rowCount: number
   pagination: PaginationState
   manualPagination?: boolean

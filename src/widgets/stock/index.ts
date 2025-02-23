@@ -1,1 +1,2 @@
-export {StockList} from "./ui/stock"
+export { PriviteStock } from "./ui/privite-stock"
+export { AllStocks } from "./ui/all-stocks"
