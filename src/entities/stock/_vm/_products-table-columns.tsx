@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/tooltip"
 import { ColumnDef } from "@tanstack/react-table"
-import { Earth, MailPlus } from "lucide-react"
+import { MailPlus } from "lucide-react"
 import Link from "next/link"
 
 // This type is used to define the shape of our data.
@@ -50,10 +50,16 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
     cell: ({ row, column }) => {
       const stock = row.original
       return (
-      <div data-title={column.columnDef.header as string} className="">        
-        <Link className="text-primary hover:text-destructive font-semibold" href={`/supplier/${stock.supplierId}`} >{stock.supplier}</Link>
-      </div>
-    )},
+        <div data-title={column.columnDef.header as string} className="">
+          <Link
+            className="font-semibold text-primary hover:text-destructive"
+            href={`/supplier/${stock.supplierId}`}
+          >
+            {stock.supplier}
+          </Link>
+        </div>
+      )
+    },
   },
   {
     accessorKey: "manufacturer",
@@ -109,33 +115,8 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
     cell: ({ row }) => {
       const stock = row.original
 
-      // Получаем текущий URL страницы
-      const currentUrl = window.location.href
-
-      // Создаем UTM-параметры
-      const utmSource = "referral"
-      const utmMedium = "partner_site"
-      const utmCampaign = ""
-
-      // Формируем новую ссылку с UTM-параметрами
-      const utmLink = `${stock.siteUrl}?utm_source=${utmSource}&utm_medium=${utmMedium}&utm_campaign=${utmCampaign}&referrer=${encodeURIComponent(currentUrl)}`
-
       return (
         <span className="flex gap-1">
-          <TooltipProvider delayDuration={100}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button size="icon" variant="link">
-                  <a target="blank" href={utmLink}>
-                    <Earth />
-                  </a>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Перейти на сайт поставщика</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger asChild>

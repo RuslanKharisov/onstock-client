@@ -25,7 +25,6 @@ export function UpdateFromFile({
 }) {
   const [error, setError] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
-  console.log("UpdateFromFile limit ==> ", limit)
 
   const {
     mutate: addOrUpdateProduct,
