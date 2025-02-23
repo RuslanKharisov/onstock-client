@@ -67,12 +67,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 
-  // Проверка на существование страницы
-  const response = await fetch(new URL(req.nextUrl, req.url), { method: "HEAD" });
-  if (!response.ok) {
-    return NextResponse.rewrite(new URL("/not-found", req.url));
-  }
-
   return NextResponse.next();
 }
 
