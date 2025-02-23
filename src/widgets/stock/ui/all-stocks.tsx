@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-columns"
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -18,6 +18,7 @@ function AllStocks({
   const { onPaginationChange, pagination } = usePagination()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [searchTerm, setSearchTerm] = useState(searchQuery) // Временный ввод
 
   // Функция обновления URL при изменении пагинации
   const updateUrlParams = (pagination: {
@@ -35,12 +36,16 @@ function AllStocks({
     updateUrlParams(pagination)
   }, [pagination]) // Срабатывает при изменении pagination
 
+  // Обновление `searchTerm`, но не `searchParams`
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearchQuery = e.target.value
-    const params = new URLSearchParams(searchParams.toString())
+    setSearchTerm(e.target.value)
+  }
 
-    if (newSearchQuery) {
-      params.set("filter_search", newSearchQuery)
+  // Применение фильтра только после нажатия кнопки
+  const applyFilter = () => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (searchTerm) {
+      params.set("filter_search", searchTerm)
     } else {
       params.delete("filter_search")
     }
@@ -51,9 +56,9 @@ function AllStocks({
   return (
     <div className="container px-3 py-1 pt-20 md:pt-5">
       <TextFilterInput
-        value={searchQuery}
+        value={searchTerm}
         onChange={handleSearchChange}
-        applyFilter={() => {}} // не задействован
+        applyFilter={applyFilter} // Теперь используется
         placeholder="Искать по артикулу или описанию ..."
       />
       <DataTable
