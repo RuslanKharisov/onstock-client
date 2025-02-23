@@ -1,12 +1,12 @@
 import { apiClient } from "@/shared/api/base";
-import { CreateSupplierDto } from "../dto/create-supplier.dto";
+import { ChangeSupplierDto } from "../dto";
 
 
 export const createSupplier = async (
   userId: string,
   accessToken: string,
-  values: CreateSupplierDto,
+  values: ChangeSupplierDto,
 ) => {
-  const body = { ...values }
+  const body = {...values}
   return await apiClient.post(`supplier`, body, accessToken, 'Bearer');
 };

@@ -4,15 +4,17 @@ export type Supplier = {
   email: string
   siteUrl: string | null
   userId: string
+  subscription: Subscription
   phoneWork?: string
   phoneMobile?: string
   telegramAccount?: string
   whatsappNumber?: string
   vkProfile?: string
+  country?: string
+  city?: string
+  street?: string
+  houseNumber?: string
   logoUrl?: string
-  addressId: number
-  address: Address
-  subscription: Subscription
 }
 
 type Subscription = {
@@ -29,37 +31,4 @@ type Tariff = {
   name: string
   maxProducts: number
   pricePerUnit: number
-}
-
-type Country = {
-  id: number
-  name: string
-  name_en: string
-}
-
-type Region = {
-  id: number
-  name: string
-  label: string
-  fullname: string
-  name_en: string
-  countryId: number
-  country: Country
-}
-
-type City = {
-  id: number
-  name: string
-  label: string
-  zip: number
-  regionId: number
-  region: Region
-}
-
-type Address = {
-  id: number
-  street: string
-  house: string
-  cityId: number
-  city: City
 }

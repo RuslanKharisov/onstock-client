@@ -5,7 +5,6 @@ import { getSupplier } from "./get-supplier";
 import { createSupplier } from "./create-supplier";
 import { ChangeSupplierDto } from "../dto";
 import { getSupplierInfo } from "./get-supplier-info";
-import { CreateSupplierDto } from "../dto/create-supplier.dto";
 
 export const supplierQueries = {
   all: () => ["suppliers"],
@@ -25,7 +24,7 @@ export const useGetSupplier = (userId: string, accessToken: string) => {
 // Хук для получение информации о поставщике по ID поставщика из params
 export const useGetSupplierInfo = (supplierId: number) => {
   return useQuery({
-    queryKey: ["supplier", supplierId,],
+    queryKey: ["supplier", supplierId, ],
     queryFn: () => getSupplierInfo(supplierId),
     enabled: !!supplierId, // Запрос выполняется только если есть id
   })
@@ -34,7 +33,7 @@ export const useGetSupplierInfo = (supplierId: number) => {
 // Хуки для мутаций
 export const useCreateSupplier = () =>
   useMutation({
-    mutationFn: ({ userId, accessToken, values }: { userId: string; accessToken: string; values: CreateSupplierDto }) =>
+    mutationFn: ({ userId, accessToken, values }: { userId: string; accessToken: string; values: ChangeSupplierDto }) =>
       createSupplier(userId, accessToken, values),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: supplierQueries.details() });
@@ -49,4 +48,3 @@ export const useUpdateSupplier = () =>
       queryClient.invalidateQueries({ queryKey: supplierQueries.details() });
     },
   });
-
