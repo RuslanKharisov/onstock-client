@@ -12,12 +12,18 @@ export const publicRoutes: string[] = [
   "/docs/policy",
   "/docs/user-agreement",
 ]
+export const privateRoutes: string[] = [
+  "/personal-stock",
+  "/profile",
+  "/prising",
+  "/auth/new-verification",
+]
 
 /**
  * Массив роутов с доступом для роли Admin
  */
 export const adminRoutes: string[] = [
-  "/settings",
+  "/admin-panel",
 ]
 
 /**

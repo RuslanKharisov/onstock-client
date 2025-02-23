@@ -1,8 +1,10 @@
-import { 
-  DEFAULT_LOGIN_REDIRECT, 
-  publicRoutes, 
-  authRoutes, 
-  apiAuthPrefix 
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  publicRoutes,
+  authRoutes,
+  apiAuthPrefix,
+  privateRoutes,
+  adminRoutes
 } from "@/shared/lib/routes";
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/shared/lib/auth-ulils";
@@ -32,10 +34,14 @@ export async function middleware(req: NextRequest) {
   };
 
   const isLoggedIn = await isValidSession();
+  const userRole = session?.user.role || "";
+  console.log("userRole ==> ", userRole);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/supplier');
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
+  const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
 
   // Если это API аутентификации, продолжаем выполнение
   if (isApiAuthRoute) return NextResponse.next();
@@ -48,9 +54,23 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  // Если пользователь не вошёл и маршрут не публичный
-  if (!isLoggedIn && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/auth/login", nextUrl));
+  // Если  маршрут не публичныйне и пользователь не вошёл
+  if (isPrivateRoute) {
+    if (!isLoggedIn) {
+      return NextResponse.redirect(new URL("/auth/login", nextUrl));
+    } else {
+      return NextResponse.next();
+    }
+  }
+
+  if (isAdminRoute && userRole !== "ADMIN") {
+    return NextResponse.redirect(new URL("/", nextUrl));
+  }
+
+  // Проверка на существование страницы
+  const response = await fetch(new URL(req.nextUrl, req.url), { method: "HEAD" });
+  if (!response.ok) {
+    return NextResponse.rewrite(new URL("/not-found", req.url));
   }
 
   return NextResponse.next();
