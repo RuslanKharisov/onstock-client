@@ -1,7 +1,7 @@
 import { MetaData } from "@/shared/api/model/types";
-import { StockListElementWithRelations } from "../_domain/types";
+import { StockListDto } from "./stock-list.dto";
 
 export type PaginatedStockListDto = {
-  data: StockListElementWithRelations[];
+  data: StockListDto[];
   meta: MetaData
 }
