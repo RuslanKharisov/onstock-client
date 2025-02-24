@@ -4,7 +4,7 @@ import Yandex from "next-auth/providers/yandex"
 import { LoginSchema } from "./_domain/schemas"
 import { jwtVerify } from "jose"
 import { loginUser } from "./api/login-user"
-import { createUser } from "./api/create-user"
+import { oAuthSignInUser } from "./api/create-user"
 import { refreshToken } from "./api/refresh-token"
 
 export const {
@@ -59,7 +59,7 @@ export const {
 
       // на сервере проверяется, существует ли уже пользователь
       // и возвращаются токены сессии
-      const res = await createUser({
+      const res = await oAuthSignInUser({
         name: user.name as string,
         email: user.email as string,
         password: "",
@@ -68,9 +68,11 @@ export const {
         type: account.type,
         image: user.image,
       })
+      console.log("signIn res ==> ", res);
       if (res.user) {
         user.backendTokens = res.backendTokens
         user.id = res.user.id
+        user.role = res.user.role
         return true
       } else {
         return false

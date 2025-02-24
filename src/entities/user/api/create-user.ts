@@ -7,7 +7,7 @@ export interface ICreateUser {
   error?: string
 }
 
-export const createUser = async (
+export const oAuthSignInUser = async (
   data: CreateUserDto,
 ): Promise<Session> => {
   const body = { ...data }
