@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useGetSupplierInfo } from "@/entities/supplier/api/supplier.queries"
 import { Telegram } from "@/shared/icons/telegram"
@@ -7,26 +7,25 @@ import { Badge } from "@/shared/ui/badge"
 import { Skeleton } from "@/shared/ui/skeleton"
 import Image from "next/image"
 
-export default  function Supplier({
-  params,
-}: {
-  params: { id: number }
-}) {
+export default function Supplier({ params }: { params: { id: number } }) {
   const supplierId = Number(params.id)
 
-  const { data:supplier, isPending } =  useGetSupplierInfo(supplierId)
+  const { data: supplier, isPending } = useGetSupplierInfo(supplierId)
 
-  if (isPending) return (
-    <div className="container h-full flex flex-col items-center justify-center">
-      <h1>... загружаем данные</h1>
-    </div>
-)
+  if (isPending)
+    return (
+      <div className="container flex h-full flex-col items-center justify-center">
+        <h1>... загружаем данные</h1>
+      </div>
+    )
 
-  if (!supplier) return (
-    <div className="container h-full flex flex-col items-center justify-center">
-      <h1>Что то пошло не так</h1>
-    </div>
-)
+  if (!supplier)
+    return (
+      <div className="container flex h-full flex-col items-center justify-center">
+        <h1>Что то пошло не так</h1>
+      </div>
+    )
+  console.log("Supplier supplier ==> ", supplier)
 
   return (
     <>
