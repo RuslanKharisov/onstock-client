@@ -1,4 +1,5 @@
 "use client"
+"use client"
 
 import { useGetSupplierInfo } from "@/entities/supplier/api/supplier.queries"
 import { Telegram } from "@/shared/icons/telegram"
@@ -25,7 +26,6 @@ export default function Supplier({ params }: { params: { id: number } }) {
         <h1>Что то пошло не так</h1>
       </div>
     )
-  console.log("Supplier supplier ==> ", supplier)
 
   return (
     <>
@@ -167,8 +167,10 @@ export default function Supplier({ params }: { params: { id: number } }) {
                         d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
                       />
                     </svg>
-                    {supplier.country}, {supplier.city}, {supplier.street},{" "}
-                    {supplier.houseNumber}
+                    {supplier.address.city.region.country.name},{" "}
+                    {supplier.address.city.region.name},{" "}
+                    {supplier.address.city.name}, {supplier.address.street},{" "}
+                    {supplier.address.house}
                   </dd>
                 </dl>
 
@@ -194,8 +196,9 @@ export default function Supplier({ params }: { params: { id: number } }) {
                         d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
                       />
                     </svg>
-                    {supplier.country}, {supplier.city}, {supplier.street},{" "}
-                    {supplier.houseNumber}
+                    {supplier.address.city.region.country.name},{" "}
+                    {supplier.address.city.name}, {supplier.address.street},{" "}
+                    {supplier.address.house}
                   </dd>
                 </dl>
               </div>
