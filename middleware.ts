@@ -14,6 +14,8 @@ export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const session = await auth();
 
+  if (!session) return false;
+
   // Проверяем наличие действующей сессии
   const isValidSession = async (): Promise<boolean> => {
     if (!session) return false;
@@ -34,8 +36,8 @@ export async function middleware(req: NextRequest) {
   };
 
   const isLoggedIn = await isValidSession();
-  const userRole = session?.user.role || "";
-  console.log("userRole ==> ", userRole);
+  const userRole = session.user.role;
+  console.log("userRole ==> ", session);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/supplier');
