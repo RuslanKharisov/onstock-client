@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
   };
 
   const isLoggedIn = await isValidSession();
-  const userRole = session.user.role;
+  const userRole = session?.user.role;
   console.log("userRole ==> ", session);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
