@@ -14,8 +14,6 @@ export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const session = await auth();
 
-  if (!session) return false;
-
   // Проверяем наличие действующей сессии
   const isValidSession = async (): Promise<boolean> => {
     if (!session) return false;
