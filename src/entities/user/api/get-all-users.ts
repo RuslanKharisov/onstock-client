@@ -1,32 +1,25 @@
 import { apiClient } from "@/shared/api/base"
-import { UserEntity } from "../types/types"
+import { getAllUsersDto } from "../dto/get-all-users.dto";
+import { MetaData } from "@/shared/api/model/types";
+import { UsersListElementWithRelations } from "../_domain/types";
 
-export interface UserResponse {
-  user?: UserEntity | null; // Поле с пользователем
-  error?: string; // Поле с сообщением об ошибке
+export type PaginatedUsersListDto = {
+  data: UsersListElementWithRelations[];
+  meta: MetaData
 }
 
 export const getAllUsers = async (
-  userId: string,
-  accessToken: string,
-): Promise<UserResponse | null> => {
-  const body = {}
-  try {
-    const res: UserResponse = await apiClient.post(
-      `user`,
-      body,
-      accessToken,
-      "Bearer",
-    )
-
-    // Проверка на ошибки
-    if (res.error) {
-      throw new Error(res.error)
-    }
-    
-    return res as UserResponse; // Приведение типа к UserEntity
-  } catch (error) {
-    console.error(error); // Логирование ошибки
-    return null
+  { accessToken, data }: {
+    accessToken: string,
+    data: getAllUsersDto
   }
+): Promise<PaginatedUsersListDto> => {
+  const body = data
+  return await apiClient.post(
+    `user`,
+    body,
+    accessToken,
+    'Bearer'
+  )
+
 }

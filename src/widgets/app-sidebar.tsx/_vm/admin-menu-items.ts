@@ -1,24 +1,32 @@
-import { Home, Users, Infinity, Building2 } from "lucide-react"
+import {
+  Home, Users, FileText, Settings, Factory
+} from "lucide-react";
 
 export const AdminMenuItems = [
   {
-    title: "Home",
-    url: "/stock",
+    title: "Главная",
+    url: "/admin/dashboard",
     icon: Home,
   },
   {
-    title: "Пользователи",
-    url: "#",
+    title: "Пользователи и роли",
+    url: "/admin/users",
     icon: Users,
   },
   {
-    title: "Подписки",
-    url: "#",
-    icon: Infinity,
+    title: "Поставщики",
+    url: "/admin/suppliers",
+    icon: Factory,
   },
   {
-    title: "Компании",
-    url: "#",
-    icon: Building2,
+    title: "Логи и аудит",
+    url: "/admin/logs",
+    icon: FileText,
   },
-]
+  {
+    title: "Настройки",
+    url: "/admin/settings",
+    icon: Settings,
+  },
+];
+

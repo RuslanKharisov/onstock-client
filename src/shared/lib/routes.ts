@@ -23,7 +23,7 @@ export const privateRoutes: string[] = [
  * Массив роутов с доступом для роли Admin
  */
 export const adminRoutes: string[] = [
-  "/admin-panel",
+  "/admin/",
 ]
 
 /**

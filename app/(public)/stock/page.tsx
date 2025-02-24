@@ -25,10 +25,6 @@ export default async function StockPage({
   const count = data.meta.total
 
   return (
-    <AllStocks
-      stockArray={stockArray}
-      count={count}
-      searchQuery={searchQuery}
-    />
+    <AllStocks dataArray={stockArray} count={count} searchQuery={searchQuery} />
   )
 }

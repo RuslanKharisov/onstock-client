@@ -1,19 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-columns"
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { useRouter, useSearchParams } from "next/navigation"
 import { TextFilterInput } from "@/shared/ui/text-filter-input"
+import { UsersTableColumns } from "@/entities/user/_vm/_users-table-columns"
 
-function AllStocks({
+function Users({
   dataArray,
   count,
   searchQuery,
 }: {
   dataArray: any[]
   count: number
-  searchQuery: string
+  searchQuery?: string
 }) {
   const { onPaginationChange, pagination } = usePagination()
   const router = useRouter()
@@ -62,7 +62,7 @@ function AllStocks({
         placeholder="Искать по артикулу или описанию ..."
       />
       <DataTable
-        columns={ProductsTableColumns}
+        columns={UsersTableColumns}
         data={dataArray}
         rowCount={count}
         manualPagination={true}
@@ -75,4 +75,4 @@ function AllStocks({
   )
 }
 
-export { AllStocks }
+export { Users }
