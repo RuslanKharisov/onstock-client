@@ -3,7 +3,6 @@
 import { UsersListElementWithRelations } from "../_domain/types"
 
 import { ColumnDef } from "@tanstack/react-table"
-import Link from "next/link"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -60,13 +59,8 @@ export const UsersTableColumns: ColumnDef<UsersListElementWithRelations>[] = [
     cell: ({ row, column }) => {
       const user = row.original
       return (
-        <div data-title={column.columnDef.header as string} className="">
-          <Link
-            className="font-semibold text-primary hover:text-destructive"
-            href={`/supplier/${user.Supplier.id}`}
-          >
-            {user.Supplier.name}
-          </Link>
+        <div data-title={column.columnDef.header as string}>
+          <i>{user?.Supplier?.name}</i>
         </div>
       )
     },
