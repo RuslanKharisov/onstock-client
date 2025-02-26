@@ -1,10 +1,10 @@
-import { Store, Home, User, Database } from "lucide-react"
+import { Store, User, Database, CornerUpLeft } from "lucide-react"
 
 export const PrivateMenuItems = [
   {
-    title: "Home",
+    title: "Общий склад",
     url: "/stock",
-    icon: Home,
+    icon: CornerUpLeft,
   },
   {
     title: "Мой склад",

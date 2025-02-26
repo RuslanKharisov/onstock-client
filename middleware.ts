@@ -35,7 +35,7 @@ export async function middleware(req: NextRequest) {
 
   const isLoggedIn = await isValidSession();
   const userRole = session?.user?.role ?? "USER"; // Добавляем защиту
-  console.log("userRole ==> ", session);
+
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith('/supplier');

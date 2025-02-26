@@ -11,9 +11,13 @@ export default async function Layout({
 
   if (session?.user.role !== "ADMIN") redirect("/")
 
+  const role = session
+    ? (session?.user.role as "USER" | "ADMIN" | undefined)
+    : "USER"
+
   return (
     <div className="flex">
-      <AppSidebar variant="admin" />
+      <AppSidebar variant={role} />
       <main className="w-full">{children}</main>
     </div>
   )

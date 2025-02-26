@@ -45,4 +45,4 @@ export const apiAuthPrefix = "/api/auth";
 /**
  * Роут для редиректа после аутентификации
  */
-export const DEFAULT_LOGIN_REDIRECT = "/personal-stock";
+export const DEFAULT_LOGIN_REDIRECT = "/profile";

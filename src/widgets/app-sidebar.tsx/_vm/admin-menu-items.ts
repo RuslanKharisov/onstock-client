@@ -1,12 +1,19 @@
 import {
-  Home, Users, FileText, Settings, Factory
+  Users, FileText, Settings, Factory, User, Store,
+  LayoutDashboard,
+  CornerUpLeft
 } from "lucide-react";
 
 export const AdminMenuItems = [
   {
-    title: "Главная",
+    title: "На главную",
+    url: "/",
+    icon: CornerUpLeft,
+  },
+  {
+    title: "Аналитика",
     url: "/admin/dashboard",
-    icon: Home,
+    icon: LayoutDashboard,
   },
   {
     title: "Пользователи и роли",
@@ -27,6 +34,16 @@ export const AdminMenuItems = [
     title: "Настройки",
     url: "/admin/settings",
     icon: Settings,
+  },
+  {
+    title: "Профиль",
+    url: "/profile",
+    icon: User,
+  },
+  {
+    title: "Мой склад",
+    url: "/personal-stock",
+    icon: Store,
   },
 ];
 

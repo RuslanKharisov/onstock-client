@@ -14,15 +14,15 @@ export interface IsideBarItems {
 }
 
 interface AppSidebarProps {
-  variant?: "privite" | "admin"
+  variant: "USER" | "ADMIN" | undefined
 }
 
-export function AppSidebar({ variant = "privite" }: AppSidebarProps) {
+export function AppSidebar({ variant = "USER" }: AppSidebarProps) {
   const isDesktop = useMediaQuery("(min-width:768px)", {
     initializeWithValue: false,
   })
 
-  const menuItems = variant === "admin" ? AdminMenuItems : PrivateMenuItems
+  const menuItems = variant === "ADMIN" ? AdminMenuItems : PrivateMenuItems
 
   if (isDesktop) return <SidebarDesktop sideBarItems={menuItems} />
 
