@@ -1,6 +1,4 @@
 import { getAllSuppliers } from "@/entities/supplier/api/get-all-suppliers"
-import { Role } from "@/entities/user/_domain/types"
-import { auth } from "@/entities/user/auth"
 import { SupplierList } from "@/views/suppliers"
 
 type SearchParams = {

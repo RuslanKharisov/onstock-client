@@ -2,7 +2,6 @@
 
 import { MainNav } from "./_ui/main-nav"
 import { Home, LucideIcon, Store } from "lucide-react"
-import { useMediaQuery } from "usehooks-ts"
 import { MobileNav } from "./_ui/mobile-nav"
 
 export interface IHeaderItems {
@@ -29,7 +28,7 @@ const headerItems = [
   },
 ]
 
-export function AppHeader({ isMobile }: { isMobile: boolean }) {
+export function AppHeader({ isMobile }: { isMobile?: boolean }) {
   console.log("isMobile ==> ", isMobile)
 
   if (!isMobile) return <MainNav headerItems={headerItems} />

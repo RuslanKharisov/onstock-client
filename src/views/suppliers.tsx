@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { Card, CardContent, CardFooter } from "@/shared/ui/card"
+import { Card, CardContent } from "@/shared/ui/card"
 import { LayoutGrid, List } from "lucide-react"
 import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/toggle-group"
 import { PaginatedSuppliersList } from "@/entities/supplier/_domain/types"
@@ -14,12 +14,11 @@ function SupplierList({
   suppliersData: PaginatedSuppliersList
 }) {
   const router = useRouter()
-  if (!suppliersData) return null
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-
   const isDesktop = useMediaQuery("(min-width:768px)", {
     initializeWithValue: false,
   })
+  if (!suppliersData) return null
 
   const supplierList = suppliersData.data
 
