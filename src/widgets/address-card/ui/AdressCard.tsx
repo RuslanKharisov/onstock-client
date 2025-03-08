@@ -42,8 +42,8 @@ const AdressCard = ({ supplier, className, viewMode }: AdressCardProps) => {
                 variant={supplier?.type === "SI" ? "secondary" : "default"}
               >
                 {supplier?.type && supplier?.type === "SI"
-                  ? "Дистрибьютор"
-                  : "Интегратор"}
+                  ? "Интегратор"
+                  : "Дистрибьютор"}
               </Badge>
             </div>
             <div className="flex grow flex-col justify-between">
