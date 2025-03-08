@@ -1,3 +1,4 @@
+import { isMobileDevice } from "@/shared/lib/responsive"
 import { Footer } from "@/widgets/app-footer"
 import { AppHeader } from "@/widgets/app-header/app-header"
 import { Suspense } from "react"
@@ -7,13 +8,12 @@ export default async function Layout({
 }: {
   children: React.ReactNode
 }) {
+  const isMobile = await isMobileDevice()
   return (
     <>
-      <Suspense fallback={<div>Loading Header...</div>}>
-        <AppHeader />
-      </Suspense>
+      <AppHeader isMobile={isMobile} />
       <Suspense fallback={<div>Loading...</div>}>
-        <main className="w-full">{children}</main>
+        <main className="mt-5 w-full">{children}</main>
       </Suspense>
       <Footer />
     </>

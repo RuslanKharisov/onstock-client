@@ -5,7 +5,6 @@ import { Home, LucideIcon, Store } from "lucide-react"
 import { useMediaQuery } from "usehooks-ts"
 import { MobileNav } from "./_ui/mobile-nav"
 
-
 export interface IHeaderItems {
   title: string
   url: string
@@ -23,14 +22,17 @@ const headerItems = [
     url: "/stock",
     icon: Store,
   },
+  {
+    title: "Поставщики",
+    url: "/supplier",
+    icon: Store,
+  },
 ]
 
-export function AppHeader() {
-  const isDesktop = useMediaQuery("(min-width:768px)", {
-    initializeWithValue: false,
-  })
-  if(isDesktop) return <MainNav headerItems={headerItems}/>
+export function AppHeader({ isMobile }: { isMobile: boolean }) {
+  console.log("isMobile ==> ", isMobile)
 
-  return <MobileNav headerItems = {headerItems}/>
+  if (!isMobile) return <MainNav headerItems={headerItems} />
 
+  return <MobileNav headerItems={headerItems} />
 }

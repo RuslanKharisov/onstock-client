@@ -1,3 +1,5 @@
+import { MetaData } from "@/shared/api/model/types"
+
 export type Supplier = {
   id: number
   name: string
@@ -13,6 +15,12 @@ export type Supplier = {
   addressId: number
   address: Address
   subscription: Subscription
+  type?: SupplierType
+}
+
+export type PaginatedSuppliersList = {
+  data: Supplier[];
+  meta: MetaData
 }
 
 type Subscription = {
@@ -23,6 +31,8 @@ type Subscription = {
   endDate: Date
   tariff: Tariff
 }
+
+type SupplierType = "SUPPLIER" | "SI"
 
 type Tariff = {
   id: number
