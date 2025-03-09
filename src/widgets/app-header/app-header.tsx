@@ -29,9 +29,6 @@ const headerItems = [
 ]
 
 export function AppHeader({ isMobile }: { isMobile?: boolean }) {
-  console.log("isMobile ==> ", isMobile)
-
   if (!isMobile) return <MainNav headerItems={headerItems} />
-
   return <MobileNav headerItems={headerItems} />
 }

@@ -68,7 +68,7 @@ export const {
         type: account.type,
         image: user.image,
       })
-      console.log("signIn res ==> ", res);
+
       if (res.user) {
         user.backendTokens = res.backendTokens
         user.id = res.user.id

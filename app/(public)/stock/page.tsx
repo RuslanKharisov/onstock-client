@@ -19,7 +19,6 @@ export default async function StockPage({
   const perPage = Number(searchParams?.perPage) || 10
 
   const data = await getStocks({ page, perPage, searchQuery })
-  console.log("data ==> ", data.data)
   const stockArray = convertToStockArray(
     data.data as StockListElementWithRelations[],
   )
