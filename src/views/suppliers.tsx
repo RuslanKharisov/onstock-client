@@ -1,71 +1,34 @@
 "use client"
-import { useState } from "react"
-import { Card, CardContent } from "@/shared/ui/card"
-import { LayoutGrid, List } from "lucide-react"
-import { ToggleGroup, ToggleGroupItem } from "@/shared/ui/toggle-group"
 import { PaginatedSuppliersList } from "@/entities/supplier/_domain/types"
 import { AdressCard } from "@/widgets/address-card"
-import { useMediaQuery } from "usehooks-ts"
-import { useRouter } from "next/navigation"
 
 function SupplierList({
   suppliersData,
 }: {
   suppliersData: PaginatedSuppliersList
 }) {
-  const router = useRouter()
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-  const isDesktop = useMediaQuery("(min-width:768px)", {
-    initializeWithValue: false,
-  })
   if (!suppliersData) return null
 
   const supplierList = suppliersData.data
 
   return (
-    <div className="container px-3 py-1 pt-5">
-      <div className="space-y-4">
-        {/* Переключатель режима отображения */}
-        <ToggleGroup
-          type="single"
-          value={viewMode}
-          onValueChange={(value: "grid" | "list") => setViewMode(value)}
-          className={` h-4 justify-end `}
-        >
-          {isDesktop ? (
-            <>
-              <ToggleGroupItem value="grid" aria-label="Сетка">
-                <LayoutGrid className="h-4 w-4" />
-              </ToggleGroupItem>
-              <ToggleGroupItem value="list" aria-label="Список">
-                <List className="h-4 w-4" />
-              </ToggleGroupItem>
-            </>
-          ) : (
-            ""
-          )}
-        </ToggleGroup>
-
-        {/* Отображение поставщиков */}
-        <div
-          className={`
-          ${viewMode === "grid" ? "grid grid-cols-1 gap-4 md:grid-cols-3" : "space-y-4"}
-        `}
-        >
+    <section className="mt-10 bg-white dark:bg-gray-900 md:mt-0">
+      <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16 ">
+        <div className="mx-auto mb-8 max-w-screen-sm text-center lg:mb-16">
+          <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            Список компаний
+          </h2>
+          <p className="font-light text-gray-500 dark:text-gray-400 sm:text-xl lg:mb-16">
+            На этой странице отображаются зарегистрировавшиеся компании
+          </p>
+        </div>
+        <div className="mb-6 grid gap-8 md:grid-cols-2 lg:mb-16">
           {supplierList.map((supplier) => (
-            <Card
-              key={supplier.id}
-              className="cursor-pointer transition-shadow hover:shadow-lg"
-              onClick={() => router.push(`/supplier/${supplier.id}`)}
-            >
-              <CardContent className="flex items-center justify-between gap-3 p-5 ">
-                <AdressCard supplier={supplier} viewMode={viewMode} />
-              </CardContent>
-            </Card>
+            <AdressCard key={supplier.id} supplier={supplier} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

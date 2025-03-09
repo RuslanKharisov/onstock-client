@@ -24,7 +24,7 @@ export default function Supplier({ params }: { params: { id: number } }) {
 
   return (
     <>
-      <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
+      <section className="mt-10 bg-white py-8 antialiased dark:bg-gray-900 md:py-8 md:pt-0">
         <div className="container px-4 2xl:px-0">
           <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
             Подробнее о компании: &#34;{supplier.name}&#34;
