@@ -25,6 +25,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.depcheck
+
 # local env files
 .env
 .env.production

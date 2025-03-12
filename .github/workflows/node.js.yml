@@ -37,16 +37,23 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ ! -d "node_modules" ]; then
+          if [ -f package-lock.json ]; then
+            echo "Found package-lock.json, installing dependencies..."
+            rm -rf node_modules
             npm ci
           else
-            echo "Skipping npm ci - node_modules already exists"
+            echo "No package-lock.json found, skipping npm install"
           fi
 
       # Восстанавливаем .env
       - name: Restore .env
         run: |
-          cp /home/admin2/secrets/.env.production .env.production || echo "No .env.production to copy"
+          if [ -f /home/admin2/secrets/.env.production ]; then
+            cp /home/admin2/secrets/.env.production .env.production
+            echo ".env.production restored"
+          else
+            echo "No .env.production to copy"
+          fi
 
       - name: Cache Next.js build
         uses: actions/cache@v4
@@ -58,5 +65,8 @@ jobs:
           restore-keys: |
             nextjs-${{ runner.os }}-${{ matrix.node-version }}-
 
-      - run: npm run build --if-present
-      - run: pm2 restart nextjs --update-env
+      - name: Build Next.js app
+        run: npm run build --if-present
+
+      - name: Restart PM2 process
+        run: pm2 restart nextjs --update-env
