@@ -1,14 +1,14 @@
-'use client'
-import { Input } from "@/shared/ui/input";
-import { Button } from "@/shared/ui/button";
-import { Search } from "lucide-react";
-import { FC } from "react";
+"use client"
+import { Input } from "@/shared/ui/input"
+import { Button } from "@/shared/ui/button"
+import { FC } from "react"
+import { SearchIcon } from "../icons/search-icon"
 
 interface TextFilterInputProps {
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  applyFilter: () => void;
-  placeholder: string;
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  applyFilter: () => void
+  placeholder: string
 }
 
 export const TextFilterInput: FC<TextFilterInputProps> = ({
@@ -25,7 +25,7 @@ export const TextFilterInput: FC<TextFilterInputProps> = ({
         value={value}
         onChange={onChange}
         onKeyDown={(e) => {
-          if (e.key === "Enter") applyFilter(); // Отправляем запрос по Enter
+          if (e.key === "Enter") applyFilter() // Отправляем запрос по Enter
         }}
       />
       <Button
@@ -34,8 +34,8 @@ export const TextFilterInput: FC<TextFilterInputProps> = ({
         variant="ghost"
         title="Применить фильтр"
       >
-        <Search size={16} />
+        <SearchIcon height={20} />
       </Button>
     </div>
-  );
-};
+  )
+}

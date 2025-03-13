@@ -1,24 +1,28 @@
-import { Store, User, Database, CornerUpLeft } from "lucide-react"
+import { CornerUpLeftIcon } from "@/shared/icons/corner-up-left-icon"
+import { StoreIcon } from "@/shared/icons/store-icon"
+import { UserIcon } from "@/shared/icons/user-icon"
+import { IsideBarItems } from "../_model/ISideBarItems"
+import { RussianRubleIcon } from "@/shared/icons/russian-ruble-icon"
 
-export const PrivateMenuItems = [
+export const PrivateMenuItems: IsideBarItems[] = [
   {
     title: "Общий склад",
     url: "/stock",
-    icon: CornerUpLeft,
+    icon: CornerUpLeftIcon,
   },
   {
     title: "Мой склад",
     url: "/personal-stock",
-    icon: Store,
+    icon: StoreIcon,
   },
   {
     title: "Профиль",
     url: "/profile",
-    icon: User,
+    icon: UserIcon,
   },
   {
     title: "Тарифы",
     url: "/prising",
-    icon: Database,
+    icon: RussianRubleIcon,
   },
 ]

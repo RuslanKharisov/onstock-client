@@ -9,10 +9,11 @@ import {
 } from "@/shared/ui/sheet"
 import { ToggleTheme } from "@/features/theme/toggle-theme"
 import { Button, ButtonProps } from "@/shared/ui/button"
-import { Menu, X } from "lucide-react"
 import { UserProfile } from "./user-profile"
 import { usePathname } from "next/navigation"
 import { HeaderSidebarButtonSheet as HeaderSidebarButton } from "./header-sidebar-button"
+import { XIcon } from "@/shared/icons/x-icon"
+import { MenuIcon } from "@/shared/icons/menu-icon"
 
 interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[]
@@ -36,7 +37,7 @@ function MobileNav({ headerItems }: MobileNavProps) {
               aria-label="Open menu"
               title="Open menu"
             >
-              <Menu size={25} />
+              <MenuIcon />
             </Button>
           </header>
         </SheetTrigger>
@@ -52,7 +53,7 @@ function MobileNav({ headerItems }: MobileNavProps) {
             </div>
             <SheetClose>
               <Button className="h-7 w-7 p-0" variant="ghost">
-                <X size={15} />
+                <XIcon />
               </Button>
             </SheetClose>
           </SheetHeader>

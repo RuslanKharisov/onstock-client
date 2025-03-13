@@ -1,11 +1,10 @@
 import { Button, ButtonProps } from "@/shared/ui/button"
 import { SheetClose } from "@/shared/ui/sheet"
 import { cn } from "@/shared/ui/utils"
-import { LucideIcon} from "lucide-react"
-import { ReactNode } from "react"
+import { FC, ReactNode, SVGProps } from "react"
 
 interface HeaderSidebarButtonProps extends ButtonProps {
-  icon?: LucideIcon
+  icon?: FC<SVGProps<SVGSVGElement>>
   className?: string
   children: ReactNode
 }
@@ -19,10 +18,10 @@ const HeaderSidebarButton = ({
   return (
     <Button
       variant="ghost"
-      className={cn("justify-start gap-2 w-full", className)}
+      className={cn("w-full justify-start gap-2", className)}
       {...props}
     >
-      {Icon && <Icon size={20}/>}
+      {Icon && <Icon />}
       <span>{children}</span>
     </Button>
   )
@@ -30,13 +29,12 @@ const HeaderSidebarButton = ({
 
 export { HeaderSidebarButton }
 
-
 const HeaderSidebarButtonSheet = (props: HeaderSidebarButtonProps) => {
   return (
     <SheetClose asChild>
       <HeaderSidebarButton {...props} />
     </SheetClose>
-  );
+  )
 }
 
-export {HeaderSidebarButtonSheet};
+export { HeaderSidebarButtonSheet }

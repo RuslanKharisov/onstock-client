@@ -1,6 +1,7 @@
 "use client"
 
 import { Stock } from "@/entities/stock/_domain/types"
+import { MailPlusIcon } from "@/shared/icons/mail-plus-icon"
 import { Button } from "@/shared/ui/button"
 
 import {
@@ -10,11 +11,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/tooltip"
 import { ColumnDef } from "@tanstack/react-table"
-import { MailPlus } from "lucide-react"
 import Link from "next/link"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 export const ProductsTableColumns: ColumnDef<Stock>[] = [
   {
@@ -125,7 +122,7 @@ export const ProductsTableColumns: ColumnDef<Stock>[] = [
                   size="icon"
                   onClick={() => navigator.clipboard.writeText(stock.email)}
                 >
-                  <MailPlus />
+                  <MailPlusIcon />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

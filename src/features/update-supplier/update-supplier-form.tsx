@@ -20,7 +20,6 @@ import { FormSuccess } from "@/shared/ui/form-success"
 import { Input } from "@/shared/ui/input"
 import { Spinner } from "@/shared/ui/spinner"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SquareArrowOutUpRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
@@ -30,6 +29,7 @@ import CityInput from "../update-profile/_ui/city-input"
 import RegionInput from "../update-profile/_ui/region-input"
 import CountryInput from "../update-profile/_ui/country-input"
 import { ChangeSupplierDto } from "@/entities/supplier/dto"
+import { SquareArrowOutUpRightIcon } from "@/shared/icons/square-arrow-out-up-right-icon"
 
 const UpdateSupplierForm = ({
   userId,
@@ -468,7 +468,7 @@ const UpdateSupplierForm = ({
               href="/personal-stock"
             >
               {" "}
-              <SquareArrowOutUpRight className="mr-2" />
+              <SquareArrowOutUpRightIcon className="mr-2" />
               <span className="my-5">Редактировать склад</span>
             </Link>
           ) : (

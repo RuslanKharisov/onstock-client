@@ -1,8 +1,8 @@
 "use client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar"
-import { User } from "lucide-react"
 import { cn } from "@/shared/ui/utils"
 import { Profile } from "../types/types"
+import { UserIcon } from "@/shared/icons/user-icon"
 
 export const ProfileAvatar = ({
   profile,
@@ -19,7 +19,7 @@ export const ProfileAvatar = ({
     <Avatar className={cn(className)}>
       <AvatarImage src={profile.image ?? ""} className="object-cover" />
       <AvatarFallback>
-        <User />
+        <UserIcon />
       </AvatarFallback>
     </Avatar>
   )

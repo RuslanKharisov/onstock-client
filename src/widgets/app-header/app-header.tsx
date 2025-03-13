@@ -1,31 +1,34 @@
 "use client"
 
 import { MainNav } from "./_ui/main-nav"
-import { Home, LucideIcon, Store } from "lucide-react"
 import { MobileNav } from "./_ui/mobile-nav"
 import { useMediaQuery } from "usehooks-ts"
+import { StoreIcon } from "@/shared/icons/store-icon"
+import { FC, SVGProps } from "react"
+import { UsersIcon } from "@/shared/icons/users-icon"
+import { CornerUpLeftIcon } from "@/shared/icons/corner-up-left-icon"
 
 export interface IHeaderItems {
   title: string
   url: string
-  icon?: LucideIcon
+  icon?: FC<SVGProps<SVGSVGElement>>
 }
 
 const headerItems = [
   {
     title: "Главная",
     url: "/",
-    icon: Home,
+    icon: CornerUpLeftIcon,
   },
   {
     title: "Cклад",
     url: "/stock",
-    icon: Store,
+    icon: StoreIcon,
   },
   {
     title: "Поставщики",
     url: "/supplier",
-    icon: Store,
+    icon: UsersIcon,
   },
 ]
 

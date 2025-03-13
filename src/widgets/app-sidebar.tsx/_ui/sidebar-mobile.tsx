@@ -8,11 +8,12 @@ import {
   SheetTrigger,
 } from "@/shared/ui/sheet"
 import { Button } from "@/shared/ui/button"
-import { Menu, X } from "lucide-react"
 import { SidebarButtonSheet as SidebarButton } from "./sidebar-button"
 import { usePathname } from "next/navigation"
 import { UserProfile } from "../../app-header/_ui/user-profile"
 import { ToggleTheme } from "@/features/theme/toggle-theme"
+import { MenuIcon } from "@/shared/icons/menu-icon"
+import { XIcon } from "@/shared/icons/x-icon"
 
 interface SidebarMobileProps {
   sideBarItems: IsideBarItems[]
@@ -23,9 +24,9 @@ const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="fixed z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-3 pl-3">
+        <div className="fixed z-50 w-full bg-background/95 py-3 pl-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <Button size="icon" variant="ghost" className="">
-            <Menu size={25} />
+            <MenuIcon />
           </Button>
         </div>
       </SheetTrigger>
@@ -41,7 +42,7 @@ const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
           </div>
           <SheetClose>
             <Button className="h-7 w-7 p-0" variant="ghost">
-              <X size={15} />
+              <XIcon />
             </Button>
           </SheetClose>
         </SheetHeader>

@@ -8,7 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu"
-import { LogOut, User } from "lucide-react"
 import { Button } from "@/shared/ui/button"
 import Link from "next/link"
 import { useSignOut } from "@/features/auth/use-sign-out"
@@ -17,6 +16,8 @@ import { LoginButton } from "@/features/login-user/login-button"
 import { EnterIcon } from "@radix-ui/react-icons"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
+import { UserIcon } from "@/shared/icons/user-icon"
+import { LogOutIcon } from "@/shared/icons/log-out-icon"
 
 export function UserProfile() {
   const { signOut, isPending: isLoadingSignOut } = useSignOut()
@@ -65,7 +66,7 @@ export function UserProfile() {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href={`/profile`}>
-              <User className="mr-2 h-4 w-4" />
+              <UserIcon className="mr-2 h-4 w-4" />
               <span>Личный кабинет</span>
             </Link>
           </DropdownMenuItem>
@@ -73,7 +74,7 @@ export function UserProfile() {
             disabled={isLoadingSignOut}
             onClick={() => signOut()}
           >
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOutIcon className="mr-2 h-4 w-4" />
             <span>Выход</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>

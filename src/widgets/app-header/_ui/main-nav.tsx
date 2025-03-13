@@ -14,13 +14,13 @@ interface MainNavProps {
 function MainNav({ headerItems }: MainNavProps) {
   const pathname = usePathname()
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky">
       <nav>
-        <div className="container flex  h-14 items-center gap-12">
-          <div className="mr-4 hidden md:flex">
+        <div className="h-14 gap-12  container flex items-center">
+          <div className="mr-4 md:flex hidden">
             <Logo />
           </div>
-          <div className="flex flex-1 items-center gap-7">
+          <div className="flex-1 gap-7 flex items-center">
             {headerItems.map((item, idx) => (
               <Link
                 key={idx}
@@ -32,7 +32,7 @@ function MainNav({ headerItems }: MainNavProps) {
             ))}
           </div>
 
-          <div className="flex flex-1 items-center justify-end space-x-3 ">
+          <div className="flex-1 space-x-3 flex items-center justify-end ">
             <Socials socialsData={socialsData} size="24" />
             <ToggleTheme />
             <UserProfile />
