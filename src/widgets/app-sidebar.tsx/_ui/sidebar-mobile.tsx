@@ -24,18 +24,18 @@ const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="fixed z-50 w-full bg-background/95 py-3 pl-3 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="z-50 w-full bg-background/95 py-3 pl-3 backdrop-blur supports-[backdrop-filter]:bg-background/60 fixed">
           <Button size="icon" variant="ghost" className="">
             <MenuIcon />
           </Button>
         </div>
       </SheetTrigger>
 
-      <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
+      <SheetContent side="left" hideClose className="px-3 py-4 max-w-[80%]">
         <SheetHeader className="flex flex-row items-center justify-between ">
           <div className="mb-3 ml-4">
-            <h1 className="">Личный кабинет</h1>
-            <div className="flex items-center gap-3 ">
+            {/* <h1 className="">Личный кабинет</h1> */}
+            <div className="gap-3 flex items-center ">
               <UserProfile />
               <ToggleTheme />
             </div>
