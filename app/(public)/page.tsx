@@ -3,8 +3,15 @@ import { FutureSection } from "@/widgets/future-section/_ui/future-section"
 import { HeroSection } from "@/widgets/hero-section/hero-section"
 import Link from "next/link"
 import { SearchInput } from "@/widgets/serch-input"
+import { GetManufactorerList } from "@/entities/manufacturer/api/get-all-manufactories"
+import { ManufacturersGrid } from "@/widgets/manufacturers"
 
 export default async function Home() {
+  const data = await GetManufactorerList({
+    page: 1,
+    perPage: 48,
+    filters: { name: "" },
+  })
   return (
     <>
       <div className="mt-[70px] min-h-screen border-r-red-400 md:mt-0">
@@ -31,6 +38,7 @@ export default async function Home() {
         </div>
         <HeroSection />
         <FutureSection />
+        <ManufacturersGrid data={data.data} />
         <BlogArticle />
       </div>
     </>

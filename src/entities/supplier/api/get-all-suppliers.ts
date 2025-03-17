@@ -1,6 +1,7 @@
 import { apiClient } from "@/shared/api/base";
 import { Supplier } from "../_domain/types";
 import { MetaData } from "@/shared/api/model/types";
+import { Filters } from "@/shared/types";
 
 
 type PaginatedSuppliersList = {
@@ -8,20 +9,20 @@ type PaginatedSuppliersList = {
   meta: MetaData
 }
 
-interface searchQueryDto {
+interface SuppliersListQueryDto {
   page: number
   perPage: number
-  searchQuery?: string
+  filters?: Filters
 }
 
 
-export const getAllSuppliers = async (
-  data: searchQueryDto,
+export const GetSupplierList = async (
+  data: SuppliersListQueryDto,
 ): Promise<PaginatedSuppliersList> => {
   const body = {
     page: data.page,
     perPage: data.perPage,
-    searchQuery: data.searchQuery
+    filters: data.filters
   }
   return await apiClient.post(`supplier`, body);
 };

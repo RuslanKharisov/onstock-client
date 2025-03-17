@@ -1,0 +1,1 @@
+export { ManufacturersGrid } from "./ui/manufacturers-grid"

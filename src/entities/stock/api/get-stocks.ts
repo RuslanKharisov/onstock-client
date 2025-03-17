@@ -5,6 +5,7 @@ import { stockQueryDto } from "../_domain/types"
 export const getStocks = async (
   data: stockQueryDto,
 ): Promise<PaginatedStockListDto> => {
+
   const body = {
     page: data.page,
     perPage: data.perPage,

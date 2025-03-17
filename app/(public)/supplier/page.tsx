@@ -1,21 +1,13 @@
-import { getAllSuppliers } from "@/entities/supplier/api/get-all-suppliers"
+import { GetSupplierList } from "@/entities/supplier/api/get-all-suppliers"
 import { SupplierList } from "@/views/suppliers"
 
-type SearchParams = {
-  filter_search?: string
-  page?: string
-  perPage?: string
-}
+export default async function SuppliersPage() {
+  const SuppliersListQuery = {
+    page: 1,
+    perPage: 10,
+    filters: { name: "" },
+  }
 
-export default async function SuppliersPage({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
-  const searchQuery = searchParams?.filter_search || ""
-  const page = Number(searchParams?.page) || 1
-  const perPage = Number(searchParams?.perPage) || 10
-
-  const data = await getAllSuppliers({ page, perPage, searchQuery })
+  const data = await GetSupplierList(SuppliersListQuery)
   return <SupplierList suppliersData={data} />
 }
