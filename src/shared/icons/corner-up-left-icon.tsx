@@ -9,9 +9,9 @@ const CornerUpLeftIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
       <polyline points="9 14 4 9 9 4" />
