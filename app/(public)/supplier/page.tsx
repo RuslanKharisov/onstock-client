@@ -9,5 +9,6 @@ export default async function SuppliersPage() {
   }
 
   const data = await GetSupplierList(SuppliersListQuery)
+
   return <SupplierList suppliersData={data} />
 }
