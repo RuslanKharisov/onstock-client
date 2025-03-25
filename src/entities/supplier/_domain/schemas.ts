@@ -19,18 +19,17 @@ export const SupplierSchema = z
     address: z.object({
       street: z.string().optional(),
       house: z.string().optional(),
-      cityId: z.number().optional(),
       city: z.object({
-        id: z.number(),
-        name: z.string().min(1),
+        id: z.number().optional(),
+        name: z.string().optional(),
         region: z.object({
-          name: z.string(),
+          name: z.string().optional(),
           country: z.object({
-            name: z.string(),
-          }),
-        }),
-      }),
-    })
+            name: z.string().optional(),
+          }).optional(),
+        }).optional(),
+      }).optional(),
+    }).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.siteUrl && data.siteUrl.trim() !== "") {

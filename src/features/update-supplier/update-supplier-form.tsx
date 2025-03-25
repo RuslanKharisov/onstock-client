@@ -78,6 +78,7 @@ const UpdateSupplierForm = ({
   } = useUpdateSupplier()
 
   const { data: supplier, isPending } = useGetSupplier(userId, accessToken)
+  console.log("supplier ==> ", supplier)
 
   const form = useForm<z.infer<typeof SupplierSchema>>({
     resolver: zodResolver(SupplierSchema),
@@ -138,14 +139,15 @@ const UpdateSupplierForm = ({
   }, [supplier])
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
+    console.log("values ==> ", values)
     const requestData: ChangeSupplierDto = {
       ...values,
       address: {
-        street: values.address.street,
-        house: values.address.house,
+        street: values?.address?.street,
+        house: values?.address?.house,
         city: {
-          name: values.address.city.name,
-          id: values.address.city.id,
+          name: values?.address?.city?.name || "",
+          id: values?.address?.city?.id || 0,
         },
       },
     }
@@ -155,6 +157,10 @@ const UpdateSupplierForm = ({
     } else {
       createSupplier({ userId, accessToken, values })
     }
+  }
+
+  const onError = (errors: any) => {
+    console.error("Form errors:", errors)
   }
 
   return (
@@ -183,18 +189,14 @@ const UpdateSupplierForm = ({
               </h3>
               <p className="text-center text-sm ">
                 Активный тариф:{" "}
-                <span>{supplier?.subscription.tariff.name}</span>{" "}
-              </p>
-              <p className="text-center text-sm ">
-                Лимит склада по тарифу:{" "}
-                <span>{supplier?.subscription.tariff.maxProducts}</span>{" "}
+                <span>{supplier?.subscription?.tariff.name}</span>{" "}
               </p>
             </div>
           )}
         </CardHeader>
         <CardContent>
           <FormProvider {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit, onError)}>
               <div className="mb-5 grid gap-x-3 gap-y-8 lg:grid-cols-2 xl:grid-cols-3">
                 <FormField
                   control={form.control}

@@ -24,5 +24,5 @@ export const GetSupplierList = async (
     perPage: data.perPage,
     filters: data.filters
   }
-  return await apiClient.post(`supplier`, body);
+  return await apiClient.post(`supplier/list`, body);
 };
