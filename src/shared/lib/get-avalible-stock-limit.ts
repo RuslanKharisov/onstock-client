@@ -1,5 +1,3 @@
-import { Supplier } from "@/entities/supplier/_domain/types"
-
 export function getAvalibleStockLimits({
   supplier,
   stockLenght,

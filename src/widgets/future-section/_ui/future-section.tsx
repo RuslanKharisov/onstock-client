@@ -6,8 +6,8 @@ const FutureSection = () => {
     <section className="">
       <div className="container py-8 sm:py-16 lg:px-6">
         <div className="mb-8 max-w-screen-md lg:mb-16">
-          <h2 className="mb-4 text-xl lg:text-4xl font-extrabold tracking-tight">
-            Мы стремимся помочь найти оборудование для промышленности в наличии.
+          <h2 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
+            Наша цель помочь найти оборудование для промышленности в наличии.
           </h2>
           <p className="md:text-lg">
             Преимущества к которым мы стремимся, это предоставить возможность

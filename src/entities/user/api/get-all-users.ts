@@ -1,6 +1,5 @@
 import { apiClient } from "@/shared/api/base"
 import { getAllUsersDto } from "../dto/get-all-users.dto";
-import { MetaData } from "@/shared/api/model/types";
 import { UsersListElementWithRelations } from "../_domain/types";
 
 export type PaginatedUsersListDto = {

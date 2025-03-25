@@ -1,5 +1,3 @@
-import { Supplier } from "@/entities/supplier/_domain/types";
-
 export type Role = 'ADMIN' | 'SUPPLIER' | 'USER';
 
 export type UsersListElementWithRelations = {

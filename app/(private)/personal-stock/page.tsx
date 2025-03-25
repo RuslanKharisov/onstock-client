@@ -1,70 +1,52 @@
-"use client"
-
-import { useGetPersonalStock } from "@/entities/stock-personal.ts/api/personal-stock.queries"
-import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
-import { getAvalibleStockLimits } from "@/shared/lib/get-avalible-stock-limit"
+import { getPersonalStock } from "@/entities/stock-personal.ts/api/get-personal-stock"
+import { auth } from "@/entities/user/auth"
 import { PrivatelStock } from "@/widgets/stock"
-import { ApdateStock, StockSettings } from "@/widgets/update-stock/update-stock"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+import { unstable_noStore as noStore } from "next/cache"
+import { revalidatePath } from "next/cache"
 
-function PersonalStock() {
-  const { data: session } = useSession()
-  const [stockSettings, setStockSettings] = useState<StockSettings | null>(null)
+export type SearchParams = {
+  sku: string
+  description: string
+  page?: string
+  perPage?: string
+}
+
+async function PersonalStock({ searchParams }: { searchParams: SearchParams }) {
+  const searchQuery = searchParams || ""
+  noStore()
+  const session = await auth()
+  if (!session) return false
 
   const userId = session?.user.id
   const accessToken = session?.backendTokens.accessToken
 
-  const { data: supplier } = useGetSupplier(userId ?? "", accessToken ?? "")
-
-  // получаем склад полользователя
-  const { data: existingStock } = useGetPersonalStock({
-    userId: userId ?? "",
-    accessToken: accessToken ?? "",
-    page: 1,
-    perPage: 5,
-    filters: undefined,
+  // Получаем данные с сервера
+  const personalStock = await getPersonalStock({
+    userId,
+    accessToken,
+    data: {
+      page: searchParams?.page,
+      perPage: searchParams?.perPage,
+      sku: searchParams?.sku,
+      description: searchParams?.description,
+    },
   })
 
-  useEffect(() => {
-    if (supplier && existingStock) {
-      const stockSettings = getAvalibleStockLimits({
-        supplier,
-        stockLenght: existingStock.meta.total,
-      })
-      setStockSettings(stockSettings ?? null)
-    }
-  }, [supplier, existingStock]) // Следим за изменениями
-
-  if (!session) return <h3>...Loading</h3>
+  // Функция для обновления данных (вызов из клиента)
+  async function updateStock() {
+    "use server"
+    revalidatePath("/personal-stock") // Обновляем страницу
+  }
 
   return (
     <div className="container mx-auto px-5 pt-16 md:pt-8 lg:px-6">
-      {/* to do вынести инфо о тарифе в отдельный компонент */}
-      <div>
-        <p className="text-center text-sm ">
-          Активный тариф:{" "}
-          <span>{supplier?.subscription.tariff.maxProducts}</span>{" "}
-        </p>
-        <p className="text-center text-sm ">
-          Лимит склада по тарифу: <span>{stockSettings?.tariffLimit}</span>{" "}
-        </p>
-        <p className="text-center text-sm ">
-          Доступно: <span>{stockSettings?.freeSpace}</span>{" "}
-        </p>
-      </div>
-
-      {userId && accessToken && (
-        <>
-          <ApdateStock
-            accessToken={accessToken}
-            userId={userId}
-            stockSettings={stockSettings}
-          />
-
-          <PrivatelStock userId={userId} accessToken={accessToken} />
-        </>
-      )}
+      <PrivatelStock
+        personalStock={personalStock}
+        userId={userId}
+        accessToken={accessToken}
+        updateStock={updateStock}
+        searchQuery={searchQuery}
+      />
     </div>
   )
 }

@@ -8,8 +8,8 @@ export type messagesType = {
 
 export type ApiResponseDto<T = any> = {
   statusCode: number
-  messages: messagesType[] | []
-  data: T
+  messages?: messagesType[] // Теперь поле необязательно
+  data?: T // Данные также могут отсутствовать
 }
 
 export const AddOrUpdateStockItem = async (

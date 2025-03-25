@@ -1,4 +1,3 @@
-import { Supplier } from "@/entities/supplier/_domain/types"
 import { StoreIcon } from "@/shared/icons/store"
 import { Telegram } from "@/shared/icons/telegram"
 import { WhatsApp } from "@/shared/icons/whatsapp"
@@ -12,13 +11,6 @@ const AdressCard = ({ supplier }: AdressCardProps) => {
   return (
     <div className="items-center rounded-lg bg-gray-50 px-1 shadow dark:border-gray-700 dark:bg-gray-800 sm:flex">
       <Link href={`/supplier/${supplier.id}`}>
-        {/* onClick={() => router.push(`/supplier/${supplier.id}`)} */}
-        {/* заглушка под logo на будущее */}
-        {/* <img
-          className="w-full rounded-lg sm:rounded-none sm:rounded-l-lg"
-          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/sofia-mcguire.png"
-          alt="Sofia Avatar"
-        /> */}
         <StoreIcon className="mx-auto h-[200px] w-[200px] rounded-lg sm:rounded-none sm:rounded-l-lg" />
       </Link>
       <div className="p-5">

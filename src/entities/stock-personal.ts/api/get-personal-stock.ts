@@ -1,29 +1,36 @@
 import { apiClient } from "@/shared/api/base"
 import { TPersonalPaginatedStockDto } from "../dto"
-import { ColumnFiltersState } from "@tanstack/react-table"
+
+interface queryDTO {
+  page?: string;
+  perPage?: string;
+  sku?: string;
+  description?: string;
+
+};
 
 export const getPersonalStock = async ({
   userId,
   accessToken,
-  page,
-  perPage,
-  filters,
+  data
 }: {
   userId: string
   accessToken: string
-  page: number
-  perPage: number
-  filters?: ColumnFiltersState
+  data: queryDTO
 }): Promise<TPersonalPaginatedStockDto> => {
-  const body = {
-    page,
-    perPage,
-    filters: JSON.stringify(filters || []),
-  }
+  const { page, perPage, ...filters } = data;
+
+  // Преобразуем filters в массив объектов { id, value }
+  const filtersArray = Object.entries(filters)
+    .filter(([_, value]) => value) // Убираем пустые значения
+    .map(([key, value]) => ({ id: key, value }));
+
+  const body = { page, perPage, filters: JSON.stringify(filtersArray) };
+
   return await apiClient.post<TPersonalPaginatedStockDto>(
     `stock/${userId}`,
     body,
     accessToken,
-    "Bearer",
-  )
-}
+    "Bearer"
+  );
+};

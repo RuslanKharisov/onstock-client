@@ -1,12 +1,12 @@
 export type addOrUpdateProductDto = {
-  sku: string
-  name: string
-  category: string | undefined
-  description: string
-  quantity: string | number
-  manufacturer: string | undefined
-  newDeliveryQty1: number | undefined
-  newDeliveryDate1: Date | undefined
-  newDeliveryQty2: number | undefined
-  newDeliveryDate2: Date | undefined
+  sku: string;
+  name: string;
+  description?: string | null;
+  quantity: number;
+  category?: string;
+  manufacturer?: string;
+  newDeliveryQty1?: number;
+  newDeliveryDate1?: Date;
+  newDeliveryQty2?: number;
+  newDeliveryDate2?: Date;
 }

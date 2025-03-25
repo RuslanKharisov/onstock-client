@@ -1,5 +1,3 @@
-import { Product } from "@/entities/producrts-list/_domain/types"
-
 export type Stock = {
   id: string
   sku: string
@@ -27,16 +25,7 @@ export type StockListElementWithRelations = {
   newDeliveryQty2: number
   newDeliveryDate2: Date
   product: Product
-  supplier: getSupplier
-}
-
-type getSupplier = {
-  id: number
-  name: string
-  email: string
-  siteUrl: string | null
-  userId: string
-  tariffId: number
+  supplier: Supplier
 }
 
 // Тип для ответа с пагинацией

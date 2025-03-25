@@ -1,5 +1,4 @@
 import { apiClient } from "@/shared/api/base"
-import { MetaData } from "@/shared/api/model/types";
 import { Manufacturer } from "../_domain/types";
 import { ManufactorerListQueryDto } from "../dto/manufactorer-list-query.dto";
 

@@ -7,9 +7,11 @@ import { Label } from "@/shared/ui/label"
 import React, { useState } from "react"
 import * as XLSX from "xlsx"
 import DownloadExcelSample from "./DownloadExcelSample"
-import { useAddOrUpdateProduct } from "@/entities/stock-personal.ts/api/personal-stock.queries"
 import { addOrUpdateProductCommand } from "@/entities/producrts-list/_domain/types"
 import { Spinner } from "@/shared/ui/spinner"
+import { useMutation } from "@tanstack/react-query"
+import { addOrUpdateProductDto } from "@/entities/stock-personal.ts/dto/add-stock-item.dto"
+import { AddOrUpdateStockItem } from "@/entities/stock-personal.ts/api/add-or-update-stock-item"
 
 export interface ProductsStock {
   Name: string
@@ -19,9 +21,11 @@ export interface ProductsStock {
 export function UpdateFromFile({
   accessToken,
   limit,
+  updateStock,
 }: {
   accessToken: string
   limit: number | null
+  updateStock: () => Promise<void>
 }) {
   const [error, setError] = useState<string | undefined>()
   const [stockData, setStockData] = useState<addOrUpdateProductCommand[]>([])
@@ -29,10 +33,23 @@ export function UpdateFromFile({
   const {
     mutate: addOrUpdateProduct,
     isPending,
-    data,
     isError,
     error: resError,
-  } = useAddOrUpdateProduct()
+    data,
+  } = useMutation({
+    mutationFn: ({
+      data,
+      accessToken,
+    }: {
+      data: addOrUpdateProductDto[]
+      accessToken: string
+    }) => {
+      return AddOrUpdateStockItem(accessToken, data)
+    },
+    onSuccess: async () => {
+      await updateStock() // Обновляем данные после успешного запроса
+    },
+  })
 
   function handleFileUpload(e: any) {
     const file = e.target.files[0]
@@ -115,7 +132,7 @@ export function UpdateFromFile({
       name: product.name || "",
       category: product.category || undefined,
       description: product.description || "",
-      quantity: product.quantity,
+      quantity: product.quantity as number,
       manufacturer: product.manufacturer || undefined,
       newDeliveryQty1:
         typeof product.newdelivery_qty_1 === "number"
@@ -160,9 +177,9 @@ export function UpdateFromFile({
         </Button>
       </CardContent>
       <CardContent>
-        {data?.messages?.[0]?.property === "ok" && (
+        {data?.data[0]?.property === "ok" && (
           <p className="mb-2 rounded-lg bg-green-300 px-3 py-3 text-center text-xs ">
-            {data?.messages?.[0]?.message}
+            {data?.data[0]?.message}
           </p>
         )}
         {error && (
@@ -170,9 +187,9 @@ export function UpdateFromFile({
             {error}
           </p>
         )}
-        {data?.messages?.[0]?.property === "warning" ? (
+        {data?.data[0]?.property === "warning" ? (
           <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">
-            {data?.messages?.[0]?.message}
+            {data?.data[0]?.message}
           </p>
         ) : isError ? (
           <p className="rounded-lg bg-red-200 px-3 py-3 text-center text-xs ">

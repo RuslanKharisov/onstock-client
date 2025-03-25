@@ -78,7 +78,6 @@ const UpdateSupplierForm = ({
   } = useUpdateSupplier()
 
   const { data: supplier, isPending } = useGetSupplier(userId, accessToken)
-  console.log("supplier ==> ", supplier)
 
   const form = useForm<z.infer<typeof SupplierSchema>>({
     resolver: zodResolver(SupplierSchema),
@@ -139,7 +138,6 @@ const UpdateSupplierForm = ({
   }, [supplier])
 
   const onSubmit = (values: z.infer<typeof SupplierSchema>) => {
-    console.log("values ==> ", values)
     const requestData: ChangeSupplierDto = {
       ...values,
       address: {

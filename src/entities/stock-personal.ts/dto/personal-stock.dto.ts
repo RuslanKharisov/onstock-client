@@ -1,15 +1,12 @@
-import { Supplier } from "@/entities/supplier/_domain/types"
-
 export type TPersonalStockDto = {
   id: string
   supplierId: number
   productId: string
   quantity: number
-  product: {
-    id: string
-    sku: string
-    name: string
-    description: string
-  }
+  newDeliveryQty1: number
+  newDeliveryDate1: Date
+  newDeliveryQty2: number
+  newDeliveryDate2: Date
+  product: Product
   supplier: Supplier
 }

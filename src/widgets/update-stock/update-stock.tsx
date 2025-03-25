@@ -9,26 +9,31 @@ import {
 } from "@/shared/ui/sheet"
 import { UpdateFromFile } from "./_ui/UpdateFromFile"
 import { Button } from "@/shared/ui/button"
-import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
 import { useRouter } from "next/navigation"
-
-export interface StockSettings {
-  stockLenght: number
-  tariffLimit: number
-  freeSpace: number
-}
+import { UpdateFromForm } from "./_ui/UpdateFromForm"
+import { useEffect, useState } from "react"
+import { getSupplier } from "@/entities/supplier/api/get-supplier"
 
 export function ApdateStock({
   userId,
   accessToken,
-  stockSettings,
+  updateStock,
 }: {
   userId: string
   accessToken: string
-  stockSettings: StockSettings | null
+  updateStock: () => Promise<void>
 }) {
   const router = useRouter()
-  const { data: supplier } = useGetSupplier(userId, accessToken)
+  const [supplier, setSupplier] = useState<Supplier>()
+  const limit = 1000 // лимит разового количества загрузки
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const data = await getSupplier(userId, accessToken)
+      setSupplier(data)
+    }
+    fetchPosts()
+  }, [])
 
   if (!supplier) {
     return (
@@ -50,13 +55,15 @@ export function ApdateStock({
   }
 
   return (
-    <section className="flex flex-wrap items-start justify-between gap-5">
-      {/* <Sheet>
+    <section className="flex flex-wrap items-start justify-between gap-5 py-5">
+      <Sheet>
         <SheetTrigger asChild>
-          <Button size="sm" className="w-full sm:w-fit">Добавить товар на склад</Button>
+          <Button size="sm" className="w-full sm:w-fit">
+            Добавить товар на склад
+          </Button>
         </SheetTrigger>
         <SheetContent
-          side="top"
+          side="left"
           className="flex flex-col items-center justify-center overflow-scroll pt-12"
         >
           <SheetHeader className="max-w-xs">
@@ -66,9 +73,14 @@ export function ApdateStock({
               продукт в базе данных .
             </SheetDescription>
           </SheetHeader>
-          {data && <UpdateFromForm supplier={data} accessToken={accessToken} />}
+
+          <UpdateFromForm
+            // limit={stockSettings.freeSpace}
+            accessToken={accessToken}
+            updateStock={updateStock}
+          />
         </SheetContent>
-      </Sheet> */}
+      </Sheet>
 
       <Sheet>
         <SheetTrigger asChild>
@@ -77,7 +89,7 @@ export function ApdateStock({
           </Button>
         </SheetTrigger>
         <SheetContent
-          side="top"
+          side="right"
           className="flex flex-col items-center justify-center overflow-scroll pt-12"
         >
           <SheetHeader className="max-w-xs">
@@ -87,12 +99,11 @@ export function ApdateStock({
               Нажмите Добавить, что-бы сохранить список в базе данных .
             </SheetDescription>
           </SheetHeader>
-          {stockSettings && (
-            <UpdateFromFile
-              accessToken={accessToken}
-              limit={stockSettings.freeSpace}
-            />
-          )}
+          <UpdateFromFile
+            accessToken={accessToken}
+            limit={limit}
+            updateStock={updateStock}
+          />
         </SheetContent>
       </Sheet>
     </section>

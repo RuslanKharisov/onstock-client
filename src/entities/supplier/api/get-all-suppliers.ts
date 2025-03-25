@@ -1,8 +1,4 @@
 import { apiClient } from "@/shared/api/base";
-import { Supplier } from "../_domain/types";
-import { MetaData } from "@/shared/api/model/types";
-import { Filters } from "@/shared/types";
-
 
 type PaginatedSuppliersList = {
   data: Supplier[];

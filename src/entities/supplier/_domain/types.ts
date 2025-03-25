@@ -1,23 +1,3 @@
-import { MetaData } from "@/shared/api/model/types"
-
-export type Supplier = {
-  id: number
-  name: string
-  email: string
-  siteUrl: string | null
-  userId: string
-  phoneWork?: string
-  phoneMobile?: string
-  telegramAccount?: string
-  whatsappNumber?: string
-  vkProfile?: string
-  logoUrl?: string
-  addressId: number
-  address: Address
-  subscription: Subscription
-  type?: SupplierType
-}
-
 export type PaginatedSuppliersList = {
   data: Supplier[];
   meta: MetaData
