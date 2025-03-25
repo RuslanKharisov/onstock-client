@@ -19,10 +19,19 @@ interface SuppliersListQueryDto {
 export const GetSupplierList = async (
   data: SuppliersListQueryDto,
 ): Promise<PaginatedSuppliersList> => {
-  const body = {
-    page: data.page,
-    perPage: data.perPage,
-    filters: data.filters
+  const params = new URLSearchParams();
+
+  // Добавляем параметры запроса
+  params.append('page', data.page.toString());
+  params.append('perPage', data.perPage.toString());
+
+  // Добавляем фильтры, если они есть
+  if (data.filters) {
+    Object.entries(data.filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        params.append(`filters[${key}]`, value.toString());
+      }
+    });
   }
-  return await apiClient.post(`supplier/list`, body);
+  return await apiClient.get(`supplier/list?${params.toString()}`);
 };
