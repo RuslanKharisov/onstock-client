@@ -31,6 +31,7 @@ async function PersonalStock({ searchParams }: { searchParams: SearchParams }) {
       description: searchParams?.description,
     },
   })
+  console.log("personalStock ==> ", personalStock)
 
   // Функция для обновления данных (вызов из клиента)
   async function updateStock() {
@@ -40,13 +41,17 @@ async function PersonalStock({ searchParams }: { searchParams: SearchParams }) {
 
   return (
     <div className="container mx-auto px-5 pt-16 md:pt-8 lg:px-6">
-      <PrivatelStock
-        personalStock={personalStock}
-        userId={userId}
-        accessToken={accessToken}
-        updateStock={updateStock}
-        searchQuery={searchQuery}
-      />
+      {personalStock ? (
+        <PrivatelStock
+          personalStock={personalStock}
+          userId={userId}
+          accessToken={accessToken}
+          updateStock={updateStock}
+          searchQuery={searchQuery}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
