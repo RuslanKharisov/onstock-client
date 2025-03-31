@@ -54,7 +54,7 @@ const CityInput: React.FC<InputProps> = ({
     <div className="relative w-full" ref={dropdownRef}>
       <Input
         {...field}
-        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className="block w-full "
         placeholder={placeholder}
         value={inputValue.name}
         onChange={(e) => handleChange(e)}
@@ -66,11 +66,11 @@ const CityInput: React.FC<InputProps> = ({
         }}
       />
       {suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full border border-gray-300 bg-white shadow-lg">
+        <ul className="absolute z-10 w-full border border-border bg-background shadow-lg">
           {suggestions.map((option) => (
             <li
               key={option.id}
-              className="cursor-pointer p-2 hover:bg-gray-200"
+              className="cursor-pointer p-2 hover:bg-foreground/10"
               onClick={() => {
                 setOnFocus(false)
                 setInputValue({
