@@ -9,7 +9,9 @@ export const getStocks = async (
   const body = {
     page: data.page,
     perPage: data.perPage,
-    searchQuery: data.searchQuery
+    filters: data.filters
   }
-  return await apiClient.post<PaginatedStockListDto>("stock", body)
+  console.log("body ==> ", body);
+
+  return await apiClient.post<PaginatedStockListDto>("stock/list", body)
 }

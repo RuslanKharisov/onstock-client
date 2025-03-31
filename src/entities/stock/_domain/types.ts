@@ -48,5 +48,5 @@ export type CreateStockElementCommand = {
 export interface stockQueryDto {
   page: number
   perPage: number
-  searchQuery?: string
+  filters?: Filters
 }

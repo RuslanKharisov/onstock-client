@@ -5,6 +5,7 @@ import { ProductsTableColumns } from "@/entities/stock/_vm/_products-table-colum
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { useRouter, useSearchParams } from "next/navigation"
 import { TextFilterInput } from "@/shared/ui/text-filter-input"
+import { SearchParams } from "app/(private)/personal-stock/page"
 
 function AllStocks({
   dataArray,
@@ -13,54 +14,84 @@ function AllStocks({
 }: {
   dataArray: any[]
   count: number
-  searchQuery: string
+  searchQuery: SearchParams
 }) {
   const { onPaginationChange, pagination } = usePagination()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [searchTerm, setSearchTerm] = useState(searchQuery) // Временный ввод
 
-  // Функция обновления URL при изменении пагинации
-  const updateUrlParams = (pagination: {
-    pageIndex: number
-    pageSize: number
-  }) => {
+  // Фильтры
+  const [filters, setFilters] = useState({
+    sku: searchQuery.sku || "", // Получаем из URL при загрузке
+    description: searchQuery.description || "",
+  })
+
+  // Функция обновления URL при изменении параметров поиска
+  const updateUrlParams = (
+    pagination?: {
+      pageIndex: number
+      pageSize: number
+    },
+    resetPage = false,
+  ) => {
     const params = new URLSearchParams(searchParams.toString())
-    params.set("page", (pagination.pageIndex + 1).toString()) // pageIndex начинается с 0
-    params.set("perPage", pagination.pageSize.toString())
+
+    if (filters.sku) {
+      params.set("sku", filters.sku)
+    } else {
+      params.delete("sku")
+    }
+
+    if (filters.description) {
+      params.set("description", filters.description)
+    } else {
+      params.delete("description")
+    }
+
+    if (resetPage) {
+      params.set("page", "1")
+    } else if (pagination) {
+      params.set("page", (pagination.pageIndex + 1).toString())
+      params.set("perPage", pagination.pageSize.toString())
+    }
+
     router.push(`?${params.toString()}`)
   }
 
-  // useEffect для отслеживания изменений пагинации
+  // useEffect для обновления URL при изменении пагинации
   useEffect(() => {
     updateUrlParams(pagination)
-  }, [pagination]) // Срабатывает при изменении pagination
+  }, [pagination]) // Обновляем URL при смене страницы
 
-  // Обновление `searchTerm`, но не `searchParams`
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value)
+  // Функция для обновления значений фильтров
+  const handleFilterChange = (key: keyof typeof filters, value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }))
   }
 
-  // Применение фильтра только после нажатия кнопки
+  // Применение фильтров при нажатии кнопки
   const applyFilter = () => {
-    const params = new URLSearchParams(searchParams.toString())
-    if (searchTerm) {
-      params.set("filter_search", searchTerm)
-    } else {
-      params.delete("filter_search")
-    }
-    params.set("page", "1") // При поиске сбрасываем на первую страницу
-    router.push(`?${params.toString()}`)
+    updateUrlParams(undefined, true)
   }
 
   return (
     <div className="container px-3 py-1 pt-20 md:pt-5">
-      <TextFilterInput
-        value={searchTerm}
-        onChange={handleSearchChange}
-        applyFilter={applyFilter} // Теперь используется
-        placeholder="Искать по артикулу или описанию ..."
-      />
+      <div className="flex flex-col gap-4  md:flex-row">
+        <TextFilterInput
+          value={filters.sku}
+          onChange={(e) => handleFilterChange("sku", e.target.value)}
+          applyFilter={applyFilter}
+          placeholder="Искать по артикулу..."
+        />
+        <TextFilterInput
+          value={filters.description}
+          onChange={(e) => handleFilterChange("description", e.target.value)}
+          applyFilter={applyFilter}
+          placeholder="Искать по описанию..."
+        />
+      </div>
       <DataTable
         columns={ProductsTableColumns}
         data={dataArray}

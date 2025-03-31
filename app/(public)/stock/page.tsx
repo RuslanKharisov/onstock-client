@@ -4,7 +4,8 @@ import { StockListElementWithRelations } from "@/entities/stock/_domain/types"
 import { AllStocks } from "@/widgets/stock"
 
 type SearchParams = {
-  filter_search?: string
+  sku: string
+  description: string
   page?: string
   perPage?: string
 }
@@ -14,11 +15,20 @@ export default async function StockPage({
 }: {
   searchParams: SearchParams
 }) {
-  const searchQuery = searchParams?.filter_search || ""
+  const searchQuery = searchParams || ""
   const page = Number(searchParams?.page) || 1
   const perPage = Number(searchParams?.perPage) || 10
 
-  const data = await getStocks({ page, perPage, searchQuery })
+  console.log("searchQuery ==> ", searchQuery)
+  const data = await getStocks({
+    page,
+    perPage,
+    filters: {
+      sku: searchParams?.sku,
+      description: searchParams?.description,
+    },
+  })
+
   const stockArray = convertToStockArray(
     data.data as StockListElementWithRelations[],
   )
