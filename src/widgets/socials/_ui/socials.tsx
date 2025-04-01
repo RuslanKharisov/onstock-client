@@ -1,3 +1,4 @@
+import { cn } from "@/shared/ui/utils"
 import { FC } from "react"
 
 export interface SocialsData {
@@ -7,13 +8,14 @@ export interface SocialsData {
 }
 
 interface SocialsProps {
-  size?: string
   socialsData: SocialsData[]
+  size?: string
+  className?: string
 }
 
-const Socials: FC<SocialsProps> = ({ size, socialsData }) => {
+const Socials: FC<SocialsProps> = ({ size, socialsData, className }) => {
   return (
-    <div className="flex gap-3">
+    <div className={cn("flex gap-3", className)}>
       {socialsData.map(({ icon: Icon, link, label }, index) => (
         <a
           key={index}

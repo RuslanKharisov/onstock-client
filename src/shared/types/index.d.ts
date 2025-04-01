@@ -17,7 +17,12 @@ interface Supplier {
     addressId: number
     address: Address
     subscription: Subscription
-    type?: SupplierType
+    supplierType?: SupplierType
+}
+
+interface SupplierType {
+    id: number
+    name: string
 }
 
 

@@ -1,1 +1,1 @@
-export {Socials} from "./_ui/socials"
+export { Socials } from "./_ui/socials"
