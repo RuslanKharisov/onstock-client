@@ -166,16 +166,16 @@ const UpdateSupplierForm = ({
       <Card className="w-full">
         <CardHeader>
           {isPending ? (
-            <div className="flex items-center justify-center">
-              <Spinner />
-              {/* <span>Загрузка...</span> */}
+            <div className="flex items-center justify-center gap-2">
+              <Spinner className="w-fit" />
+              <p> ... ищем в базе</p>
             </div>
           ) : !supplier ? (
             <div>
               <h3 className="text-center text-lg font-bold text-destructive">
-                Поставщик не найден!
+                Похоже вы еще не зарегистрировались в качестве поставщика!
               </h3>
-              <p className="text-center text-xs">
+              <p className="text-center text-sm font-semibold">
                 Укажите данные вашей компании и нажмите на кнопку
                 &quot;Сохранить&quot;
               </p>

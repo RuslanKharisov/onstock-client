@@ -1,1 +1,1 @@
-export {ImageWithCTAButton} from "./_ui/Image-with-CTA-button"
+export { ImageWithCTAButton } from "./_ui/Image-with-CTA-button"

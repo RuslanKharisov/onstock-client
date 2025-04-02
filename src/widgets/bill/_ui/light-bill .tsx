@@ -21,10 +21,9 @@ const LightBill = ({ billDetails }: { billDetails: TTariff | undefined }) => {
     : 0
 
   return (
-    <div className="py-8">
+    <div className="py-5">
       <div className="mb-2 border-2 border-primary"></div>
-
-      <Table className="mb-10 w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
+      <Table className="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right">
         <TableHeader className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <TableRow>
             <TableHead className="px-6 py-3">№ п.п</TableHead>
@@ -37,17 +36,23 @@ const LightBill = ({ billDetails }: { billDetails: TTariff | undefined }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow className="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
-            <TableCell className="px-6 py-4">1</TableCell>
-            <TableCell className="px-6 py-4 text-sm">{name}</TableCell>
-            <TableCell className="px-6 py-4">
+          <TableRow className="border-b odd:bg-card-foreground/10 even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800">
+            <TableCell data-title="№ п.п" className="bottom-1 px-6 py-4">
+              1
+            </TableCell>
+            <TableCell data-title="Тариф" className="px-6 py-4 text-sm">
+              {name}
+            </TableCell>
+            <TableCell data-title="Лимит" className="px-6 py-4">
               {" "}
-              {billDetails.maxProducts}
+              {billDetails.maxProducts} шт.
             </TableCell>
-            <TableCell className="px-6 py-4">
-              {billDetails.pricePerUnit}
+            <TableCell data-title="Цена за единицу, руб." className="px-6 py-4">
+              {billDetails.pricePerUnit} руб.
             </TableCell>
-            <TableCell className="px-6 py-4">{total}</TableCell>
+            <TableCell data-title="Сумма, руб." className="px-6 py-4">
+              {total} руб.
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

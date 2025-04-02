@@ -50,7 +50,14 @@ async function PersonalStock({ searchParams }: { searchParams: SearchParams }) {
           searchQuery={searchQuery}
         />
       ) : (
-        <></>
+        <>
+          <h3 className="text-center text-lg font-bold text-destructive">
+            Похоже вы еще не зарегистрировались в качестве поставщика!
+          </h3>
+          <p className="text-center text-sm font-semibold">
+            Укажите данные вашей компании в вкладке Профиль
+          </p>
+        </>
       )}
     </div>
   )

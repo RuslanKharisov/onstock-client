@@ -13,7 +13,7 @@ import { useState } from "react"
 import { LightBill } from "@/widgets/bill"
 import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem } from "@/shared/ui/form"
-import { RequestByMail } from "@/widgets/offer-request"
+import { ImageWithCTAButton } from "@/widgets/cta-section"
 
 export type TTariff = {
   id: number
@@ -28,14 +28,14 @@ interface FormData {
 
 const tariffs: TTariff[] = [
   { id: 1, name: "TARIFF_10", maxProducts: 10, pricePerUnit: 0.0 },
-  { id: 2, name: "TARIFF_100", maxProducts: 100, pricePerUnit: 2.5 },
+  { id: 2, name: "TARIFF_100", maxProducts: 100, pricePerUnit: 0.0 },
   { id: 3, name: "TARIFF_500", maxProducts: 500, pricePerUnit: 1.5 },
   { id: 4, name: "TARIFF_1000", maxProducts: 1000, pricePerUnit: 1.0 },
   { id: 5, name: "TARIFF_2 000", maxProducts: 2000, pricePerUnit: 0.8 },
-  { id: 6, name: "TARIFF_3 000", maxProducts: 3000, pricePerUnit: 0.7 },  
+  { id: 6, name: "TARIFF_3 000", maxProducts: 3000, pricePerUnit: 0.7 },
   { id: 7, name: "TARIFF_4 000", maxProducts: 4000, pricePerUnit: 0.6 },
   { id: 8, name: "TARIFF_5 000", maxProducts: 5000, pricePerUnit: 0.5 },
-  { id: 9, name: "TARIFF_10 000", maxProducts: 10000, pricePerUnit: 0.3 },
+  { id: 9, name: "TARIFF_10 000", maxProducts: 10000, pricePerUnit: 0.5 },
 ]
 
 export type TBillItem = {
@@ -107,7 +107,11 @@ const Prising = () => {
                     </FormItem>
                   )}
                 ></FormField>
-                <Button size="sm" type="submit" className="mt-4 w-full sm:w-fit">
+                <Button
+                  size="sm"
+                  type="submit"
+                  className="mt-4 w-full sm:w-fit"
+                >
                   Рассчитать стоимость
                 </Button>
               </form>
@@ -115,8 +119,9 @@ const Prising = () => {
           </CardContent>
         </Card>
       </div>
-      <RequestByMail />
+
       <LightBill billDetails={selectedTariff} />
+      <ImageWithCTAButton />
     </div>
   )
 }
