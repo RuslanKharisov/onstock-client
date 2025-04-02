@@ -20,5 +20,21 @@ export const GetSupplierList = async (
     perPage: data.perPage,
     filters: data.filters
   }
-  return await apiClient.post(`supplier/list`, body);
+
+  try {
+    return await apiClient.post(`supplier/list`, body);
+  } catch (error) {
+    console.log("error ==> ", error);
+    return {
+      data: [],
+      meta: {
+        total: 1,
+        page: 1,
+        currentPage: 1,
+        lastPage: 1,
+        next: null,
+        prev: null,
+      }
+    }
+  }
 };

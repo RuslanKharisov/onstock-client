@@ -36,7 +36,7 @@ const AcountOverview = ({ supplier }: AdressCardProps) => {
                   alt="Helene avatar"
                 /> */}
                 <div>
-                  <Badge variant="success">
+                  <Badge variant="success" className="mb-2">
                     {supplier.supplierType?.name
                       ? supplier.supplierType?.name
                       : "Не указан"}

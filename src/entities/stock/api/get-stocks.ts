@@ -13,5 +13,21 @@ export const getStocks = async (
   }
   console.log("body ==> ", body);
 
-  return await apiClient.post<PaginatedStockListDto>("stock/list", body)
+  try {
+    return await apiClient.post<PaginatedStockListDto>("stock/list", body)
+
+  } catch (error) {
+    console.error("error ==> ", error);
+    return {
+      data: [],
+      meta: {
+        total: 1,
+        page: 1,
+        currentPage: 1,
+        lastPage: 1,
+        next: null,
+        prev: null,
+      }
+    }
+  }
 }
