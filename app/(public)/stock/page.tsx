@@ -19,7 +19,6 @@ export default async function StockPage({
   const page = Number(searchParams?.page) || 1
   const perPage = Number(searchParams?.perPage) || 10
 
-  console.log("searchQuery ==> ", searchQuery)
   const data = await getStocks({
     page,
     perPage,

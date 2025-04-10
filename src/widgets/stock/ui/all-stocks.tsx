@@ -78,6 +78,9 @@ function AllStocks({
 
   return (
     <div className="container px-3 py-1 pt-20 md:pt-5">
+      <h1 className="mb-8 text-center">
+        Онлайн каталог оборудования промышленной автоматизации
+      </h1>
       <div className="flex flex-col gap-4  md:flex-row">
         <TextFilterInput
           value={filters.sku}

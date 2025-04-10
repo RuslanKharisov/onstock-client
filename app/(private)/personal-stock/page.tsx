@@ -31,7 +31,6 @@ async function PersonalStock({ searchParams }: { searchParams: SearchParams }) {
       description: searchParams?.description,
     },
   })
-  console.log("personalStock ==> ", personalStock)
 
   // Функция для обновления данных (вызов из клиента)
   async function updateStock() {
