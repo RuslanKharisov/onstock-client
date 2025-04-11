@@ -26,12 +26,13 @@ function MobileNav({ headerItems }: MobileNavProps) {
   return (
     <>
       <Sheet>
-        <SheetTrigger asChild aria-controls="radix-:R1mcq:">
+        <SheetTrigger asChild>
           <Button
             size="icon"
             variant="ghost"
             className="fixed left-0 top-0 z-50 w-full justify-between bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
             aria-label="Open menu"
+            aria-controls="radix-:R1mcq:"
           >
             <MenuIcon className="h-5 w-5" />
           </Button>
