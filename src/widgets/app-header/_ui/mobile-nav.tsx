@@ -28,11 +28,10 @@ function MobileNav({ headerItems }: MobileNavProps) {
           <Button
             size="icon"
             variant="ghost"
-            className="fixed z-50 flex w-full justify-between bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            className="fixed left-0 top-0 z-50 w-full justify-between bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
             aria-label="Open menu"
-            title="Open menu"
           >
-            <MenuIcon />
+            <MenuIcon className="h-5 w-5" />
           </Button>
         </SheetTrigger>
 
