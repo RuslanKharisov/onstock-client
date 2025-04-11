@@ -13,14 +13,12 @@ export async function BlogArticle({
     <div className={className}>
       <section className="container m-auto grid items-center py-8">
         <div className="relative m-auto flex max-w-4xl flex-col items-start justify-center gap-8">
-          <h1 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
+          <h2 className="mb-4 text-xl font-extrabold tracking-tight lg:text-4xl">
             {post.title}
-          </h1>
-          
+          </h2>
+
           <article>
-            <Markdown className="space-y-4 ">
-              {post.metadata.content}
-            </Markdown>
+            <Markdown className="space-y-4 ">{post.metadata.content}</Markdown>
           </article>
         </div>
       </section>
