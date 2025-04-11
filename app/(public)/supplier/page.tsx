@@ -1,5 +1,12 @@
 import { GetSupplierList } from "@/entities/supplier/api/get-all-suppliers"
 import { SupplierList } from "@/views/suppliers"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Поставщики | Prom-Stock",
+  description:
+    "Список компаний поставщиков оборудования промышленной автоматизации.",
+}
 
 export default async function SuppliersPage() {
   const SuppliersListQuery = {

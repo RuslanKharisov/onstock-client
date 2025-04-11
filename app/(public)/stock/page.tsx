@@ -2,6 +2,13 @@ import { getStocks } from "@/entities/stock/api/get-stocks"
 import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-array"
 import { StockListElementWithRelations } from "@/entities/stock/_domain/types"
 import { AllStocks } from "@/widgets/stock"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Онлайн склад | Prom-Stock",
+  description:
+    "Онлайн каталог оборудования промышленной автоматизации. Поиск по складу. Контроллеры. КИПиА. Блоки питания. Автоматические выключатели. Частотные преобразователи.",
+}
 
 type SearchParams = {
   sku: string
