@@ -55,7 +55,7 @@ export function ApdateStock({
   }
 
   return (
-    <section className="flex flex-wrap items-start justify-between gap-5 py-5">
+    <div className="flex flex-wrap items-start justify-between gap-5 py-5">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="sm" className="w-full sm:w-fit">
@@ -106,6 +106,6 @@ export function ApdateStock({
           />
         </SheetContent>
       </Sheet>
-    </section>
+    </div>
   )
 }
