@@ -25,21 +25,15 @@ function MobileNav({ headerItems }: MobileNavProps) {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <div
-            aria-label="Header area"
-            title="Header area"
+          <Button
+            size="icon"
+            variant="ghost"
             className="fixed z-50 flex w-full justify-between bg-background/95 px-3 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+            aria-label="Open menu"
+            title="Open menu"
           >
-            <Button
-              size="icon"
-              variant="ghost"
-              className=""
-              aria-label="Open menu"
-              title="Open menu"
-            >
-              <MenuIcon />
-            </Button>
-          </div>
+            <MenuIcon />
+          </Button>
         </SheetTrigger>
 
         <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
