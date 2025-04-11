@@ -4,7 +4,9 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet"
 import { ToggleTheme } from "@/features/theme/toggle-theme"
@@ -24,7 +26,7 @@ function MobileNav({ headerItems }: MobileNavProps) {
   return (
     <>
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger asChild aria-controls="radix-:R1mcq:">
           <Button
             size="icon"
             variant="ghost"
@@ -36,18 +38,16 @@ function MobileNav({ headerItems }: MobileNavProps) {
         </SheetTrigger>
 
         <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
-          <SheetHeader className="flex flex-row items-center justify-between ">
-            <div className="mb-3 ml-4">
-              <h1 className="">Личный кабинет</h1>
-              <div className="flex items-center gap-3 ">
-                <UserProfile />
-                <ToggleTheme />
-              </div>
-            </div>
-            <SheetClose>
-              <Button className="h-7 w-7 p-0" variant="ghost">
-                <XIcon />
-              </Button>
+          <SheetHeader className="mb-3 ml-4">
+            <SheetTitle>Личный кабинет</SheetTitle>
+            <SheetDescription className="space-x-3 ">
+              <UserProfile />
+              <ToggleTheme />
+            </SheetDescription>
+            <SheetClose className=" absolute right-5">
+              {/* <Button className="h-7 w-7 p-0" variant="ghost"> */}
+              <XIcon />
+              {/* </Button> */}
             </SheetClose>
           </SheetHeader>
           <div>
