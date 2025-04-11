@@ -139,7 +139,7 @@
  
     
 
-  
+  /*
 
   @media (max-width:770px) {
     table thead tr {
@@ -165,7 +165,7 @@
      table tbody tr td::before{
        margin-bottom: 5px;
        display: inline-block;
-       width: 175px;
+       width: fit-content;
        color: #6C7A89;
        padding-right: 20px;
        content: attr(data-title);
@@ -178,6 +178,7 @@
      }
    }
 
+   */
 }
 
 
