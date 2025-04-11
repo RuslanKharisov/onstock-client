@@ -28,8 +28,8 @@ const AcountOverview = ({ supplier }: AdressCardProps) => {
     <section className="bg-white py-14 antialiased dark:bg-gray-900 md:py-8">
       <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
         <div className="flex flex-col gap-5 py-4 md:py-8">
-          <div className="flex w-full items-center justify-center rounded-lg bg-gradient-to-bl from-gray-500 from-0% via-zinc-100 via-35% to-blue-900 to-100% py-20">
-            <h1 className="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
+          <div className="flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-slate-900 from-0% to-slate-700 to-100% py-20">
+            <h1 className="flex items-center text-xl font-bold leading-none  text-white sm:text-2xl">
               Компания: &quot;{supplier.name}&quot;
             </h1>
           </div>
@@ -37,8 +37,8 @@ const AcountOverview = ({ supplier }: AdressCardProps) => {
             <div className="space-y-4 font-light">
               <a href="#" className="flex items-center space-x-3">
                 <GeoIcon height={24} width={24} />
-                <span className="max-md:text-[#353535]">
-                  <p className=" dark:text-gray-400">
+                <span className="">
+                  <p className="">
                     {supplier?.address?.city?.region?.country?.name}{" "}
                     {supplier?.address?.city?.region?.name}{" "}
                     {supplier?.address?.city?.name} {supplier?.address?.street}{" "}
@@ -48,19 +48,15 @@ const AcountOverview = ({ supplier }: AdressCardProps) => {
               </a>
               <a href="#" className="flex items-center space-x-5">
                 <Mail />
-                <span className="max-md:text-[#353535]">{supplier.email}</span>
+                <span className="">{supplier.email}</span>
               </a>
               <a href="#" className="flex items-center space-x-3">
                 <Phone />
-                <span className="max-md:text-[#353535]">
-                  {supplier.phoneWork}
-                </span>
+                <span className="">{supplier.phoneWork}</span>
               </a>
               <a href="#" className="flex items-center space-x-3">
                 <Smartphone />
-                <span className="max-md:text-[#353535]">
-                  {supplier.phoneMobile}
-                </span>
+                <span className="">{supplier.phoneMobile}</span>
               </a>
               <Socials className="gap-0" socialsData={socialsData} size="28" />
             </div>

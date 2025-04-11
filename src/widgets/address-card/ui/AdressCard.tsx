@@ -9,18 +9,16 @@ interface AdressCardProps {
 
 const AdressCard = ({ supplier }: AdressCardProps) => {
   return (
-    <div className="items-center rounded-lg bg-gray-50 px-1 shadow dark:border-gray-700 dark:bg-gray-800 sm:flex">
+    <div className="flex items-center gap-3 rounded-lg bg-gray-50 bg-gradient-to-r from-slate-900 from-0% to-slate-700 to-100% px-3 shadow dark:border-gray-700 sm:flex">
       <Link href={`/supplier/${supplier.id}`}>
-        <StoreIcon className="mx-auto h-[200px] w-[200px] rounded-lg sm:rounded-none sm:rounded-l-lg" />
+        <StoreIcon className="mx-auto h-[100px] w-[100px] rounded-lg sm:rounded-none sm:rounded-l-lg" />
       </Link>
-      <div className="p-5">
-        <h3 className="text-xl font-bold tracking-tight text-primary/95 dark:text-primary/95">
+      <div className="p-3 font-light text-white">
+        <h3 className="text-xl font-bold tracking-tight">
           <Link href={`/supplier/${supplier.id}`}>{supplier.name}</Link>
         </h3>
-        <span className="text-primary/80 dark:text-primary/80">
-          {supplier?.siteUrl}
-        </span>
-        <p className="mb-4 mt-3 font-light text-gray-500 dark:text-gray-400">
+        <span className="">{supplier?.siteUrl}</span>
+        <p className="mb-4 mt-3">
           {supplier?.address?.city?.region?.country?.name}{" "}
           {supplier?.address?.city?.region?.name}{" "}
           {supplier?.address?.city?.name} {supplier?.address?.street}{" "}
