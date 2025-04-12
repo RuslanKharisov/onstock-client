@@ -1,11 +1,11 @@
-import { LogoIcon } from "@/shared/ui/logo-icon";
-import Link from "next/link";
+import Link from "next/link"
+import { LogoNew } from "./logo-new"
 
 export function Logo() {
   return (
     <Link className="flex items-center space-x-2" href="/">
-      <LogoIcon className="h-6 w-6" />
-      <span className="font-bold inline-block">Prom-Stock</span>
+      <LogoNew className="h-12 w-12" />
+      <span className="inline-block font-bold">Prom-Stock</span>
     </Link>
-  );
+  )
 }
