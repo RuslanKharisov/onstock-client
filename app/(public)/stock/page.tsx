@@ -31,7 +31,7 @@ export default async function StockPageTest({
 
   const pagination = {
     page: searchParams.page || "1",
-    perPage: searchParams.perPage || "10",
+    perPage: searchParams.perPage || "5",
   }
 
   const suppliersData = await GetSupplierList({
