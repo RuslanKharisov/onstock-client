@@ -6,6 +6,8 @@ import { createSupplier } from "./create-supplier";
 import { ChangeSupplierDto } from "../dto";
 import { getSupplierInfo } from "./get-supplier-info";
 import { CreateSupplierDto } from "../dto/create-supplier.dto";
+import { ConnectSupplierApiDto } from "../dto/connect-supplier-api.dto";
+import { ConnectSupplierApi } from "./update-connect-supplier-api";
 
 export const supplierQueries = {
   all: () => ["suppliers"],
@@ -49,4 +51,17 @@ export const useUpdateSupplier = () =>
       queryClient.invalidateQueries({ queryKey: supplierQueries.details() });
     },
   });
+
+
+export const useConnectSupplierApi = () => {
+  return useMutation({
+    mutationFn: async ({
+      url,
+      token,
+      accessToken,
+    }: ConnectSupplierApiDto) => {
+      ConnectSupplierApi({ url, token, accessToken })
+    },
+  })
+}
 

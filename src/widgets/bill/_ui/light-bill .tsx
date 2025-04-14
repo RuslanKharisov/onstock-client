@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/ui/table"
-import { TTariff } from "app/(private)/prising/page"
 
 const LightBill = ({ billDetails }: { billDetails: TTariff | undefined }) => {
   if (!billDetails) return null

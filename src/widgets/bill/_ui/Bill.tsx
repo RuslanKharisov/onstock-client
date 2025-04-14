@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/ui/table"
-import { TTariff } from "app/(private)/prising/page"
 
 const Bill = ({ billDetails }: { billDetails: TTariff }) => {
   if (!billDetails) return null

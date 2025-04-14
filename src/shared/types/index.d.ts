@@ -18,6 +18,12 @@ interface Supplier {
     address: Address
     subscription: Subscription
     supplierType?: SupplierType
+    api: Api
+}
+
+interface Api {
+    url: string
+    token: string
 }
 
 interface SupplierType {
@@ -45,3 +51,10 @@ interface MetaData {
     next: number | null;
     prev: number | null;
 };
+
+interface TTariff {
+    id: number
+    name: string
+    maxProducts: number
+    pricePerUnit: number
+}

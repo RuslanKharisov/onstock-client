@@ -7,14 +7,11 @@ import { convertToStockArray } from "@/features/stock/lib/convert-type-to-stock-
 import { DataTable, usePagination } from "@/widgets/smart-data-table"
 import { useRouter, useSearchParams } from "next/navigation"
 import { TextFilterInput } from "@/shared/ui/text-filter-input"
-import { useGetSupplier } from "@/entities/supplier/api/supplier.queries"
-import { ApdateStock } from "@/widgets/update-stock/update-stock"
 import { TPersonalPaginatedStockDto } from "@/entities/stock-personal.ts/dto"
 import { SearchParams } from "app/(private)/personal-stock/page"
 
 function PrivatelStock({
   personalStock,
-  userId,
   accessToken,
   updateStock,
   searchQuery,
@@ -34,8 +31,6 @@ function PrivatelStock({
     sku: searchQuery.sku || "", // Получаем из URL при загрузке
     description: searchQuery.description || "",
   })
-
-  const { data: supplier } = useGetSupplier(userId, accessToken)
 
   // Функция обновления URL при изменении параметров поиска
   const updateUrlParams = (
@@ -103,18 +98,16 @@ function PrivatelStock({
 
   return (
     <>
-      <div>
-        <p className="text-center text-sm ">
-          Активный тариф:{" "}
-          <span>{supplier?.subscription.tariff.maxProducts}</span>{" "}
-        </p>
+      <div className="py-8">
+        <h1 className="text-center  ">Поиск по своему складу</h1>
+        <p className="text-center  ">В рарзаботке!</p>
       </div>
 
-      <ApdateStock
+      {/* <ApdateStock
         accessToken={accessToken}
         userId={userId}
         updateStock={updateStock}
-      />
+      /> */}
 
       <div className="flex flex-col gap-4  md:flex-row">
         <TextFilterInput
