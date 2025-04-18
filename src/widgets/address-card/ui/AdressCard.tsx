@@ -9,7 +9,7 @@ interface AdressCardProps {
 
 const AdressCard = ({ supplier }: AdressCardProps) => {
   return (
-    <div className="flex items-center gap-3 rounded-lg bg-gray-50 bg-gradient-to-r from-slate-400 from-0% to-slate-200 to-100% px-3 shadow dark:bg-gradient-to-r dark:from-slate-800 dark:from-0% dark:to-slate-900 dark:to-100% sm:flex">
+    <div className="flex items-center gap-3 rounded-lg  bg-gradient-to-r from-slate-400 from-0% to-slate-200 to-100% px-3 shadow dark:bg-gradient-to-r dark:from-slate-800 dark:from-0% dark:to-slate-900 dark:to-100% sm:flex">
       <Link href={`/supplier/${supplier.id}`}>
         <StoreIcon className="mx-auto h-[100px] w-[100px] rounded-lg sm:rounded-none sm:rounded-l-lg" />
       </Link>
