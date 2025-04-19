@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   title: "Оборудование и комплектующие в наличии на складах в России",
   description:
     "Промышленный склад: Агрегатор оборудования для АСУ ТП, КИП и автоматизации производств",
+  openGraph: {
+    title: "Онлайн склад | Prom-Stock",
+    description: "Онлайн каталог оборудования промышленной автоматизации...",
+    url: "https://prom-stock.ru",
+    siteName: "Prom-Stock",
+    images: [
+      {
+        url: "https://prom-stock.ru/og-preview.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Prom-Stock Preview",
+      },
+    ],
+    locale: "ru_RU",
+    type: "website",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
