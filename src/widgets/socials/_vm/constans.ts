@@ -9,7 +9,7 @@ export interface SocialsData {
 }
 
 const WHATSAPP = "79178696482"
-const TELEGRAM = "rusl_dev"
+const TELEGRAM = "promstock"
 
 export const socialsData = [
   {
